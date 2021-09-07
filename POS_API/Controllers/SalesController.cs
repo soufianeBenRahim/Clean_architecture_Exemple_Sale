@@ -9,14 +9,14 @@ namespace POS_API.Controllers
     {
       
 
-        [HttpGet]
+        [HttpPost("CreateSale")]
         public async Task<ActionResult<int>> Create()
         {
             return await Mediator.Send(new CreateSaleCommand());
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, AddItemToSaleCommand command)
+        [HttpPut("[action] {id}")]
+        public async Task<ActionResult> AddItemToSale(int id, AddItemToSaleCommand command)
         {
             if (id != command.idSale)
             {
@@ -28,8 +28,8 @@ namespace POS_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("[action]")]
-        public async Task<ActionResult> UpdateItemDetails(int id, ValidateVenteAsCacheCommand command)
+        [HttpPut("[action] {id}")]
+        public async Task<ActionResult> ValidateVenteAsCache(int id, ValidateVenteAsCacheCommand command)
         {
             if (id != command.idSale)
             {
