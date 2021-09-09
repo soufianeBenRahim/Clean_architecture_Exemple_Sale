@@ -12,6 +12,8 @@ namespace Clean_Architecture_Soufiane.Domain.Events
         public IthemAddToSaleDomainEvent(int _idSale,int _idIthem,int _NbUnit)
         {
             id = _idSale;
+            idIthem = _idIthem;
+            NbUnit = _NbUnit;
         }
 
         public int id { get; }
