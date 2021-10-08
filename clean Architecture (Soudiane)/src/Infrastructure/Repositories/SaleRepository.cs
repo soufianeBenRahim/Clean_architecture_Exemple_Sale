@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Repositories
+namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 {
     public class SaleRepository
         : ISaleRepository

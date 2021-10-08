@@ -5,6 +5,7 @@ using Clean_Architecture_Soufiane.Domain.Seedwork;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations;
 using Clean_Architecture_Soufiane.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Clean_Architecture_Soufiane.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext,IUnitOfWork
+    public class ApplicationDbContext : IdentityDbContext, IUnitOfWork
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
