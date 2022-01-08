@@ -13,7 +13,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog
         public string Description { get; set; }
 
         public decimal Price { get; set; }
-
+        public string Bar_Code { get; set; }
         public string PictureFileName { get; set; }
 
         public string PictureUri { get; set; }
