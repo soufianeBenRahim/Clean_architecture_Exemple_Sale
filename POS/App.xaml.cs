@@ -6,7 +6,7 @@ using Clean_Architecture_Soufiane.Infrastructure.Persistence;
 using Clean_Architecture_Soufiane.Infrastructure.Services;
 using Clean_Architecture_Soufiane.WPF;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Repositories;
+using Clean_Architecture_Soufiane.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;

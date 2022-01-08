@@ -1,9 +1,9 @@
 ﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence;
+using Clean_Architecture_Soufiane.Infrastructure.Repositories;
 using Clean_Architecture_Soufiane.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
