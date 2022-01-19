@@ -15,28 +15,19 @@ namespace POS_API.Controllers
             return await Mediator.Send(new CreateSaleCommand());
         }
 
-        [HttpPut("[action] {id}")]
-        public async Task<ActionResult> AddItemToSale(int id, AddItemToSaleCommand command)
+        [HttpPut("[action]")]
+        public async Task<ActionResult> AddItemToSale( AddItemToSaleCommand command)
         {
-            if (id != command.idSale)
-            {
-                return BadRequest();
-            }
-
             await Mediator.Send(command);
 
             return NoContent();
         }
 
-        [HttpPut("[action] {id}")]
-        public async Task<ActionResult> ValidateVenteAsCache(int id, ValidateVenteAsCacheCommand command)
+        [HttpPut("[action]")]
+        public async Task<ActionResult> ValidateVenteAsCache( ValidateVenteAsCacheCommand command)
         {
-            if (id != command.idSale)
-            {
-                return BadRequest();
-            }
 
-            await Mediator.Send(command);
+             await Mediator.Send(command);
 
             return NoContent();
         }
