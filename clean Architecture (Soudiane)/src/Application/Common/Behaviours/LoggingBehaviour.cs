@@ -1,6 +1,4 @@
-﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
-using MediatR;
-using MediatR.Pipeline;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
