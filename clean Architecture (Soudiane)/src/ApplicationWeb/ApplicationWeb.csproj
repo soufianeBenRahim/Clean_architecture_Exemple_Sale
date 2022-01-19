@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Clean_Architecture_Soufiane.Application</RootNamespace>
-    <AssemblyName>Clean_Architecture_Soufiane.Application</AssemblyName>
+    <AssemblyName>Clean_Architecture_Soufiane.ApplicationWeb</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\InfrastructureWeb\InfrastructureWeb.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Sale\Queries\" />
   </ItemGroup>
 
 </Project>

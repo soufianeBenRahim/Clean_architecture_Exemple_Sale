@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\clean Architecture (Soudiane)\src\Application\Application.csproj" />
-    <ProjectReference Include="..\clean Architecture (Soudiane)\src\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\clean Architecture (Soudiane)\src\ApplicationWeb\ApplicationWeb.csproj" />
+    <ProjectReference Include="..\clean Architecture (Soudiane)\src\InfrastructureWeb\InfrastructureWeb.csproj" />
   </ItemGroup>
 
 </Project>

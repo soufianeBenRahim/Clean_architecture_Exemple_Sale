@@ -16,6 +16,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using POS.View;
 
 namespace POS
 {
@@ -40,8 +41,6 @@ namespace POS
             {
                 options.UseSqlite("Data Source = SaleDataBase.db");
             });
-            // Application dependancy injection
-            services.AddApplication();
 
             // infrastrecture dependancy injection
             services.AddScoped<IDomainEventService, DomainEventService>();
@@ -50,11 +49,11 @@ namespace POS
 
             services.AddSingleton<ICurrentUserService, CurrentUserServiceWPF>();
             
-            services.AddSingleton<MainWindow>();
+            services.AddSingleton<LoginForm>();
         }
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<MainWindow>();
+            var mainWindow = serviceProvider.GetService<LoginForm>();
             mainWindow.Show();
         }
     }

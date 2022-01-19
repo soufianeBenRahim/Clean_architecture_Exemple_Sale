@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{626B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeskTop", "DeskTop", "{C0C89F92-E6EE-4BD7-ACCD-140F8B892E22}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeskTop.Integration.Tests", "DeskTop.Integration.Tests\DeskTop.Integration.Tests.csproj", "{1945FA70-36EA-4492-8791-56E587331595}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeskTop.Integration.Tests", "DeskTop.Integration.Tests\DeskTop.Integration.Tests.csproj", "{1945FA70-36EA-4492-8791-56E587331595}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationWeb", "clean Architecture (Soudiane)\src\ApplicationWeb\ApplicationWeb.csproj", "{CD10411E-F124-48D8-ABA6-87AEA1D1EE10}"
 EndProject

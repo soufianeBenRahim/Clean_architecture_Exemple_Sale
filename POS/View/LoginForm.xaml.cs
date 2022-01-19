@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POS
+namespace POS.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginForm : Window
     {
-        public MainWindow()
+        public LoginForm()
         {
             InitializeComponent();
+            this.DataContext = new LoginViewModel();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
