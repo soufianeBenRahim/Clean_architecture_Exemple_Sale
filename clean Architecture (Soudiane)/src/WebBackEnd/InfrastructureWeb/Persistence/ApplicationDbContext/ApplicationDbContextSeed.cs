@@ -18,20 +18,20 @@
 
     public class ApplicationDbContextSeed
     {
-        public async Task SeedAsync(ApplicationDbContext context, IWebHostEnvironment env, bool useCustomizationData , ILogger<ApplicationDbContextSeed> logger)
+        public async Task SeedAsync(ApplicationDbContext context, IWebHostEnvironment env, bool useCustomizationData, ILogger<ApplicationDbContextSeed> logger)
         {
             var contentRootPath = env.ContentRootPath;
             var picturePath = env.WebRootPath;
             using (context)
+            {
+                if (!context.SaleStatuss.Any())
                 {
-                    if (!context.SaleStatuss.Any())
-                    {
-                        context.SaleStatuss.AddRange(useCustomizationData
-                                                ? GetOrderStatusFromFile(contentRootPath, logger)
-                                                : GetPredefinedOrderStatus());
-                    }
+                    context.SaleStatuss.AddRange(useCustomizationData
+                                            ? GetSaleStatusFromFile(contentRootPath, logger)
+                                            : GetPredefinedSaleStatus());
+                }
 
-                    await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
 
 
                 if (!context.CatalogBrands.Any())
@@ -299,7 +299,7 @@
 
             return csvheaders;
         }
-        private IEnumerable<SaleStatus> GetPredefinedOrderStatus()
+        private IEnumerable<SaleStatus> GetPredefinedSaleStatus()
         {
             return new List<SaleStatus>()
             {
@@ -309,31 +309,31 @@
             };
         }
 
-        private IEnumerable<SaleStatus> GetOrderStatusFromFile(string contentRootPath, ILogger<ApplicationDbContextSeed> log)
+        private IEnumerable<SaleStatus> GetSaleStatusFromFile(string contentRootPath, ILogger<ApplicationDbContextSeed> log)
         {
-            string csvFileOrderStatus = Path.Combine(contentRootPath, "Setup", "OrderStatus.csv");
+            string csvFileSaleStatus = Path.Combine(contentRootPath, "Setup", "OrderStatus.csv");
 
-            if (!File.Exists(csvFileOrderStatus))
+            if (!File.Exists(csvFileSaleStatus))
             {
-                return GetPredefinedOrderStatus();
+                return GetPredefinedSaleStatus();
             }
 
             string[] csvheaders;
             try
             {
                 string[] requiredHeaders = { "OrderStatus" };
-                csvheaders = GetHeaders(requiredHeaders, csvFileOrderStatus);
+                csvheaders = GetHeaders(requiredHeaders, csvFileSaleStatus);
             }
             catch (Exception ex)
             {
                 log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
-                return GetPredefinedOrderStatus();
+                return GetPredefinedSaleStatus();
             }
 
             int id = 1;
-            return File.ReadAllLines(csvFileOrderStatus)
+            return File.ReadAllLines(csvFileSaleStatus)
                                         .Skip(1) // skip header row
-                                        .SelectTry(x => CreateOrderStatus(x, ref id))
+                                        .SelectTry(x => CreateSaleStatus(x, ref id))
                                         .OnCaughtException(ex => { log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
                                         .Where(x => x != null);
         }
@@ -356,11 +356,11 @@
 
             return csvheaders;
         }
-        private SaleStatus CreateOrderStatus(string value, ref int id)
+        private SaleStatus CreateSaleStatus(string value, ref int id)
         {
             if (String.IsNullOrEmpty(value))
             {
-                throw new Exception("Orderstatus is null or empty");
+                throw new Exception("Salestatus is null or empty");
             }
 
             return new SaleStatus(id++, value.Trim('"').Trim().ToLowerInvariant());
@@ -392,9 +392,9 @@
             };
         }
 
-      
 
-      
+
+
 
         private IEnumerable<CatalogType> GetPreconfiguredCatalogTypes()
         {
@@ -407,11 +407,11 @@
             };
         }
 
-    
 
-   
 
-       
+
+
+
 
 
         private IEnumerable<CatalogItem> GetPreconfiguredItems()
@@ -433,7 +433,7 @@
             };
         }
 
-      
+
         private void GetCatalogItemPictures(string contentRootPath, string picturePath)
         {
             if (picturePath != null)

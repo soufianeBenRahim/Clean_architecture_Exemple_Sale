@@ -7,48 +7,48 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
     class SaleItemEntityTypeConfiguration
         : IEntityTypeConfiguration<SaleItem>
     {
-        public void Configure(EntityTypeBuilder<SaleItem> orderItemConfiguration)
+        public void Configure(EntityTypeBuilder<SaleItem> saleItemConfiguration)
         {
-            orderItemConfiguration.ToTable("SLE_ITEMS");
+            saleItemConfiguration.ToTable("SLE_ITEMS");
 
-            orderItemConfiguration.HasKey(o => o.Id);
+            saleItemConfiguration.HasKey(o => o.Id);
 
-            orderItemConfiguration.Ignore(b => b.DomainEvents);
+            saleItemConfiguration.Ignore(b => b.DomainEvents);
 
-            orderItemConfiguration.Property(o => o.Id)
+            saleItemConfiguration.Property(o => o.Id)
                 .UseHiLo("saleitemseq");
 
-            orderItemConfiguration.Property<int>("SaleId")
+            saleItemConfiguration.Property<int>("SaleId")
                 .IsRequired();
 
-            orderItemConfiguration
+            saleItemConfiguration
                 .Property<decimal>("_discount")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("Discount")
                 .IsRequired();
 
-            orderItemConfiguration.Property<int>("ProductId")
+            saleItemConfiguration.Property<int>("ProductId")
                 .IsRequired();
 
-            orderItemConfiguration
+            saleItemConfiguration
                 .Property<string>("_productName")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("ProductName")
                 .IsRequired();
 
-            orderItemConfiguration
+            saleItemConfiguration
                 .Property<decimal>("_unitPrice")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("UnitPrice")
                 .IsRequired();
 
-            orderItemConfiguration
+            saleItemConfiguration
                 .Property<int>("_units")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("Units")
                 .IsRequired();
 
-            orderItemConfiguration
+            saleItemConfiguration
                 .Property<string>("_pictureUrl")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("PictureUrl")

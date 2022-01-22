@@ -35,7 +35,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence
             _domainEventService = domainEventService;
             _dateTime = dateTime;
         }
-        public DbSet<Sale> Orders { get; set; }
+        public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleItem> SaleItems { get; set; }
         public DbSet<SaleStatus> SaleStatuss { get; set; }
         public DbSet<CatalogItem> CatalogItems { get; set; }
@@ -171,11 +171,11 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence
 
             return new ApplicationDbContext(optionsBuilder.Options, new curentUser(), new NoMediator(), new DateTimeService());
 
-          
+
         }
         class curentUser : ICurrentUserService
         {
-            public string UserId =>  "";
+            public string UserId => "";
         }
         class NoMediator : IDomainEventService
         {

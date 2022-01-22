@@ -28,19 +28,19 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 
         public Sale Add(Sale order)
         {
-            return _context.Orders.Add(order).Entity;
+            return _context.Sales.Add(order).Entity;
 
         }
 
         public async Task<Sale> GetAsync(int orderId)
         {
             var order = await _context
-                                .Orders
+                                .Sales
                                 .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null)
             {
                 order = _context
-                            .Orders
+                            .Sales
                             .Local
                             .FirstOrDefault(o => o.Id == orderId);
             }

@@ -9,18 +9,18 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
     class SaleStatusEntityTypeConfiguration
         : IEntityTypeConfiguration<SaleStatus>
     {
-        public void Configure(EntityTypeBuilder<SaleStatus> orderStatusConfiguration)
+        public void Configure(EntityTypeBuilder<SaleStatus> saleStatusConfiguration)
         {
-            orderStatusConfiguration.ToTable("SLE_STATUS");
+            saleStatusConfiguration.ToTable("SLE_STATUS");
 
-            orderStatusConfiguration.HasKey(o => o.Id);
+            saleStatusConfiguration.HasKey(o => o.Id);
 
-            orderStatusConfiguration.Property(o => o.Id)
+            saleStatusConfiguration.Property(o => o.Id)
                 .HasDefaultValue(1)
                 .ValueGeneratedNever()
                 .IsRequired();
 
-            orderStatusConfiguration.Property(o => o.Name)
+            saleStatusConfiguration.Property(o => o.Name)
                 .HasMaxLength(200)
                 .IsRequired();
         }
