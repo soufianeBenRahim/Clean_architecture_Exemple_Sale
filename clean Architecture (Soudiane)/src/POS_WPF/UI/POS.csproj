@@ -4,6 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebBackEnd\InfrastructureWeb\InfrastructureWeb.csproj" />
+    <ProjectReference Include="..\Infrastrecture\InfrastructureWPF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
