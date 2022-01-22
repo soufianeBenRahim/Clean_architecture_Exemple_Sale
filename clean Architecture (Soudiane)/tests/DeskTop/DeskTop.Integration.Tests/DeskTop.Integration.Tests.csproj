@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\POS_WPF\POS.csproj" />
+    <ProjectReference Include="..\..\..\src\POS_WPF\UI\POS.csproj" />
   </ItemGroup>
 
 </Project>
