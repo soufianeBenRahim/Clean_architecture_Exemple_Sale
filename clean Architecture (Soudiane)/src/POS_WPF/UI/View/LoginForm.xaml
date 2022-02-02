@@ -21,15 +21,15 @@ Title="Login" Height="255" Width="370" WindowState="Normal" WindowStartupLocatio
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Margin="0,5" Content="User Id : " VerticalContentAlignment="Center"
 HorizontalContentAlignment="Right"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtUserId" Margin="0,5" Width="150" VerticalContentAlignment="Center"
+                    <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" x:Name="UserName" Margin="0,5" Width="150" VerticalContentAlignment="Center"
 HorizontalContentAlignment="Left"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="0,5" Content="Password : " VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
-                    <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="txtPassword" Margin="0,5" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                    <TextBox Text="{Binding PassWord , UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" x:Name="PassWord" Margin="0,5" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                        <Button Content="LOGIN"  Command="{Binding Login}" x:Name="btnLogin" Margin="2,10" Width="100" Height="30"  Background="#a6d9ef" Foreground="Black" BorderBrush="White"/>
-                        <Button Content="CLOSE" Command="{Binding Close}" x:Name="btnClose" Margin="2,10" Width="100" Background="#a6d9ef" Foreground="Black" BorderBrush="White"/>
+                        <Button Content="LOGIN" IsDefault="True" Command="{Binding Login}" x:Name="btnLogin" Margin="2,10" Width="100" Height="30"  Background="#a6d9ef" Foreground="Black" BorderBrush="White" Click="btnLogin_Click"/>
+                        <Button Content="CLOSE" IsCancel="True" Command="{Binding Close}" x:Name="btnClose" Margin="2,10" Width="100" Background="#a6d9ef" Foreground="Black" BorderBrush="White" Click="cancel_Click"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>

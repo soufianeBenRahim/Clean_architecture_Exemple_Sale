@@ -17,6 +17,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using POS.View;
+using POS.Services;
+using POS.ViewModel;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 
 namespace POS
 {
@@ -48,8 +51,12 @@ namespace POS
             services.AddScoped<ISaleRepository, SaleRepository>();
 
             services.AddSingleton<ICurrentUserService, CurrentUserServiceWPF>();
-            
+            services.AddSingleton<IDateTime,DateTimeService>();
+            services.AddSingleton<INavigationService, NavigationServiceFabrique>();
+            services.AddSingleton<IUsersRepository, UsersRepository>();
+            services.AddSingleton<LoginViewModel>();
             services.AddSingleton<LoginForm>();
+            services.AddSingleton<MainPage>();
         }
         private void OnStartup(object sender, StartupEventArgs e)
         {

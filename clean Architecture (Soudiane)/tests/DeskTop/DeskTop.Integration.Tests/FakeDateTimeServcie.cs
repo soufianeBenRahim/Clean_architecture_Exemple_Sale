@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS
+namespace DeskTop.Integration.Tests
 {
-    public class CurrentUserServiceWPF : ICurrentUserService
+    public class FakeDateTimeServcie : IDateTime
     {
-        public string UserId { get; set; }
+        public DateTime Now => new DateTime(2022,1,1);
     }
 }

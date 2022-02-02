@@ -1,4 +1,9 @@
-﻿using POS.ViewModel;
+﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
+using Clean_Architecture_Soufiane.Infrastructure.Repositories;
+using Clean_Architecture_Soufiane.Infrastructure.Services;
+using POS.Services;
+using POS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +26,22 @@ namespace POS.View
     /// </summary>
     public partial class LoginForm : Window
     {
-        public LoginForm()
+
+        public LoginForm(LoginViewModel vm)
         {
             InitializeComponent();
-            this.DataContext = new LoginViewModel();
+            this.DataContext = vm;
         }
 
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            (this.DataContext as LoginViewModel).login();
+            this.Close();
+        }
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+             this.Close();
+        }
+        
     }
 }

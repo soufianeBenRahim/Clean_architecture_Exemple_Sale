@@ -5,6 +5,7 @@ using Clean_Architecture_Soufiane.Domain.Seedwork;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations;
 using Clean_Architecture_Soufiane.Infrastructure.Services;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -41,6 +42,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence
         public DbSet<CatalogItem> CatalogItems { get; set; }
         public DbSet<CatalogBrand> CatalogBrands { get; set; }
         public DbSet<CatalogType> CatalogTypes { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // Dispatch Domain Events collection. 
