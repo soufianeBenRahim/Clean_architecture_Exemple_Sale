@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace DeskTop.Integration.Tests
 {
-    public class FakeNavigationService : INavigationService
+    public class FakeNavigationProxy:INavigationService
     {
         private Type current;
         public Type getCurrent()
@@ -16,9 +16,10 @@ namespace DeskTop.Integration.Tests
             return  current;
         }
 
-        public void NavigateToAsync(Type Forme)
+        public void NavigateToAsync<T>()
         {
-            current= Forme;
+            var form=Activator.CreateInstance<T>() as Window;
+            current = form.GetType();
         }
     }
 }

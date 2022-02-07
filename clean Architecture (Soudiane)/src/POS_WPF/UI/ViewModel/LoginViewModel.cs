@@ -1,20 +1,36 @@
 ﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using POS.Services;
 using POS.View;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace POS.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
         IDateTime DateTimeServce;
-        INavigationService NavigationServiceFabrique;
         IUsersRepository userRepository;
-        public LoginViewModel(IDateTime dateTimeServce,INavigationService navigationServiece, IUsersRepository userRepository )
+
+
+        public RelayCommand loginCommand { get; init; }
+        public LoginViewModel(IDateTime dateTimeServce,IUsersRepository userRepository)
         {
             this.DateTimeServce = dateTimeServce;
-            this.NavigationServiceFabrique = navigationServiece;
             this.userRepository = userRepository;
+            loginCommand = new RelayCommand(login,canLogin);
+        }
+
+        private bool  canLogin()
+        {
+            return userName != null && passWord != null;
+        }
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            loginCommand.NotifyCanExecuteChanged();
         }
 
         private string userName;
@@ -26,8 +42,7 @@ namespace POS.ViewModel
             }
             set
             {
-                userName = value;
-                OnPropertyChanged(UserName);
+               SetProperty(ref userName,value) ;
             }
         }
 
@@ -40,8 +55,7 @@ namespace POS.ViewModel
             }
             set
             {
-                passWord = value;
-                OnPropertyChanged(UserName);
+                SetProperty(ref passWord, value);
             }
         }
 
@@ -50,15 +64,20 @@ namespace POS.ViewModel
             if (PassWord != null &&
                             PassWord.Equals($"{DateTimeServce.Now.Hour}@{DateTimeServce.Now.Minute}"))
             {
-
-                this.NavigationServiceFabrique.NavigateToAsync(typeof(MainPage));
+                if (CurentView != null)
+                {
+                    CurentView.CloseWindow();
+                }
                 return;
             }
             if (PassWord != null && UserName!=null &&
                 this.userRepository.FindUserByUserNameAndPassword(UserName, PassWord))
             {
-                
-                this.NavigationServiceFabrique.NavigateToAsync(typeof(MainPage));
+
+                if (CurentView != null)
+                {
+                   CurentView.CloseWindow();
+                }
             }
         }
 

@@ -6,7 +6,7 @@ namespace POS.Services
 {
     public interface INavigationService
     {
-        void NavigateToAsync (Type Forme);
+        void NavigateToAsync<T>();
 
         Type getCurrent();
     }

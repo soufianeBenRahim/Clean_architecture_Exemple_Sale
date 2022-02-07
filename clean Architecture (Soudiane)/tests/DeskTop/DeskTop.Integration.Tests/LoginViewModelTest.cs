@@ -2,6 +2,10 @@
 using POS.ViewModel;
 using System.Windows;
 using POS.View;
+using POS.Services;
+using Clean_Architecture_Soufiane.Application.Common.Interfaces;
+using POS.Services.TesteServices;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 
 namespace DeskTop.Integration.Tests
 {
@@ -9,33 +13,33 @@ namespace DeskTop.Integration.Tests
     {
         public LoginViewModelTest()
         {
-
+            ConfigurationService.GetInstance(true);
         }
         [Test]
         public  void LoginViewModel_WhenPasswordIsHeurAtMinut_ShouldGoToTheMainPage()
         {
-            FakeDateTimeServcie dateTimeService = new FakeDateTimeServcie();
-            FakeNavigationService navigationservice = new FakeNavigationService();
-            UsersRepositoryFake userRepository = new UsersRepositoryFake();
-            var loginViewModel = new LoginViewModel(dateTimeService, navigationservice, userRepository);
+
+            ConfigurationService.GetInstance(true);
+            var  dateTimeService= ConfigurationService.getService<IDateTime>();
+            var loginViewModel = ConfigurationService.getService<LoginViewModel>();
             loginViewModel.UserName = "soufiane";
             loginViewModel.PassWord =$"{dateTimeService.Now.Hour}@{dateTimeService.Now.Minute}";
+            loginViewModel.SetView(new FakeView());
             loginViewModel.login();
-            Assert.AreEqual(navigationservice.getCurrent(), typeof(MainPage));
-          
+            Assert.IsTrue(loginViewModel.isFormClosed());
         }
         [Test]
         public void LoginViewModel_WhenUserNameAndPasswerdExisteInUserTtabele_ShouldGoToTheMainPage()
         {
-            FakeDateTimeServcie dateTimeService = new FakeDateTimeServcie();
-            FakeNavigationService navigationservice = new FakeNavigationService();
-            UsersRepositoryFake userRepository = new UsersRepositoryFake();
+            ConfigurationService.GetInstance(true);
+            var loginViewModel = ConfigurationService.getService<LoginViewModel>();
+            IUsersRepository userRepository = ConfigurationService.getService<IUsersRepository>();
             userRepository.AddUser("Soufiane", "1234");
-            var loginViewModel = new LoginViewModel(dateTimeService, navigationservice, userRepository);
             loginViewModel.UserName = "Soufiane";
             loginViewModel.PassWord = "1234";
+            loginViewModel.SetView(new FakeView());
             loginViewModel.login();
-            Assert.AreEqual(navigationservice.getCurrent(), typeof(MainPage));
+            Assert.IsTrue(loginViewModel.isFormClosed());
 
         }
 

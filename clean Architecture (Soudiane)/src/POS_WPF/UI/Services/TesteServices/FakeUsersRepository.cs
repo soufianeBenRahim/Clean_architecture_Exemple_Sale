@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DeskTop.Integration.Tests
 {
-    public class UsersRepositoryFake : IUsersRepository
+    public class FakeUsersRepository : IUsersRepository
     {
         public IUnitOfWork UnitOfWork => throw new NotImplementedException();
         private List<ApplicationUser> users= new List<ApplicationUser>();

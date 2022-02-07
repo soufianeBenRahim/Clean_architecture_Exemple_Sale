@@ -6,6 +6,7 @@ using POS.Services;
 using POS.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,30 +19,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Providers;
 
 namespace POS.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class LoginForm : Window
+    public partial class LoginForm : FormeBase
     {
 
-        public LoginForm(LoginViewModel vm)
+        public LoginForm(LoginViewModel vm):base(vm)
         {
             InitializeComponent();
-            this.DataContext = vm;
         }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            (this.DataContext as LoginViewModel).login();
-            this.Close();
-        }
+   
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-             this.Close();
+            Application.Current.Shutdown();
         }
-        
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CultureInfo cultureInfo = (CultureInfo)comboLoc.SelectedItem;
+            LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+            LocalizeDictionary.Instance.Culture = cultureInfo;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ILocalizationProvider provider = LocalizeDictionary.GetDefaultProvider(LocalizeDictionary.Instance);
+            comboLoc.ItemsSource = provider.AvailableCultures;
+        }
     }
 }

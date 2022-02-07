@@ -20,6 +20,8 @@ using POS.View;
 using POS.Services;
 using POS.ViewModel;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
+using WPFLocalizeExtension.Engine;
+using System.Globalization;
 
 namespace POS
 {
@@ -29,38 +31,15 @@ namespace POS
     public partial class App : Application
     {
 
-
-        public IConfiguration Configuration { get; }
-        private ServiceProvider serviceProvider;
         public App()
         {
-            ServiceCollection services = new ServiceCollection();
-            ConfigureServices(services);
-            serviceProvider = services.BuildServiceProvider();
+            LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
+            ConfigurationService.GetInstance(false);
         }
-        private void ConfigureServices(ServiceCollection services)
-        {
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlite("Data Source = SaleDataBase.db");
-            });
-
-            // infrastrecture dependancy injection
-            services.AddScoped<IDomainEventService, DomainEventService>();
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddScoped<ISaleRepository, SaleRepository>();
-
-            services.AddSingleton<ICurrentUserService, CurrentUserServiceWPF>();
-            services.AddSingleton<IDateTime,DateTimeService>();
-            services.AddSingleton<INavigationService, NavigationServiceFabrique>();
-            services.AddSingleton<IUsersRepository, UsersRepository>();
-            services.AddSingleton<LoginViewModel>();
-            services.AddSingleton<LoginForm>();
-            services.AddSingleton<MainPage>();
-        }
+     
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<LoginForm>();
+            var mainWindow = ConfigurationService.getService<MainPage>();
             mainWindow.Show();
         }
     }

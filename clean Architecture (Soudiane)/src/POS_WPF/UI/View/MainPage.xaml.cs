@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using POS.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,14 @@ namespace POS.View
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = ConfigurationService.getService<LoginForm>();
+            mainWindow.Owner = this;
+            mainWindow.ShowDialog();
         }
     }
 }

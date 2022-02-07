@@ -1,15 +1,27 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using POS.Services;
+using POS.View;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 
 namespace POS.ViewModel
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        INavigationService navigationServiceProxy;
+        internal IView CurentView;
+        public ViewModelBase()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            navigationServiceProxy = ConfigurationService.getService<INavigationService>();
+        }
+        public void SetView(IView view)
+        {
+            CurentView = view;
+        }
+        public bool isFormClosed()
+        {
+            return CurentView.IsClosed;
         }
     }
 }

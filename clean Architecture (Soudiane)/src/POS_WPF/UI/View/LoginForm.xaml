@@ -1,13 +1,30 @@
-﻿<Window x:Class="POS.View.LoginForm"
-xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" BorderThickness="0" WindowStyle="None" BorderBrush="Black" ResizeMode="NoResize"
-Title="Login" Height="255" Width="370" WindowState="Normal" WindowStartupLocation="CenterScreen" Background="Black">
+﻿<view:FormeBase
+        x:Class="POS.View.LoginForm"
+        xmlns:view="clr-namespace:POS.View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="an"
+        lex:ResxLocalizationProvider.DefaultAssembly="POS"
+        lex:ResxLocalizationProvider.DefaultDictionary="Stringes"
+        BorderThickness="0" 
+        WindowStyle="None" 
+        BorderBrush="Black" 
+        ResizeMode="NoResize"
+        Title="Login" 
+        Height="255" 
+        Width="370" 
+        WindowState="Normal" 
+        WindowStartupLocation="CenterScreen" 
+        Background="Black"
+        Loaded="Window_Loaded">
 
     <StackPanel Orientation="Vertical" Background="#a6d9ef" Margin="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
         <Border CornerRadius="25" Margin="20,15,20,10" BorderBrush="Red" Background="White" Width="330">
             <StackPanel Orientation="Vertical">
                 <Label Content="Welcome" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Margin="2,5,2,0" VerticalContentAlignment="Bottom"/>
-                <Label Content="Please Login to Proceed" FontSize="20" HorizontalContentAlignment="Center" FontWeight="Medium" Margin="2,0,2,10" FontStyle="Italic" VerticalContentAlignment="Top"/>
+                <ComboBox Name="comboLoc" SelectionChanged="ComboBox_SelectionChanged" />
+                <Label Content="{lex:Loc}" FontSize="20" HorizontalContentAlignment="Center" FontWeight="Medium" Margin="2,0,2,10" FontStyle="Italic" VerticalContentAlignment="Top"/>
 
                 <Grid Margin="2" >
                     <Grid.ColumnDefinitions>
@@ -28,11 +45,11 @@ HorizontalContentAlignment="Left"/>
                     <TextBox Text="{Binding PassWord , UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" x:Name="PassWord" Margin="0,5" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                        <Button Content="LOGIN" IsDefault="True" Command="{Binding Login}" x:Name="btnLogin" Margin="2,10" Width="100" Height="30"  Background="#a6d9ef" Foreground="Black" BorderBrush="White" Click="btnLogin_Click"/>
-                        <Button Content="CLOSE" IsCancel="True" Command="{Binding Close}" x:Name="btnClose" Margin="2,10" Width="100" Background="#a6d9ef" Foreground="Black" BorderBrush="White" Click="cancel_Click"/>
+                        <Button Content="LOGIN" IsDefault="True" Command="{Binding loginCommand,Mode=TwoWay}" x:Name="btnLogin" Margin="2,10" Width="100" Height="30"  Background="#a6d9ef" Foreground="Black" BorderBrush="White"/>
+                        <Button Content="CLOSE" IsCancel="True"  x:Name="btnClose" Margin="2,10" Width="100" Background="#a6d9ef" Foreground="Black" BorderBrush="White" Click="cancel_Click"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>
         </Border>
     </StackPanel>
-</Window>
+</view:FormeBase>
