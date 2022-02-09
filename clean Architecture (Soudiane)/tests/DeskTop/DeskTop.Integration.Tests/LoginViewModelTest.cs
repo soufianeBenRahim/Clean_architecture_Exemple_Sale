@@ -6,6 +6,7 @@ using POS.Services;
 using Clean_Architecture_Soufiane.Application.Common.Interfaces;
 using POS.Services.TesteServices;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DeskTop.Integration.Tests
 {
@@ -13,32 +14,37 @@ namespace DeskTop.Integration.Tests
     {
         public LoginViewModelTest()
         {
-            ConfigurationService.GetInstance(true);
+        }
+
+
+        [OneTimeSetUp]
+        public void RunBeforeAnyTests()
+        {
+
+            var services = new ServiceCollection();
+            ConfigurationService.GetInstance(services,true);
+
+
+       
         }
         [Test]
         public  void LoginViewModel_WhenPasswordIsHeurAtMinut_ShouldGoToTheMainPage()
         {
-
-            ConfigurationService.GetInstance(true);
             var  dateTimeService= ConfigurationService.getService<IDateTime>();
             var loginViewModel = ConfigurationService.getService<LoginViewModel>();
-            loginViewModel.UserName = "soufiane";
-            loginViewModel.PassWord =$"{dateTimeService.Now.Hour}@{dateTimeService.Now.Minute}";
+            var pass =$"{dateTimeService.Now.Hour}@{dateTimeService.Now.Minute}";
             loginViewModel.SetView(new FakeView());
-            loginViewModel.login();
+            loginViewModel.login("soufiane", pass);
             Assert.IsTrue(loginViewModel.isFormClosed());
         }
         [Test]
         public void LoginViewModel_WhenUserNameAndPasswerdExisteInUserTtabele_ShouldGoToTheMainPage()
         {
-            ConfigurationService.GetInstance(true);
             var loginViewModel = ConfigurationService.getService<LoginViewModel>();
             IUsersRepository userRepository = ConfigurationService.getService<IUsersRepository>();
             userRepository.AddUser("Soufiane", "1234");
-            loginViewModel.UserName = "Soufiane";
-            loginViewModel.PassWord = "1234";
             loginViewModel.SetView(new FakeView());
-            loginViewModel.login();
+            loginViewModel.login("Soufiane", "1234");
             Assert.IsTrue(loginViewModel.isFormClosed());
 
         }
