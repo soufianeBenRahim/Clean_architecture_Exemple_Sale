@@ -38,15 +38,15 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Margin="0,5" Content="User Id : " VerticalContentAlignment="Center"
 HorizontalContentAlignment="Right"/>
-                    <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" x:Name="UserName" Margin="0,5" Width="150" VerticalContentAlignment="Center"
+                    <TextBox x:Name="userName" Grid.Column="1" Margin="0,5" Width="150" VerticalContentAlignment="Center"
 HorizontalContentAlignment="Left"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Margin="0,5" Content="Password : " VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
-                    <TextBox Text="{Binding PassWord , UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" x:Name="PassWord" Margin="0,5" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                    <PasswordBox x:Name="password"  Grid.Row="1" Grid.Column="1"  Margin="0,5" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                        <Button Content="LOGIN" IsDefault="True" Command="{Binding loginCommand,Mode=TwoWay}" x:Name="btnLogin" Margin="2,10" Width="100" Height="30"  Background="#a6d9ef" Foreground="Black" BorderBrush="White"/>
-                        <Button Content="CLOSE" IsCancel="True"  x:Name="btnClose" Margin="2,10" Width="100" Background="#a6d9ef" Foreground="Black" BorderBrush="White" Click="cancel_Click"/>
+                        <Button Content="LOGIN" Click="btnLogin_Click" IsDefault="True"  x:Name="btnLogin" Margin="2,10" Width="100" Height="30"  Background="#a6d9ef" Foreground="Black" BorderBrush="White"/>
+                        <Button Content="CLOSE" Click="cancel_Click" IsCancel="True"  x:Name="btnClose" Margin="2,10" Width="100" Background="#a6d9ef" Foreground="Black" BorderBrush="White" />
                     </StackPanel>
                 </Grid>
             </StackPanel>

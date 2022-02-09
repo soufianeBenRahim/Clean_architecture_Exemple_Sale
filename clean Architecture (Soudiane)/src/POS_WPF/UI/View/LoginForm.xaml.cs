@@ -29,10 +29,11 @@ namespace POS.View
     /// </summary>
     public partial class LoginForm : FormeBase
     {
-
+        private LoginViewModel loginViewModel;
         public LoginForm(LoginViewModel vm):base(vm)
         {
             InitializeComponent();
+            loginViewModel = vm;
         }
    
         private void cancel_Click(object sender, RoutedEventArgs e)
@@ -51,6 +52,11 @@ namespace POS.View
         {
             ILocalizationProvider provider = LocalizeDictionary.GetDefaultProvider(LocalizeDictionary.Instance);
             comboLoc.ItemsSource = provider.AvailableCultures;
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            loginViewModel.login(userName.Text,password.Password);
         }
     }
 }

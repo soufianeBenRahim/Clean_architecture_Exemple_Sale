@@ -14,55 +14,16 @@ namespace POS.ViewModel
         IDateTime DateTimeServce;
         IUsersRepository userRepository;
 
-
-        public RelayCommand loginCommand { get; init; }
         public LoginViewModel(IDateTime dateTimeServce,IUsersRepository userRepository)
         {
             this.DateTimeServce = dateTimeServce;
             this.userRepository = userRepository;
-            loginCommand = new RelayCommand(login,canLogin);
         }
 
-        private bool  canLogin()
+        public void login(string user,string pass)
         {
-            return userName != null && passWord != null;
-        }
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-            loginCommand.NotifyCanExecuteChanged();
-        }
-
-        private string userName;
-        public string UserName 
-        { 
-            get 
-            {
-                return userName;
-            }
-            set
-            {
-               SetProperty(ref userName,value) ;
-            }
-        }
-
-        private string passWord;
-        public string PassWord
-        {
-            get
-            {
-                return passWord;
-            }
-            set
-            {
-                SetProperty(ref passWord, value);
-            }
-        }
-
-        public void login()
-        {
-            if (PassWord != null &&
-                            PassWord.Equals($"{DateTimeServce.Now.Hour}@{DateTimeServce.Now.Minute}"))
+            if (pass != null &&
+                            pass.Equals($"{DateTimeServce.Now.Hour}@{DateTimeServce.Now.Minute}"))
             {
                 if (CurentView != null)
                 {
@@ -70,10 +31,9 @@ namespace POS.ViewModel
                 }
                 return;
             }
-            if (PassWord != null && UserName!=null &&
-                this.userRepository.FindUserByUserNameAndPassword(UserName, PassWord))
+            var existe = this.userRepository.FindUserByUserNameAndPassword(user, pass);
+            if (pass != null && user != null && existe)
             {
-
                 if (CurentView != null)
                 {
                    CurentView.CloseWindow();
