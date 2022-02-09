@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POS", "src\POS_WPF\UI\POS.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureWPF", "src\POS_WPF\Infrastrecture\InfrastructureWPF.csproj", "{A728663F-B8FB-466E-9402-80DFEC1F7162}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationWPF", "src\POS_WPF\ApplicationWPF\ApplicationWPF.csproj", "{470D1331-3071-4C5E-BE76-EC5625D9B269}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{A728663F-B8FB-466E-9402-80DFEC1F7162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A728663F-B8FB-466E-9402-80DFEC1F7162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A728663F-B8FB-466E-9402-80DFEC1F7162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{470D1331-3071-4C5E-BE76-EC5625D9B269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{470D1331-3071-4C5E-BE76-EC5625D9B269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{470D1331-3071-4C5E-BE76-EC5625D9B269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{470D1331-3071-4C5E-BE76-EC5625D9B269}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +129,7 @@ Global
 		{4D7C3724-AFA6-42EF-AFE9-DAA18442D329} = {DFA0E23D-1314-4968-A244-9279C2073B3A}
 		{8B0F7E79-8569-4E14-82DC-19F78C17CC50} = {0129B6D4-9D10-4D58-8245-50BA063271C5}
 		{A728663F-B8FB-466E-9402-80DFEC1F7162} = {4D7C3724-AFA6-42EF-AFE9-DAA18442D329}
+		{470D1331-3071-4C5E-BE76-EC5625D9B269} = {DFA0E23D-1314-4968-A244-9279C2073B3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E03E2CF-936C-4CC6-B1E1-77E724BEF5D9}
