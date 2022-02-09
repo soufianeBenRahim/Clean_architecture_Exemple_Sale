@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using System;
 
-namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
+namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 {
     class SaleEntityTypeConfiguration : IEntityTypeConfiguration<Sale>
     {
@@ -12,12 +12,14 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
         {
             saleConfiguration.ToTable("SLE_SALE");
 
+
             saleConfiguration.HasKey(o => o.Id);
+            saleConfiguration.Property(o => o.Id)
+            .HasDefaultValue(1)
+            .ValueGeneratedOnAdd()
+            .IsRequired();
 
             saleConfiguration.Ignore(b => b.DomainEvents);
-
-            saleConfiguration.Property(o => o.Id)
-                .UseHiLo("saleseq");
 
           
 

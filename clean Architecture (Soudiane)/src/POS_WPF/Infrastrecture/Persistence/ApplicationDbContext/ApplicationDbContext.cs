@@ -2,8 +2,6 @@
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using Clean_Architecture_Soufiane.Domain.Seedwork;
-using Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration;
-using Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations;
 using Clean_Architecture_Soufiane.Infrastructure.Services;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations;
 
 namespace Clean_Architecture_Soufiane.Infrastructure.Persistence
 {
@@ -91,7 +90,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence
             builder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
             builder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
             builder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
-
+         
         }
 
         private async Task DispatchEvents()

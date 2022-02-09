@@ -15,20 +15,18 @@
     using System.IO.Compression;
 
     using System.Text.RegularExpressions;
+    using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 
     public class ApplicationDbContextSeed
     {
-        public async Task SeedAsync(ApplicationDbContext context, IWebHostEnvironment env, bool useCustomizationData , ILogger<ApplicationDbContextSeed> logger)
+        public async Task SeedAsync(ApplicationDbContext context, ILogger<ApplicationDbContextSeed> logger)
         {
-            var contentRootPath = env.ContentRootPath;
-            var picturePath = env.WebRootPath;
+
             using (context)
                 {
                     if (!context.SaleStatuss.Any())
                     {
-                        context.SaleStatuss.AddRange(useCustomizationData
-                                                ? GetSaleStatusFromFile(contentRootPath, logger)
-                                                : GetPredefinedSaleStatus());
+                        context.SaleStatuss.AddRange( GetPredefinedSaleStatus());
                     }
 
                     await context.SaveChangesAsync();
@@ -36,269 +34,34 @@
 
                 if (!context.CatalogBrands.Any())
                 {
-                    await context.CatalogBrands.AddRangeAsync(useCustomizationData
-                        ? GetCatalogBrandsFromFile(contentRootPath, logger)
-                        : GetPreconfiguredCatalogBrands());
+                    await context.CatalogBrands.AddRangeAsync(GetPreconfiguredCatalogBrands());
 
                     await context.SaveChangesAsync();
                 }
 
                 if (!context.CatalogTypes.Any())
                 {
-                    await context.CatalogTypes.AddRangeAsync(useCustomizationData
-                        ? GetCatalogTypesFromFile(contentRootPath, logger)
-                        : GetPreconfiguredCatalogTypes());
+                    await context.CatalogTypes.AddRangeAsync(GetPreconfiguredCatalogTypes());
 
                     await context.SaveChangesAsync();
                 }
 
                 if (!context.CatalogItems.Any())
                 {
-                    await context.CatalogItems.AddRangeAsync(useCustomizationData
-                        ? GetCatalogItemsFromFile(contentRootPath, context, logger)
-                        : GetPreconfiguredItems());
+                    await context.CatalogItems.AddRangeAsync(GetPreconfiguredItems());
 
                     await context.SaveChangesAsync();
 
-                    GetCatalogItemPictures(contentRootPath, picturePath);
+                   // GetCatalogItemPictures(Environment.CurrentDirectory,Path.Combine( Environment.CurrentDirectory,"Images"));
                 }
-
-            }
-
-        }
-
-        private IEnumerable<CatalogItem> GetCatalogItemsFromFile(string contentRootPath, ApplicationDbContext context, ILogger<ApplicationDbContextSeed> logger)
-        {
-            string csvFileCatalogItems = Path.Combine(contentRootPath, "Setup", "CatalogItems.csv");
-
-            if (!File.Exists(csvFileCatalogItems))
-            {
-                return GetPreconfiguredItems();
-            }
-
-            string[] csvheaders;
-            try
-            {
-                string[] requiredHeaders = { "catalogtypename", "catalogbrandname", "description", "name", "price", "picturefilename" };
-                string[] optionalheaders = { "availablestock", "restockthreshold", "maxstockthreshold", "onreorder" };
-                csvheaders = GetHeaders(csvFileCatalogItems, requiredHeaders, optionalheaders);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
-                return GetPreconfiguredItems();
-            }
-
-            var catalogTypeIdLookup = context.CatalogTypes.ToDictionary(ct => ct.Type, ct => ct.Id);
-            var catalogBrandIdLookup = context.CatalogBrands.ToDictionary(ct => ct.Brand, ct => ct.Id);
-
-            return File.ReadAllLines(csvFileCatalogItems)
-                        .Skip(1) // skip header row
-                        .Select(row => Regex.Split(row, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"))
-                        .SelectTry(column => CreateCatalogItem(column, csvheaders, catalogTypeIdLookup, catalogBrandIdLookup))
-                        .OnCaughtException(ex => { logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
-                        .Where(x => x != null);
-        }
-        private CatalogItem CreateCatalogItem(string[] column, string[] headers, Dictionary<String, int> catalogTypeIdLookup, Dictionary<String, int> catalogBrandIdLookup)
-        {
-            if (column.Count() != headers.Count())
-            {
-                throw new Exception($"column count '{column.Count()}' not the same as headers count'{headers.Count()}'");
-            }
-
-            string catalogTypeName = column[Array.IndexOf(headers, "catalogtypename")].Trim('"').Trim();
-            if (!catalogTypeIdLookup.ContainsKey(catalogTypeName))
-            {
-                throw new Exception($"type={catalogTypeName} does not exist in catalogTypes");
-            }
-
-            string catalogBrandName = column[Array.IndexOf(headers, "catalogbrandname")].Trim('"').Trim();
-            if (!catalogBrandIdLookup.ContainsKey(catalogBrandName))
-            {
-                throw new Exception($"type={catalogTypeName} does not exist in catalogTypes");
-            }
-
-            string priceString = column[Array.IndexOf(headers, "price")].Trim('"').Trim();
-            if (!Decimal.TryParse(priceString, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out Decimal price))
-            {
-                throw new Exception($"price={priceString}is not a valid decimal number");
-            }
-
-            var catalogItem = new CatalogItem()
-            {
-                CatalogTypeId = catalogTypeIdLookup[catalogTypeName],
-                CatalogBrandId = catalogBrandIdLookup[catalogBrandName],
-                Description = column[Array.IndexOf(headers, "description")].Trim('"').Trim(),
-                Name = column[Array.IndexOf(headers, "name")].Trim('"').Trim(),
-                Price = price,
-                PictureFileName = column[Array.IndexOf(headers, "picturefilename")].Trim('"').Trim(),
-            };
-
-            int availableStockIndex = Array.IndexOf(headers, "availablestock");
-            if (availableStockIndex != -1)
-            {
-                string availableStockString = column[availableStockIndex].Trim('"').Trim();
-                if (!String.IsNullOrEmpty(availableStockString))
+                if (!context.Users.Any())
                 {
-                    if (int.TryParse(availableStockString, out int availableStock))
-                    {
-                        catalogItem.AvailableStock = availableStock;
-                    }
-                    else
-                    {
-                        throw new Exception($"availableStock={availableStockString} is not a valid integer");
-                    }
+                    await context.Users.AddAsync(new ApplicationUser() { ID = Guid.NewGuid(), Password = "1234", UserName = "soufiane" });
                 }
             }
 
-            int restockThresholdIndex = Array.IndexOf(headers, "restockthreshold");
-            if (restockThresholdIndex != -1)
-            {
-                string restockThresholdString = column[restockThresholdIndex].Trim('"').Trim();
-                if (!String.IsNullOrEmpty(restockThresholdString))
-                {
-                    if (int.TryParse(restockThresholdString, out int restockThreshold))
-                    {
-                        catalogItem.RestockThreshold = restockThreshold;
-                    }
-                    else
-                    {
-                        throw new Exception($"restockThreshold={restockThreshold} is not a valid integer");
-                    }
-                }
-            }
-
-            int maxStockThresholdIndex = Array.IndexOf(headers, "maxstockthreshold");
-            if (maxStockThresholdIndex != -1)
-            {
-                string maxStockThresholdString = column[maxStockThresholdIndex].Trim('"').Trim();
-                if (!String.IsNullOrEmpty(maxStockThresholdString))
-                {
-                    if (int.TryParse(maxStockThresholdString, out int maxStockThreshold))
-                    {
-                        catalogItem.MaxStockThreshold = maxStockThreshold;
-                    }
-                    else
-                    {
-                        throw new Exception($"maxStockThreshold={maxStockThreshold} is not a valid integer");
-                    }
-                }
-            }
-
-            int onReorderIndex = Array.IndexOf(headers, "onreorder");
-            if (onReorderIndex != -1)
-            {
-                string onReorderString = column[onReorderIndex].Trim('"').Trim();
-                if (!String.IsNullOrEmpty(onReorderString))
-                {
-                    if (bool.TryParse(onReorderString, out bool onReorder))
-                    {
-                        catalogItem.OnReorder = onReorder;
-                    }
-                    else
-                    {
-                        throw new Exception($"onReorder={onReorderString} is not a valid boolean");
-                    }
-                }
-            }
-
-            return catalogItem;
         }
-        private IEnumerable<CatalogType> GetCatalogTypesFromFile(string contentRootPath, ILogger<ApplicationDbContextSeed> logger)
-        {
-            string csvFileCatalogTypes = Path.Combine(contentRootPath, "Setup", "CatalogTypes.csv");
 
-            if (!File.Exists(csvFileCatalogTypes))
-            {
-                return GetPreconfiguredCatalogTypes();
-            }
-
-            string[] csvheaders;
-            try
-            {
-                string[] requiredHeaders = { "catalogtype" };
-                csvheaders = GetHeaders(csvFileCatalogTypes, requiredHeaders);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
-                return GetPreconfiguredCatalogTypes();
-            }
-
-            return File.ReadAllLines(csvFileCatalogTypes)
-                                        .Skip(1) // skip header row
-                                        .SelectTry(x => CreateCatalogType(x))
-                                        .OnCaughtException(ex => { logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
-                                        .Where(x => x != null);
-        }
-        private CatalogType CreateCatalogType(string type)
-        {
-            type = type.Trim('"').Trim();
-
-            if (String.IsNullOrEmpty(type))
-            {
-                throw new Exception("catalog Type Name is empty");
-            }
-
-            return new CatalogType
-            {
-                Type = type,
-            };
-        }
-        private IEnumerable<CatalogBrand> GetCatalogBrandsFromFile(string contentRootPath, ILogger<ApplicationDbContextSeed> logger)
-        {
-            string csvFileCatalogBrands = Path.Combine(contentRootPath, "Setup", "CatalogBrands.csv");
-
-            if (!File.Exists(csvFileCatalogBrands))
-            {
-                return GetPreconfiguredCatalogBrands();
-            }
-
-            string[] csvheaders;
-            try
-            {
-                string[] requiredHeaders = { "catalogbrand" };
-                csvheaders = GetHeaders(csvFileCatalogBrands, requiredHeaders);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
-                return GetPreconfiguredCatalogBrands();
-            }
-
-            return File.ReadAllLines(csvFileCatalogBrands)
-                                        .Skip(1) // skip header row
-                                        .SelectTry(x => CreateCatalogBrand(x))
-                                        .OnCaughtException(ex => { logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
-                                        .Where(x => x != null);
-        }
-        private string[] GetHeaders(string csvfile, string[] requiredHeaders, string[] optionalHeaders = null)
-        {
-            string[] csvheaders = File.ReadLines(csvfile).First().ToLowerInvariant().Split(',');
-
-            if (csvheaders.Count() < requiredHeaders.Count())
-            {
-                throw new Exception($"requiredHeader count '{ requiredHeaders.Count()}' is bigger then csv header count '{csvheaders.Count()}' ");
-            }
-
-            if (optionalHeaders != null)
-            {
-                if (csvheaders.Count() > (requiredHeaders.Count() + optionalHeaders.Count()))
-                {
-                    throw new Exception($"csv header count '{csvheaders.Count()}'  is larger then required '{requiredHeaders.Count()}' and optional '{optionalHeaders.Count()}' headers count");
-                }
-            }
-
-            foreach (var requiredHeader in requiredHeaders)
-            {
-                if (!csvheaders.Contains(requiredHeader))
-                {
-                    throw new Exception($"does not contain required header '{requiredHeader}'");
-                }
-            }
-
-            return csvheaders;
-        }
         private IEnumerable<SaleStatus> GetPredefinedSaleStatus()
         {
             return new List<SaleStatus>()
@@ -309,76 +72,6 @@
             };
         }
 
-        private IEnumerable<SaleStatus> GetSaleStatusFromFile(string contentRootPath, ILogger<ApplicationDbContextSeed> log)
-        {
-            string csvFileSaleStatus = Path.Combine(contentRootPath, "Setup", "OrderStatus.csv");
-
-            if (!File.Exists(csvFileSaleStatus))
-            {
-                return GetPredefinedSaleStatus();
-            }
-
-            string[] csvheaders;
-            try
-            {
-                string[] requiredHeaders = { "OrderStatus" };
-                csvheaders = GetHeaders(requiredHeaders, csvFileSaleStatus);
-            }
-            catch (Exception ex)
-            {
-                log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message);
-                return GetPredefinedSaleStatus();
-            }
-
-            int id = 1;
-            return File.ReadAllLines(csvFileSaleStatus)
-                                        .Skip(1) // skip header row
-                                        .SelectTry(x => CreateSaleStatus(x, ref id))
-                                        .OnCaughtException(ex => { log.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
-                                        .Where(x => x != null);
-        }
-        private string[] GetHeaders(string[] requiredHeaders, string csvfile)
-        {
-            string[] csvheaders = File.ReadLines(csvfile).First().ToLowerInvariant().Split(',');
-
-            if (csvheaders.Count() != requiredHeaders.Count())
-            {
-                throw new Exception($"requiredHeader count '{ requiredHeaders.Count()}' is different then read header '{csvheaders.Count()}'");
-            }
-
-            foreach (var requiredHeader in requiredHeaders)
-            {
-                if (!csvheaders.Contains(requiredHeader))
-                {
-                    throw new Exception($"does not contain required header '{requiredHeader}'");
-                }
-            }
-
-            return csvheaders;
-        }
-        private SaleStatus CreateSaleStatus(string value, ref int id)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                throw new Exception("Salestatus is null or empty");
-            }
-
-            return new SaleStatus(id++, value.Trim('"').Trim().ToLowerInvariant());
-        }
-        private CatalogBrand CreateCatalogBrand(string brand)
-        {
-            brand = brand.Trim('"').Trim();
-
-            if (String.IsNullOrEmpty(brand))
-            {
-                throw new Exception("catalog Brand Name is empty");
-            }
-
-            return new CatalogBrand
-            {
-                Brand = brand,
-            };
-        }
 
         private IEnumerable<CatalogBrand> GetPreconfiguredCatalogBrands()
         {

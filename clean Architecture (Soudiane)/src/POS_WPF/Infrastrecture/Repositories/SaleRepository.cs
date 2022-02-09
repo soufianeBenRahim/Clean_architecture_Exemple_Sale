@@ -11,53 +11,63 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
     public class SaleRepository
         : ISaleRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IDbContextFactory<ApplicationDbContext> _dbFactory;
 
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _context;
+                return this._dbFactory.CreateDbContext();
             }
         }
 
-        public SaleRepository(ApplicationDbContext context)
+        public SaleRepository(IDbContextFactory<ApplicationDbContext> dbFactory)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
         }
 
         public Sale Add(Sale order)
         {
-            return _context.Sales.Add(order).Entity;
-
+            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
+            {
+                return db.Sales.Add(order).Entity;
+            }
         }
 
         public async Task<Sale> GetAsync(int orderId)
         {
-            var order = await _context
-                                .Sales
-                                .FirstOrDefaultAsync(o => o.Id == orderId);
-            if (order == null)
+            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
             {
-                order = _context
+                var order = await db
                             .Sales
-                            .Local
-                            .FirstOrDefault(o => o.Id == orderId);
-            }
-            if (order != null)
-            {
-                await _context.Entry(order)
-                    .Collection(i => i.SaleItems).LoadAsync();
-                await _context.Entry(order)
-                    .Reference(i => i.SaleStatus).LoadAsync();
+                            .FirstOrDefaultAsync(o => o.Id == orderId);
+                if (order == null)
+                {
+                    order = db
+                                .Sales
+                                .Local
+                                .FirstOrDefault(o => o.Id == orderId);
+                }
+                if (order != null)
+                {
+                    await db.Entry(order)
+                        .Collection(i => i.SaleItems).LoadAsync();
+                    await db.Entry(order)
+                        .Reference(i => i.SaleStatus).LoadAsync();
+                }
+
+                return order;
             }
 
-            return order;
+        
         }
 
         public void Update(Sale order)
         {
-            _context.Entry(order).State = EntityState.Modified;
+            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
+            {
+                db.Entry(order).State = EntityState.Modified;
+            }
         }
     }
 }

@@ -13,9 +13,10 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 
             builder.HasKey(ci => ci.Id);
 
-            builder.Property(ci => ci.Id)
-               .UseHiLo("catalog_type_hilo")
-               .IsRequired();
+            builder.Property(o => o.Id)
+           .HasDefaultValue(1)
+           .ValueGeneratedOnAdd()
+           .IsRequired();
 
             builder.Property(cb => cb.Type)
                 .IsRequired()

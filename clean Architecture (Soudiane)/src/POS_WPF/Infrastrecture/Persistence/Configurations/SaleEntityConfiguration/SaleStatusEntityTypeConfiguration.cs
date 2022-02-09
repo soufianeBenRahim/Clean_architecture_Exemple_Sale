@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
 
-namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
+namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 {
     class SaleStatusEntityTypeConfiguration
         : IEntityTypeConfiguration<SaleStatus>

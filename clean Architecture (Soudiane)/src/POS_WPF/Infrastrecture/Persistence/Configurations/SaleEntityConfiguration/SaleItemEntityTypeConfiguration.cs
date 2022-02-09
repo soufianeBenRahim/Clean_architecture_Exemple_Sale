@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
+namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 {
     class SaleItemEntityTypeConfiguration
         : IEntityTypeConfiguration<SaleItem>
@@ -12,11 +12,12 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
             saleItemConfiguration.ToTable("SLE_ITEMS");
 
             saleItemConfiguration.HasKey(o => o.Id);
-
+            saleItemConfiguration.Property(o => o.Id)
+             .HasDefaultValue(1)
+             .ValueGeneratedOnAdd()
+             .IsRequired();
             saleItemConfiguration.Ignore(b => b.DomainEvents);
 
-            saleItemConfiguration.Property(o => o.Id)
-                .UseHiLo("saleitemseq");
 
             saleItemConfiguration.Property<int>("SaleId")
                 .IsRequired();

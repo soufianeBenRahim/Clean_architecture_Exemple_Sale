@@ -11,9 +11,10 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
         {
             builder.ToTable("Catalog");
 
-            builder.Property(ci => ci.Id)
-                .UseHiLo("catalog_hilo")
-                .IsRequired();
+            builder.Property(o => o.Id)
+             .HasDefaultValue(1)
+             .ValueGeneratedOnAdd()
+             .IsRequired();
 
             builder.Property(ci => ci.Name)
                 .IsRequired(true)

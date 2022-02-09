@@ -1,6 +1,7 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 using Clean_Architecture_Soufiane.Domain.Seedwork;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +12,36 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 {
     public class UsersRepository : IUsersRepository
     {
-        private readonly ApplicationDbContext _context;
-
+        private readonly IDbContextFactory<ApplicationDbContext> _dbFactory;
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return _context;
+                return this._dbFactory.CreateDbContext();
             }
         }
-
+        public UsersRepository(IDbContextFactory<ApplicationDbContext> dbFactory)
+        {
+            _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
+        }
         public void AddUser(string userName, string password)
         {
-            throw new NotImplementedException();
+            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
+            {
+                db.Users.Add(new ApplicationUser() { ID = Guid.NewGuid(), Password = password, UserName = userName });
+            }
+                
         }
 
         public bool FindUserByUserNameAndPassword(string userName, string password)
         {
-            return true;
+            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
+            {
+                var user = db
+                           .Users
+                           .FirstOrDefaultAsync(x => x.UserName == userName && x.Password == password);
+                return user!=null;
+            }
         }
     }
 }
