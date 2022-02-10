@@ -33,12 +33,15 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
             this.SaleStatus = SaleStatus.Paid;
             this.AddDomainEvent(new SaleStatusChangedToPaidCachDomainEvent(Id));
         }
-
         public Sale()
         {
             _saleItems = new List<SaleItem>();
-            _orderDate = DateTime.UtcNow;
             _saleStatusId = SaleStatus.AwaitingValidation.Id;
+            _orderDate = DateTime.UtcNow;
+
+            // Add the OrderStarterDomainEvent to the domain events collection 
+            // to be raised/dispatched when comitting changes into the Database [ After DbContext.SaveChanges() ]
+            this.AddDomainEvent(new SaleStatusChangedToPaidCachDomainEvent(Id));
         }
 
        
