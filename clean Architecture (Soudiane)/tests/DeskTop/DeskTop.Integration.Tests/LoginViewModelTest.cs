@@ -8,7 +8,8 @@ using POS.Services.TesteServices;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DeskTop.Integration.Tests
+
+namespace DeskTop.Integration.LoginViewModelTests
 {
     public class LoginViewModelTest
     {
@@ -16,17 +17,14 @@ namespace DeskTop.Integration.Tests
         {
         }
 
-
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
-
-            var services = new ServiceCollection();
-            ConfigurationService.GetInstance(services,true);
-
-
-       
+           
+           
         }
+
+
         [Test]
         public  void LoginViewModel_WhenPasswordIsHeurAtMinut_ShouldGoToTheMainPage()
         {
