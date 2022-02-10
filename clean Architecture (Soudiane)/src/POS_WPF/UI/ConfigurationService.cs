@@ -84,16 +84,7 @@ namespace POS.Services
         {
             try
             {
-                IDbContextFactory<ApplicationDbContext> dbFactory = ConfigurationService.getService<IDbContextFactory<ApplicationDbContext>>();
-                var SaleContext = dbFactory.CreateDbContext();
-
-                if (SaleContext.Database.IsSqlite())
-                {
-                    SaleContext.Database.EnsureDeleted();
-                    SaleContext.Database.EnsureCreated();
-                }
-
-
+                ApplicationDbContext SaleContext = RestartDataBase();
 
                 var logger = ConfigurationService.getService<ILogger<ApplicationDbContextSeed>>();
 
@@ -110,6 +101,20 @@ namespace POS.Services
 
                 throw;
             }
+        }
+
+        public static ApplicationDbContext RestartDataBase()
+        {
+            IDbContextFactory<ApplicationDbContext> dbFactory = ConfigurationService.getService<IDbContextFactory<ApplicationDbContext>>();
+            var SaleContext = dbFactory.CreateDbContext();
+
+            if (SaleContext.Database.IsSqlite())
+            {
+                SaleContext.Database.EnsureDeleted();
+                SaleContext.Database.EnsureCreated();
+            }
+
+            return SaleContext;
         }
     }
 }
