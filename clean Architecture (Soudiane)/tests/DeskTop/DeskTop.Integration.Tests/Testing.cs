@@ -35,7 +35,6 @@ public class Testing
         // Register testing version
         services.AddTransient(provider =>
             Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));
-        dbFactory = ConfigurationService.getService<IDbContextFactory<ApplicationDbContext>>();
 
     }
 
