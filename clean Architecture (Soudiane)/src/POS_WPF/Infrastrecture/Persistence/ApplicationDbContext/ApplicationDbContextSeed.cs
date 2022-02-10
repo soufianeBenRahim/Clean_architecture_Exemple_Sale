@@ -57,6 +57,7 @@
                 if (!context.Users.Any())
                 {
                     await context.Users.AddAsync(new ApplicationUser() { ID = Guid.NewGuid(), Password = "1234", UserName = "soufiane" });
+                    await context.SaveChangesAsync();
                 }
             }
 
