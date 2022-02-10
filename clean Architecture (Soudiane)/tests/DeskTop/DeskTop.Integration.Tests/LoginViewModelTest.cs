@@ -13,15 +13,20 @@ namespace DeskTop.Integration.LoginViewModelTests
 {
     public class LoginViewModelTest
     {
+
         public LoginViewModelTest()
         {
+         
         }
 
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
-           
-           
+            var isMoke = true;
+            var inMemoryDatabase = false;
+            var services = new ServiceCollection();
+            services.AddLogging();
+            ConfigurationService.GetInstance(services, isMoke, inMemoryDatabase);
         }
 
 
