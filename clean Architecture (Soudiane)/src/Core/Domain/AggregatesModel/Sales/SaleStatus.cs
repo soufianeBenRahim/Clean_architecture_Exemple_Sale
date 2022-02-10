@@ -1,10 +1,11 @@
-﻿namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
+﻿using Clean_Architecture_Soufiane.Domain.SeedWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Clean_Architecture_Soufiane.Domain.Exceptions;
+
+namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 {
-    using Clean_Architecture_Soufiane.Domain.SeedWork;
-    using Ordering.Domain.Exceptions;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class SaleStatus
         : Enumeration

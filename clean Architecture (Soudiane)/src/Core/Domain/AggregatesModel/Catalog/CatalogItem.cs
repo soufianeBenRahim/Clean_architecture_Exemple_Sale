@@ -1,5 +1,5 @@
 ﻿
-using Ordering.Domain.Exceptions;
+using Clean_Architecture_Soufiane.Domain.Exceptions;
 using System;
 
 namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog

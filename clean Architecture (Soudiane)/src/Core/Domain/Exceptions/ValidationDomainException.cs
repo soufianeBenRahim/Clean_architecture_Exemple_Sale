@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ordering.Domain.Exceptions
+namespace Clean_Architecture_Soufiane.Domain.Exceptions
 {
     /// <summary>
     /// Exception type for domain exceptions

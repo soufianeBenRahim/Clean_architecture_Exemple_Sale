@@ -1,6 +1,6 @@
 ﻿
 using Clean_Architecture_Soufiane.Domain.Seedwork;
-using Ordering.Domain.Exceptions;
+using Clean_Architecture_Soufiane.Domain.Exceptions;
 
 namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 {

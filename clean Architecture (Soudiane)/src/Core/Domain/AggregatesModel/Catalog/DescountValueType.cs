@@ -1,7 +1,7 @@
 ﻿namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog
 {
     using Clean_Architecture_Soufiane.Domain.SeedWork;
-    using Ordering.Domain.Exceptions;
+    using Clean_Architecture_Soufiane.Domain.Exceptions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
