@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using POS.Services;
+using POS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace POS.View
     /// <summary>
     /// Logique d'interaction pour MainPage.xaml
     /// </summary>
-    public partial class MainPage : Window
+    public partial class MainPage : FormeBase
     {
-        public MainPage()
+        public MainPage(MainPageViewModel vm):base(vm)
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
