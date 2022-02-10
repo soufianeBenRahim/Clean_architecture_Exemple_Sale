@@ -1,4 +1,5 @@
 ﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence;
@@ -23,6 +24,9 @@ namespace Clean_Architecture_Soufiane.Infrastructure
             services.AddScoped<ISaleRepository, SaleRepository>();
 
             services.AddSingleton<IUsersRepository, UsersRepository>();
+         
+            services.AddSingleton<ICatalogTypeRepository, CatalogTypeRepository>();
+            services.AddSingleton<ICatalogIthemsRepository, CatalogIthemsRepository>();
 
             return services;
         }

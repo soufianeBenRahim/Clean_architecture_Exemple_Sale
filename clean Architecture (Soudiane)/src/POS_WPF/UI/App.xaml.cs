@@ -25,7 +25,6 @@ using WPFLocalizeExtension.Engine;
 using System.Globalization;
 using Microsoft.Extensions.Hosting;
 using POS.Navigation;
-using Microsoft.AspNetCore.Hosting;
 
 namespace POS
 {
@@ -45,48 +44,18 @@ namespace POS
               })            
               .ConfigureServices(services =>
               {
-                  ConfigurationService.GetInstance(services, false);
+                  ConfigurationService.GetInstance(services, false,false);
                 
               })
               .Build();
         }
 
-        private static void DataBaseSeed()
-        {
-            try
-            {
-                IDbContextFactory<ApplicationDbContext> dbFactory = ConfigurationService.getService<IDbContextFactory<ApplicationDbContext>>();
-        var SaleContext = dbFactory.CreateDbContext();
-
-                if (SaleContext.Database.IsSqlite())
-                {
-                    SaleContext.Database.EnsureDeleted();
-                    SaleContext.Database.EnsureCreated();
-                }
-           
-                
-
-                var logger =ConfigurationService.getService<ILogger<ApplicationDbContextSeed>>();
-
-                var loggerSales = ConfigurationService.getService<ILogger<ApplicationDbContextSeed>>();
-                new ApplicationDbContextSeed().SeedAsync(SaleContext, logger)
-                                                   .Wait();
-
-            }
-            catch (Exception ex)
-            {
-                var logger = ConfigurationService.getService<ILogger<App>>();
-
-                logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-                throw;
-            }
-        }
+     
         private void OnStartup(object sender, StartupEventArgs e)
         {
 
             _host.Start();
-            DataBaseSeed();
+            ConfigurationService.DataBaseSeed();
             MainWindow = ConfigurationService.getService<MainPage>();
             MainWindow.Show();
 
