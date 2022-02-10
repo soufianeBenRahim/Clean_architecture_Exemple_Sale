@@ -24,11 +24,12 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
         {
             _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
         }
-        public void AddUser(string userName, string password)
+        public async void AddUser(string userName, string password)
         {
             using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
             {
-                db.Users.Add(new ApplicationUser() { ID = Guid.NewGuid(), Password = password, UserName = userName });
+                await  db.Users.AddAsync(new ApplicationUser() { ID = Guid.NewGuid(), Password = password, UserName = userName });
+                await db.SaveChangesAsync();
             }
                 
         }
@@ -37,10 +38,9 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
         {
             using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
             {
-                var user = db
-                           .Users
-                           .FirstOrDefaultAsync(x => x.UserName == userName && x.Password == password);
-                return user!=null;
+                var existe = db.Users.FirstOrDefault(x => x.UserName == userName && x.Password == password);
+                var users = db.Users.ToList();
+                return existe!=null;
             }
         }
     }
