@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="OpenCover" Version="4.7.1221" />
   </ItemGroup>
 
   <ItemGroup>
