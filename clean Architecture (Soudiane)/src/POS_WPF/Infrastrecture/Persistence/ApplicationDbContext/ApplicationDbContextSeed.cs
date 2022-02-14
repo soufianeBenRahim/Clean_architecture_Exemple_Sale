@@ -108,7 +108,7 @@
        
 
 
-        private IEnumerable<CatalogItem> GetPreconfiguredItems()
+        public static IEnumerable<CatalogItem> GetPreconfiguredItems()
         {
             return new List<CatalogItem>()
             {
