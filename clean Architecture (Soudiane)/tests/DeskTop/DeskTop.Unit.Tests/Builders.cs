@@ -4,11 +4,11 @@ namespace DeskTop.Unit.SaleAggregateTest
 {
     public class OrderBuilder
     {
-        private readonly Sale order;
+        private readonly Sale sale;
 
         public OrderBuilder()
         {
-            order = new Sale();
+            sale = new Sale();
         }
 
         public OrderBuilder AddOne(
@@ -19,13 +19,13 @@ namespace DeskTop.Unit.SaleAggregateTest
             string pictureUrl,
             int units = 1)
         {
-            order.AddSaleItem(productId, productName, unitPrice, discount, pictureUrl, units);
+            sale.AddSaleItem(productId, productName, unitPrice, discount, pictureUrl, units);
             return this;
         }
 
         public Sale Build()
         {
-            return order;
+            return sale;
         }
     }
 }
