@@ -51,7 +51,8 @@ namespace POS.Services
                 services.AddSingleton<INavigationService, FakeNavigationProxy>();
                 services.AddSingleton<ICatalogTypeRepository, FakeCatalogTypeRepository>();
                 services.AddSingleton<ICatalogIthemsRepository, FakeCatalogIthemsRepository>();
-
+                services.AddSingleton<ISaleRepository, FackSaleRepository>();
+                
             }
             else
             {

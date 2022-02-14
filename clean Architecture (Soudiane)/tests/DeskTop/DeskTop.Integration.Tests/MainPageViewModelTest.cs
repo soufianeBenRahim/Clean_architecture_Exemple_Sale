@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 
 namespace DeskTop.Integration.MainPageViewModelTests
 {
@@ -58,6 +59,27 @@ namespace DeskTop.Integration.MainPageViewModelTests
             var valuesrepository = catalogeIthemsRepository.GetCatalogsByCatigoryId(2);
             Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesrepository).Using(new CatalogIthemComparer()));
         }
+        [Test]
+        public void MainPage_WhenLoaded_ShouldloadAllCatalogItems()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var catalogeIthemsRepository = ConfigurationService.getService<ICatalogIthemsRepository>();
+            var valuesrepository = catalogeIthemsRepository.GetAll();
+            Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesrepository).Using(new CatalogIthemComparer()));
+        }
+
+        [Test]
+        public void MainPage_WhenFilterWithNull_ShouldloadAllCatalogItems()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var catalogeIthemsRepository = ConfigurationService.getService<ICatalogIthemsRepository>();
+            var valuesrepository = catalogeIthemsRepository.GetAll();
+            mainPage.Filter(null);
+            Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesrepository).Using(new CatalogIthemComparer()));
+        }
+      
         class CatalogIthemComparer : IEqualityComparer<CatalogItem>
         {
             public bool Equals(CatalogItem b1, CatalogItem b2)
@@ -77,5 +99,64 @@ namespace DeskTop.Integration.MainPageViewModelTests
                 return bx.GetHashCode();
             }
         }
+
+        [Test]
+        public async Task MainPage_AfterAddItemToLocalSale_ShouldSaveTheSaleInDataBase()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var SaleRepository = ConfigurationService.getService<ISaleRepository>();
+            mainPage.AddItemToLocalSale(1, "cup", 10.0m, 0, string.Empty);
+            mainPage.AddItemToLocalSale(2, "cup", 20.0m, 0, string.Empty);
+            var sale=await SaleRepository.GetAsync(mainPage.LocalSal.Id);
+            Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
+        }
+        [Test]
+        public async Task MainPage_AfterAddTheSamItemToLocalSale_ShouldSaveTheSaleInDataBase()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var SaleRepository = ConfigurationService.getService<ISaleRepository>();
+            mainPage.AddItemToLocalSale(1, "cup", 10.0m, 0, string.Empty);
+            mainPage.AddItemToLocalSale(1, "cup", 10.0m, 0, string.Empty);
+            var sale = await SaleRepository.GetAsync(mainPage.LocalSal.Id);
+            Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
+        }
+        [Test]
+        public async Task MainPage_WhenSacanBarCode_ShouldAddTheCorespondingItemBarCodeToSaleLocal()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.ScanBarCode("1111");
+            var item = mainPage.LocalSal.SaleItems.FirstOrDefault(x => x.Id == 1);
+            Assert.NotNull(item);
+        }
+        class SaleIthemComparer : IEqualityComparer<SaleItem>
+        {
+            public bool Equals(SaleItem b1, SaleItem b2)
+            {
+                if (b2 == null && b1 == null)
+                    return true;
+                else if (b1 == null || b2 == null)
+                    return false;
+                else if (b1.Id == b2.Id 
+                    && b1.GetCurrentDiscount() == b2.GetCurrentDiscount()
+                    && b1.GetOrderItemProductName() == b2.GetOrderItemProductName()
+                    && b1.GetPictureUri() == b2.GetPictureUri()
+                    && b1.GetUnitPrice() == b2.GetUnitPrice()
+                    && b1.GetUnits() == b2.GetUnits()
+                    && b1.ProductId == b2.ProductId)
+                    return true;
+                else
+                    return false;
+            }
+
+            public int GetHashCode(SaleItem bx)
+            {
+                return bx.GetHashCode();
+            }
+        }
+
+
     }
 }

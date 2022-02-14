@@ -14,26 +14,24 @@ namespace POS.Services.TesteServices
         {
             new Sale(){
                 Created=new DateTime(2022,1,1),
-                CreatedBy="Soufiane"},
-            new Sale(){
-                Created=new DateTime(2022,2,1),
-                CreatedBy="Rahim"},
+                CreatedBy="Soufiane"}
         };
         public IUnitOfWork UnitOfWork => throw new NotImplementedException();
 
         public Sale Add(Sale vente)
         {
-            throw new NotImplementedException();
+            sales.Append(vente);
+            return vente;
         }
 
         public Task<Sale> GetAsync(int orderId)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(sales.FirstOrDefault(x => x.Id == orderId));
         }
 
         public void Update(Sale order)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
