@@ -123,7 +123,7 @@ namespace DeskTop.Integration.MainPageViewModelTests
             Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
         }
         [Test]
-        public async Task MainPage_WhenSacanBarCode_ShouldAddTheCorespondingItemBarCodeToSaleLocal()
+        public void MainPage_WhenSacanBarCode_ShouldAddTheCorespondingItemBarCodeToSaleLocal()
         {
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
