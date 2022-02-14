@@ -12,62 +12,53 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
         : ISaleRepository
     {
         private readonly IDbContextFactory<ApplicationDbContext> _dbFactory;
-
+        private readonly ApplicationDbContext _applicationDB;
         public IUnitOfWork UnitOfWork
         {
             get
             {
-                return this._dbFactory.CreateDbContext();
+                return _applicationDB;
             }
         }
 
         public SaleRepository(IDbContextFactory<ApplicationDbContext> dbFactory)
         {
             _dbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
+            _applicationDB=_dbFactory.CreateDbContext();
         }
 
         public Sale Add(Sale order)
         {
-            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
-            {
-                return db.Sales.Add(order).Entity;
-            }
+            return _applicationDB.Sales.Add(order).Entity;
         }
 
         public async Task<Sale> GetAsync(int orderId)
         {
-            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
-            {
-                var order = await db
+                var order = await _applicationDB
                             .Sales
                             .FirstOrDefaultAsync(o => o.Id == orderId);
                 if (order == null)
                 {
-                    order = db
+                    order = _applicationDB
                                 .Sales
                                 .Local
                                 .FirstOrDefault(o => o.Id == orderId);
                 }
                 if (order != null)
                 {
-                    await db.Entry(order)
+                    await _applicationDB.Entry(order)
                         .Collection(i => i.SaleItems).LoadAsync();
-                    await db.Entry(order)
+                    await _applicationDB.Entry(order)
                         .Reference(i => i.SaleStatus).LoadAsync();
                 }
 
                 return order;
-            }
-
         
         }
 
         public void Update(Sale order)
         {
-            using (ApplicationDbContext db = this._dbFactory.CreateDbContext())
-            {
-                db.Entry(order).State = EntityState.Modified;
-            }
+             _applicationDB.Entry(order).State = EntityState.Modified;
         }
     }
 }
