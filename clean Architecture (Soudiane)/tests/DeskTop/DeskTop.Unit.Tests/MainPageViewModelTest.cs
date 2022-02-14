@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using POS.Exceptions;
 using POS.Services;
 using POS.ViewModel;
 using System;
@@ -35,5 +36,17 @@ namespace DeskTop.Unit.Tests
             mainPage.ScanBarCode("");
             Assert.IsEmpty(mainPage.LocalSal.SaleItems);
         }
+        [Test]
+        public void MainPage_WhenSacanBarCodeNotExiste_ShouldRaisNotFoundException()
+        {
+            var isMoke = true;
+            var inMemoryDatabase = true;
+            var services = new ServiceCollection();
+            services.AddLogging();
+            ConfigurationService.GetInstance(services, isMoke, inMemoryDatabase);
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            Assert.Throws<BarCodeNotFondException>(() => mainPage.ScanBarCode("123456789"));
+        }
+
     }
 }

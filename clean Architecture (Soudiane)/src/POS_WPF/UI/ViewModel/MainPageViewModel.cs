@@ -1,5 +1,6 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
+using POS.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,10 @@ namespace POS.ViewModel
                 return;
             }
             var items = _catalogeIthemsRepository.GetItemByBarCode(barCode);
-
+            if (items == null|| items.Count()==0)
+            {
+                throw new BarCodeNotFondException();
+            }
                 LocalSal.AddSaleItem(items.First().Id,
                  items.First().Name,
                  items.First().Price,
