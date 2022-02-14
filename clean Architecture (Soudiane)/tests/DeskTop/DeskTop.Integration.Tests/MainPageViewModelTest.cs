@@ -157,6 +157,15 @@ namespace DeskTop.Integration.MainPageViewModelTests
             }
         }
 
-
+        [Test]
+        public void MainPage_DoFilterByName_ShouldFilterTheItemsCataloge()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var catalogeIthemsRepository = ConfigurationService.getService<ICatalogIthemsRepository>();
+            mainPage.FilterByName(new CatalogType() { Id = 2, Type = "type2" },"cup");
+            var valuesRepository = catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(2, "cup");
+            Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesRepository).Using(new CatalogIthemComparer()));
+        }
     }
 }

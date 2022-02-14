@@ -73,5 +73,15 @@ namespace POS.ViewModel
                 _saleRepository.Add(LocalSal);
                 _saleRepository.UnitOfWork.SaveChangesAsync();
         }
+
+        public void FilterByName(CatalogType catalogType, string name)
+        {
+            if (catalogType == null && string.IsNullOrWhiteSpace(name))
+            {
+                CatalogsFiltred = _catalogeIthemsRepository.GetAll();
+                return;
+            }
+            CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(catalogType.Id, name);
+        }
     }
 }

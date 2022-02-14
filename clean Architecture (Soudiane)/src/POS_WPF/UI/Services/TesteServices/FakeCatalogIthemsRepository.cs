@@ -28,5 +28,10 @@ namespace POS.Services.TesteServices
         {
             return GetPreconfiguredItems().Where(x => x.Bar_Code == barCode).ToList();
         }
+
+        public IEnumerable<CatalogItem> GetCatalogsByCatigoryIdAndName(int idType, string name)
+        {
+            return GetPreconfiguredItems().Where(x => x.CatalogTypeId == idType && x.Name.Contains(name)).ToList();
+        }
     }
 }

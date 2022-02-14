@@ -8,34 +8,31 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 {
     public class CatalogIthemsRepository: ICatalogIthemsRepository
     {
-        private readonly IDbContextFactory<ApplicationDbContext> _dbFactory;
+        private readonly ApplicationDbContext _dbContest;
+
         public CatalogIthemsRepository(IDbContextFactory<ApplicationDbContext> dbFactory)
         {
-            _dbFactory = dbFactory;
+            _dbContest = dbFactory.CreateDbContext();
         }
 
         public IEnumerable<CatalogItem> GetAll()
         {
-            using (var dbContext = _dbFactory.CreateDbContext())
-            {
-                return dbContext.CatalogItems.ToList();
-            }
+            return _dbContest.CatalogItems.ToList();
         }
 
         public IEnumerable<CatalogItem> GetCatalogsByCatigoryId(int idType)
         {
-            using(var dbContext= _dbFactory.CreateDbContext())
-            {
-                return dbContext.CatalogItems.Where(x => x.CatalogTypeId == idType).ToList();
-            }
+            return _dbContest.CatalogItems.Where(x => x.CatalogTypeId == idType).ToList();
+        }
+
+        public IEnumerable<CatalogItem> GetCatalogsByCatigoryIdAndName(int idType, string name)
+        {
+            return _dbContest.CatalogItems.Where(x => x.CatalogTypeId == idType && x.Name.Contains(name)).ToList();
         }
 
         public IEnumerable<CatalogItem> GetItemByBarCode(string barCode)
         {
-            using (var dbContext = _dbFactory.CreateDbContext())
-            {
-                return dbContext.CatalogItems.Where(x => x.Bar_Code == barCode).ToList();
-            }
+             return _dbContest.CatalogItems.Where(x => x.Bar_Code == barCode).ToList();
         }
     }
 }
