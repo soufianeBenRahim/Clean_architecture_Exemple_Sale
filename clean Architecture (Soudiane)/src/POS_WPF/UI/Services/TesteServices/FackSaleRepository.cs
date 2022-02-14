@@ -10,13 +10,17 @@ namespace POS.Services.TesteServices
 {
     public class FackSaleRepository : ISaleRepository
     {
+        public FackSaleRepository(IUnitOfWork unitOfWork)
+        {
+            UnitOfWork = unitOfWork;
+        }
         private IEnumerable<Sale> sales => new List<Sale>()
         {
             new Sale(){
                 Created=new DateTime(2022,1,1),
                 CreatedBy="Soufiane"}
         };
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        public IUnitOfWork UnitOfWork { get; set; }
 
         public Sale Add(Sale vente)
         {

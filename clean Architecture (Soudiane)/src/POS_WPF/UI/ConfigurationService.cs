@@ -3,6 +3,7 @@ using Clean_Architecture_Soufiane.Application.Common.Interfaces;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
+using Clean_Architecture_Soufiane.Domain.Seedwork;
 using Clean_Architecture_Soufiane.Infrastructure;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence;
 using Clean_Architecture_Soufiane.Infrastructure.Repositories;
@@ -52,7 +53,7 @@ namespace POS.Services
                 services.AddSingleton<ICatalogTypeRepository, FakeCatalogTypeRepository>();
                 services.AddSingleton<ICatalogIthemsRepository, FakeCatalogIthemsRepository>();
                 services.AddSingleton<ISaleRepository, FackSaleRepository>();
-                
+                services.AddSingleton<IUnitOfWork , FackUnitOfWerk>();
             }
             else
             {
