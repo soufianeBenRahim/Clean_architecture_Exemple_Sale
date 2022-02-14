@@ -83,5 +83,10 @@ namespace POS.ViewModel
             }
             CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(catalogType.Id, name);
         }
+
+        public void ClearFilter()
+        {
+            CatalogsFiltred = _catalogeIthemsRepository.GetAll();
+        }
     }
 }

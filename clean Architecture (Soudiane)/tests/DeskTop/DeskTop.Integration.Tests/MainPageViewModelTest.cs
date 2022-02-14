@@ -167,5 +167,15 @@ namespace DeskTop.Integration.MainPageViewModelTests
             var valuesRepository = catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(2, "cup");
             Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesRepository).Using(new CatalogIthemComparer()));
         }
+        [Test]
+        public void MainPage_WhenDoClearFilter_ShouldloadAllCatalogItems()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var catalogeIthemsRepository = ConfigurationService.getService<ICatalogIthemsRepository>();
+            var valuesrepository = catalogeIthemsRepository.GetAll();
+            mainPage.ClearFilter();
+            Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesrepository).Using(new CatalogIthemComparer()));
+        }
     }
 }
