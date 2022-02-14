@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DeskTop.Unit.Tests
 {
-    public class MainPageViewModelTest
+    public class MainPageViewModelUnitTest
     {
         [Test]
         public void MainPage_WhenLoaded_ShouldInitializeTheLocalSaleObject()

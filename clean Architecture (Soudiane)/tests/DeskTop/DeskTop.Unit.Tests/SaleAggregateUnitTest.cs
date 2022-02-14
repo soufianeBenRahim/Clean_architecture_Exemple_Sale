@@ -5,9 +5,9 @@ using Clean_Architecture_Soufiane.Domain.Exceptions;
 
 namespace DeskTop.Unit.SaleAggregateTest
 {
-    public class SaleAggregateTest
+    public class SaleAggregateUnitTest
     {
-        public SaleAggregateTest()
+        public SaleAggregateUnitTest()
         { }
 
         [Test]
