@@ -30,7 +30,7 @@
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
             <StackPanel Grid.Column="2" Orientation="Vertical" >
                 <StackPanel Orientation="Horizontal">
-                    <Button Click="Button_Click_1">Clear Filter</Button>
+                    <Button>Clear Filter</Button>
                     <ListView ></ListView>
                 </StackPanel>
                 
