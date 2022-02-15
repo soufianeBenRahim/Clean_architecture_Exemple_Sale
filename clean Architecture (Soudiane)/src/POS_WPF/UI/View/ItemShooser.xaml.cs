@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using POS.Services;
-using POS.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,15 +15,13 @@ using System.Windows.Shapes;
 namespace POS.View
 {
     /// <summary>
-    /// Logique d'interaction pour MainPage.xaml
+    /// Interaction logic for ItemShooser.xaml
     /// </summary>
-    public partial class MainPage : FormeBase
+    public partial class ItemShooser : FormeBase
     {
-        public MainPage(MainPageViewModel vm):base(vm)
+        public ItemShooser(ItemShooserViewModel vm) : base(vm)
         {
             InitializeComponent();
-            this.WindowState = WindowState.Maximized;
-
         }
 
     }

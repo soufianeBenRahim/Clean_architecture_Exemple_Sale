@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
+using POS.View;
 
 namespace DeskTop.Integration.MainPageViewModelTests
 {
@@ -177,5 +178,6 @@ namespace DeskTop.Integration.MainPageViewModelTests
             mainPage.ClearFilter();
             Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesrepository).Using(new CatalogIthemComparer()));
         }
+
     }
 }

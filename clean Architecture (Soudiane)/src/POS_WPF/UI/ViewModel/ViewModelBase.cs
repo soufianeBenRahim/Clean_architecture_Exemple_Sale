@@ -9,7 +9,7 @@ namespace POS.ViewModel
 {
     public class ViewModelBase : ObservableObject
     {
-        INavigationService navigationServiceProxy;
+        internal INavigationService navigationServiceProxy;
         internal IView CurentView;
         public ViewModelBase()
         {

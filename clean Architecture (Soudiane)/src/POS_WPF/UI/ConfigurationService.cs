@@ -81,6 +81,7 @@ namespace POS.Services
             services.AddSingleton<MainPageViewModel>();
             services.AddSingleton<LoginForm>();
             services.AddSingleton<MainPage>();
+            services.AddSingleton<ItemShooser>();
         }
         public static void DataBaseSeed()
         {

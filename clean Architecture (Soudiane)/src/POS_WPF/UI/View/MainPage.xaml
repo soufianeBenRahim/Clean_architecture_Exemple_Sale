@@ -10,6 +10,35 @@
         Width="800"
         Loaded="Window_Loaded">
     <DockPanel>
-        
+       
+        <Menu DockPanel.Dock="Top" Height="20">
+            <MenuItem >Fichier </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom">
+        </StatusBar>
+        <Grid DockPanel.Dock="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" DockPanel.Dock="Left" Width="200">
+                <TextBlock > code barre </TextBlock>
+                <ListView></ListView>
+            </StackPanel>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+            <StackPanel Grid.Column="2" Orientation="Vertical" >
+                <StackPanel Orientation="Horizontal">
+                    <Button Click="Button_Click_1">Clear Filter</Button>
+                    <ListView ></ListView>
+                </StackPanel>
+                
+                <TextBlock > Filter by name </TextBlock>
+                <ListView ></ListView>
+            </StackPanel>
+            
+        </Grid>
+
     </DockPanel>
 </local:FormeBase>

@@ -1,6 +1,7 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using POS.Exceptions;
+using POS.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,11 @@ namespace POS.ViewModel
             {
                 throw new BarCodeNotFondException();
             }
-                LocalSal.AddSaleItem(items.First().Id,
+            if (items.Count() > 1)
+            {
+                navigationServiceProxy.NavigateToAsync<ItemShooser>(new ItemShooserViewModel(items),(CurentView as FormeBase));
+            }
+            LocalSal.AddSaleItem(items.First().Id,
                  items.First().Name,
                  items.First().Price,
                  0,

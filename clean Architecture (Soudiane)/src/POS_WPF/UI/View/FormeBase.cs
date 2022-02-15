@@ -11,10 +11,12 @@ namespace POS.View
     public class FormeBase:Window,IView
     {
         private bool isClosed = false;
+        internal ViewModelBase _bctx;
         public FormeBase(ViewModelBase vm )
         {
             this.DataContext = vm;
             vm.SetView(this);
+            _bctx=vm;
         }
         
         public bool IsClosed 
