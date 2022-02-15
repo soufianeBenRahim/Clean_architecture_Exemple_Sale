@@ -49,7 +49,6 @@ namespace DeskTop.Unit.Tests
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var navigationService = ConfigurationService.getService<INavigationService>();
             mainPage.ScanBarCode("1000");
-            var type = navigationService.getCurrent();
             Assert.IsTrue(navigationService.getCurrent().Equals(typeof(ItemShooser)));
         }
     }
