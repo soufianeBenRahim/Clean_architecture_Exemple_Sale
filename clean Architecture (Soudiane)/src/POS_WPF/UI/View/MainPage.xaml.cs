@@ -28,6 +28,12 @@ namespace POS.View
             this.WindowState = WindowState.Maximized;
 
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = ConfigurationService.getService<LoginForm>();
+            mainWindow.Owner = this;
+            mainWindow.ShowDialog();
+        }
 
     }
 }
