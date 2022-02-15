@@ -1,4 +1,6 @@
 ﻿using POS.Services;
+using POS.View;
+using POS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,9 @@ namespace DeskTop.Integration.Tests
             return  current;
         }
 
-        public void NavigateToAsync<T>()
+        public void NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
         {
-            var form=Activator.CreateInstance<T>() as Window;
-            current = form.GetType();
+            current = typeof(T);
         }
     }
 }

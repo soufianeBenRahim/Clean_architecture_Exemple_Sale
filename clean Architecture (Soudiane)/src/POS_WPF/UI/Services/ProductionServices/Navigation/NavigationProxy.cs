@@ -1,5 +1,6 @@
 ﻿using POS.Services;
 using POS.View;
+using POS.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,17 @@ namespace POS.Navigation
     public class NavigationProxy : INavigationService
     {
         private Type CurentForme;
-        public void NavigateToAsync<T>()
+        public void NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
         {
-            var page = ConfigurationService.getService<T>();
+            var page = (T)Activator.CreateInstance(typeof(T), viemModel); ;
 
             if (page != null)
             {
                 var pageToOpen = page as FormeBase;
                 if (pageToOpen != null)
                 {
-                    pageToOpen.IsClosed = false;
-                    Application.Current.MainWindow = pageToOpen;
-                    pageToOpen.Show();
+                    pageToOpen.Owner = parent;
+                    pageToOpen.ShowDialog();
                     CurentForme = pageToOpen.GetType();
                 }
             }
