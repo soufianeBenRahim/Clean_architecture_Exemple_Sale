@@ -19,12 +19,12 @@
 
        
         <Label Name="lblQuestion" Grid.Column="1">Veuillez choisir parmi les produits si-dessous :</Label>
-        <ListView ItemsSource="{Binding Source=Items}"  Name="txtAnswer" Grid.Column="1" Grid.Row="1" MinWidth="250">
+        <ListView ItemsSource="{Binding Items}"  Name="txtAnswer" Grid.Column="1" Grid.Row="1" MinWidth="250">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Source=GetOrderItemProductName(),Mode=OneWay}" />
-                    <GridViewColumn Header="Unite" Width="50" DisplayMemberBinding="{Binding Source=GetUnits(),Mode=OneWay}" />
-                    <GridViewColumn Header="Pix" Width="150" DisplayMemberBinding="{Binding Source=GetUnitPrice(),Mode=OneWay}" />
+                    <GridViewColumn Header="Name" Width="300" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Prix unit" Width="60" DisplayMemberBinding="{Binding Price}" />
+                    <GridViewColumn Header="Avalable stock" Width="150" DisplayMemberBinding="{Binding AvailableStock}" />
                 </GridView>
             </ListView.View>
         </ListView>
