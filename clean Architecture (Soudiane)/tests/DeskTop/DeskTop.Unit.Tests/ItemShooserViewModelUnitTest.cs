@@ -51,7 +51,14 @@ namespace DeskTop.Unit.Tests
             }
         }
         [Test]
-        public void ItemSooserViewModel_whenSelectedElementChange_shouldSetTereternedValueToSelectedElement()
+        public void ItemSooserViewModel_WhenNotSelectedElement_shouldRereternedValueBeNull()
+        {
+            var items = ApplicationDbContextSeed.GetPreconfiguredItems();
+            var itemShouserViewModel = new ItemShooserViewModel(items);
+            Assert.IsNull(itemShouserViewModel.Result);
+        }
+        [Test]
+        public void ItemSooserViewModel_whenSelectedElementChange_shouldSetRereternedValueToSelectedElement()
         {
             var items=ApplicationDbContextSeed.GetPreconfiguredItems();
             var itemShouserViewModel = new ItemShooserViewModel(items);
