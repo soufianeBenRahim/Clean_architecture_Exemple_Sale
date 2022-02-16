@@ -1,4 +1,5 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
+using Clean_Architecture_Soufiane.Infrastructure.Persistence;
 using DeskTop.Integration.Tests;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -7,6 +8,7 @@ using POS.Services;
 using POS.Services.TesteServices;
 using POS.View;
 using POS.ViewModel;
+using System.Linq;
 
 namespace DeskTop.Unit.Tests
 {
@@ -54,9 +56,10 @@ namespace DeskTop.Unit.Tests
         {
            
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var countBefor=mainPage.LocalSal.SaleItems.Count;
             SetReteuRnedValueToFakeNavifationService(null);
             mainPage.ScanBarCode("1000");
-            Assert.IsEmpty(mainPage.LocalSal.SaleItems);
+            Assert.AreEqual(mainPage.LocalSal.SaleItems.Count, countBefor);
         }
         [Test]
         public void MainPage_WhenScanBarCodeGetMultipleItemAndUserSelectOne_ShouldAddItemToSale()
@@ -73,6 +76,16 @@ namespace DeskTop.Unit.Tests
             var navigationService = ConfigurationService.getService<INavigationService>();
             var Mock = navigationService as FakeNavigationProxy;
             Mock.RetunEdValue = value;
+        }
+        [Test]
+        public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldAddTenItemInTheSale()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var itemToAdd=ApplicationDbContextSeed.GetPreconfiguredItems().Where(x=>x.Id==2).First();
+            SetReteuRnedValueToFakeNavifationService(itemToAdd);
+            mainPage.ScanBarCode("1000");
+            var itemAdd = mainPage.LocalSal.SaleItems.ToList()[0];
+            Assert.AreEqual(itemAdd.ProductId, itemToAdd.Id);
         }
     }
 }

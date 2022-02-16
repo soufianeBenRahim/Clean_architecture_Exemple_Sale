@@ -56,22 +56,31 @@ namespace POS.ViewModel
 
         public void ScanBarCode(string barCode)
         {
-            if(string.IsNullOrEmpty(barCode))
+            if (string.IsNullOrEmpty(barCode))
             {
                 return;
             }
             var items = _catalogeIthemsRepository.GetItemByBarCode(barCode);
-            if (items == null|| items.Count()==0)
+            if (items == null || items.Count() == 0)
             {
                 throw new BarCodeNotFondException();
             }
             if (items.Count() > 1)
             {
-                var result =navigationServiceProxy.NavigateToAsync<ItemShooser>(new ItemShooserViewModel(items),(CurentView as FormeBase));
-                if (result == null)
+                var result = navigationServiceProxy.NavigateToAsync<ItemShooser>(new ItemShooserViewModel(items), (CurentView as FormeBase));
+                if (result != null)
                 {
-                    return;
+                    var itemToAdd = result as CatalogItem;
+                    LocalSal.AddSaleItem(itemToAdd.Id,
+                     itemToAdd.Name,
+                     itemToAdd.Price,
+                     0,
+                     itemToAdd.PictureUri,
+                     1);
+                    Save();
                 }
+
+                return;
             }
             LocalSal.AddSaleItem(items.First().Id,
                  items.First().Name,
@@ -79,8 +88,13 @@ namespace POS.ViewModel
                  0,
                  items.First().PictureUri,
                  1);
-                _saleRepository.Add(LocalSal);
-                _saleRepository.UnitOfWork.SaveChangesAsync();
+            Save();
+        }
+
+        private void Save()
+        {
+            _saleRepository.Add(LocalSal);
+            _saleRepository.UnitOfWork.SaveChangesAsync();
         }
 
         public void FilterByName(CatalogType catalogType, string name)
