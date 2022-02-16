@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using POS;
 using POS.Services;
+using POS.Services.TesteServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,12 +59,15 @@ namespace DeskTop.Unit.Tests
             Assert.IsNull(itemShouserViewModel.Result);
         }
         [Test]
-        public void ItemSooserViewModel_whenSelectedElementChange_shouldSetRereternedValueToSelectedElement()
+        public void ItemSooserViewModel_whenSelectedElementChangedAndOkPressed_shooldFormClosedAndSetTheResultToSelectedItem()
         {
-            var items=ApplicationDbContextSeed.GetPreconfiguredItems();
+            var items = ApplicationDbContextSeed.GetPreconfiguredItems();
             var itemShouserViewModel = new ItemShooserViewModel(items);
+            itemShouserViewModel.SetView(new FakeView());
             itemShouserViewModel.SelectedItem = items.ToList()[0];
-            Assert.NotNull(itemShouserViewModel.Result);
+            itemShouserViewModel.Ok();
+            Assert.IsTrue(itemShouserViewModel.isFormClosed());
+            Assert.IsNotNull(itemShouserViewModel.Result);
         }
         [Test]
         public void ItemSooserViewModel_whenFilter_TheneItemsViewEqualsTheFiltredElementOfItemsWithTeStringInFilterTextBox()

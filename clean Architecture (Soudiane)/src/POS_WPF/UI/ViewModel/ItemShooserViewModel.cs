@@ -15,13 +15,20 @@ namespace POS
             ItemsView = new ObservableCollection<CatalogItem>(items); 
         }
         public IEnumerable<CatalogItem> Items { get; set; }
-        public CatalogItem SelectedItem { get=> Result as CatalogItem; set=> Result=value; }
+        private CatalogItem selectedItem;
+        public CatalogItem SelectedItem { get=> selectedItem; set=> selectedItem = value; }
         
         public ObservableCollection<CatalogItem> ItemsView { get; set; }
 
         public void Filter(string filterText)
         {
             ItemsView=new ObservableCollection<CatalogItem>(Items.Where(X=>X.Name.Contains(filterText)).ToList());
+        }
+
+        public void Ok()
+        {
+            Result = SelectedItem;
+            CurentView.CloseWindow();
         }
     }
 }
