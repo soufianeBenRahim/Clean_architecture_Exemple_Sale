@@ -81,7 +81,7 @@ namespace DeskTop.Integration.MainPageViewModelTests
             Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesrepository).Using(new CatalogIthemComparer()));
         }
       
-        class CatalogIthemComparer : IEqualityComparer<CatalogItem>
+        public class CatalogIthemComparer : IEqualityComparer<CatalogItem>
         {
             public bool Equals(CatalogItem b1, CatalogItem b2)
             {
