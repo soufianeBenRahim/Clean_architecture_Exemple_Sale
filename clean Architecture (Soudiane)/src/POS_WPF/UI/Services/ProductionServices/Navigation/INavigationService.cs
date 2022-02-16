@@ -8,7 +8,7 @@ namespace POS.Services
 {
     public interface INavigationService
     {
-        void NavigateToAsync<T>(ViewModelBase viemModel ,FormeBase parent);
+        object NavigateToAsync<T>(ViewModelBase viemModel ,FormeBase parent);
 
         Type getCurrent();
     }

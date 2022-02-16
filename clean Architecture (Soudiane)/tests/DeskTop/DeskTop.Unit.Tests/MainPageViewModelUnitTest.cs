@@ -1,14 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
+using DeskTop.Integration.Tests;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using POS.Exceptions;
 using POS.Services;
+using POS.Services.TesteServices;
 using POS.View;
 using POS.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeskTop.Unit.Tests
 {
@@ -50,6 +48,31 @@ namespace DeskTop.Unit.Tests
             var navigationService = ConfigurationService.getService<INavigationService>();
             mainPage.ScanBarCode("1000");
             Assert.IsTrue(navigationService.getCurrent().Equals(typeof(ItemShooser)));
+        }
+        [Test]
+        public void MainPage_WhenScanBarCodeGetMultipleItemAndUserNoSelect_ShouldNotAddItemToSale()
+        {
+           
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            SetReteuRnedValueToFakeNavifationService(null);
+            mainPage.ScanBarCode("1000");
+            Assert.IsEmpty(mainPage.LocalSal.SaleItems);
+        }
+        [Test]
+        public void MainPage_WhenScanBarCodeGetMultipleItemAndUserSelectOne_ShouldAddItemToSale()
+        {
+            var mainPage = new MainPageViewModel(new FakeCatalogTypeRepository()
+            , new FakeCatalogIthemsRepository(), new FackSaleRepository(new FackUnitOfWerk()));
+            SetReteuRnedValueToFakeNavifationService(new CatalogItem());
+            mainPage.ScanBarCode("1000");
+            Assert.IsNotEmpty(mainPage.LocalSal.SaleItems);
+        }
+
+        private void SetReteuRnedValueToFakeNavifationService(CatalogItem value)
+        {
+            var navigationService = ConfigurationService.getService<INavigationService>();
+            var Mock = navigationService as FakeNavigationProxy;
+            Mock.RetunEdValue = value;
         }
     }
 }

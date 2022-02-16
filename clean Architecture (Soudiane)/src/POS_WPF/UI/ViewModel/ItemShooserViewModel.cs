@@ -16,7 +16,7 @@ namespace POS
         }
         public IEnumerable<CatalogItem> Items { get; set; }
         public CatalogItem SelectedItem { get=> Result as CatalogItem; set=> Result=value; }
-        public object Result { get; set; }
+        
         public ObservableCollection<CatalogItem> ItemsView { get; set; }
 
         public void Filter(string filterText)

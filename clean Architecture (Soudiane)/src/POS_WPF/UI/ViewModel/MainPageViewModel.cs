@@ -67,7 +67,11 @@ namespace POS.ViewModel
             }
             if (items.Count() > 1)
             {
-                navigationServiceProxy.NavigateToAsync<ItemShooser>(new ItemShooserViewModel(items),(CurentView as FormeBase));
+                var result =navigationServiceProxy.NavigateToAsync<ItemShooser>(new ItemShooserViewModel(items),(CurentView as FormeBase));
+                if (result == null)
+                {
+                    return;
+                }
             }
             LocalSal.AddSaleItem(items.First().Id,
                  items.First().Name,

@@ -35,5 +35,9 @@ namespace POS.View
             isClosed = true;
             this.Close();
         }
+        public object GetResult()
+        {
+            return _bctx.Result;
+        }
     }
 }

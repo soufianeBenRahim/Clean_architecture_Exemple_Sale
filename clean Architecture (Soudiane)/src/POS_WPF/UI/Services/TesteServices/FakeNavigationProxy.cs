@@ -1,4 +1,5 @@
-﻿using POS.Services;
+﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
+using POS.Services;
 using POS.View;
 using POS.ViewModel;
 using System;
@@ -13,14 +14,18 @@ namespace DeskTop.Integration.Tests
     public class FakeNavigationProxy:INavigationService
     {
         private Type current;
+
+        public object RetunEdValue { get; set; }
+
         public Type getCurrent()
         {
             return  current;
         }
 
-        public void NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
+        public object NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
         {
             current = typeof(T);
+            return RetunEdValue;
         }
     }
 }

@@ -23,5 +23,6 @@ namespace POS.ViewModel
         {
             return CurentView.IsClosed;
         }
+        public object Result { get; set; }
     }
 }

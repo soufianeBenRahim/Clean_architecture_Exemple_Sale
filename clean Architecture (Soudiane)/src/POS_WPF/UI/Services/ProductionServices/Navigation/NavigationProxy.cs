@@ -13,7 +13,7 @@ namespace POS.Navigation
     public class NavigationProxy : INavigationService
     {
         private Type CurentForme;
-        public void NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
+        public object NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
         {
             var page = (T)Activator.CreateInstance(typeof(T), viemModel); ;
 
@@ -25,8 +25,10 @@ namespace POS.Navigation
                     pageToOpen.Owner = parent;
                     pageToOpen.ShowDialog();
                     CurentForme = pageToOpen.GetType();
+                    return pageToOpen.GetResult();
                 }
             }
+            return null;
         }
 
         public Type getCurrent()
