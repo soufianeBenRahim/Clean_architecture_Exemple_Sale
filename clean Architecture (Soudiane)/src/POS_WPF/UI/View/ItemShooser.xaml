@@ -19,7 +19,7 @@
 
        
         <Label Name="lblQuestion" Grid.Column="1">Veuillez choisir parmi les produits si-dessous :</Label>
-        <ListView ItemsSource="{Binding Items}"  Name="txtAnswer" Grid.Column="1" Grid.Row="1" MinWidth="250">
+        <ListView ItemsSource="{Binding ItemsView}"  Name="txtAnswer" Grid.Column="1" Grid.Row="1" MinWidth="250">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="300" DisplayMemberBinding="{Binding Name}" />
