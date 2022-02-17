@@ -71,7 +71,7 @@ namespace POS.ViewModel
                 if (result != null)
                 {
                     var itemToAdd = result as CatalogItem;
-                    LocalSal.AddSaleItem(itemToAdd.Id,
+                    AddItemToLocalSale(itemToAdd.Id,
                      itemToAdd.Name,
                      itemToAdd.Price,
                      0,
@@ -82,7 +82,7 @@ namespace POS.ViewModel
 
                 return;
             }
-            LocalSal.AddSaleItem(items.First().Id,
+            AddItemToLocalSale(items.First().Id,
                  items.First().Name,
                  items.First().Price,
                  0,
