@@ -141,11 +141,11 @@ namespace DeskTop.Integration.MainPageViewModelTests
                 else if (b1 == null || b2 == null)
                     return false;
                 else if (b1.Id == b2.Id 
-                    && b1.GetCurrentDiscount() == b2.GetCurrentDiscount()
-                    && b1.GetOrderItemProductName() == b2.GetOrderItemProductName()
-                    && b1.GetPictureUri() == b2.GetPictureUri()
-                    && b1.GetUnitPrice() == b2.GetUnitPrice()
-                    && b1.GetUnits() == b2.GetUnits()
+                    && b1.Discount == b2.Discount
+                    && b1.ProductName == b2.ProductName
+                    && b1.PictureUri == b2.PictureUri
+                    && b1.UnitPrice == b2.UnitPrice
+                    && b1.Units == b2.Units
                     && b1.ProductId == b2.ProductId)
                     return true;
                 else

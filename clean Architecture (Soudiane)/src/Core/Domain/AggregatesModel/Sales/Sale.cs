@@ -54,11 +54,11 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
             var existingOrderForProduct = _saleItems.Where(o => o.ProductId == productId)
                 .SingleOrDefault();
 
-            if (existingOrderForProduct != null && existingOrderForProduct.GetUnitPrice()== unitPrice)
+            if (existingOrderForProduct != null && existingOrderForProduct.UnitPrice== unitPrice)
             {
                 //if previous line exist modify it with higher discount  and units..
 
-                if (discount > existingOrderForProduct.GetCurrentDiscount())
+                if (discount > existingOrderForProduct.Discount)
                 {
                     existingOrderForProduct.SetNewDiscount(discount);
                 }
@@ -77,7 +77,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 
         public decimal GetTotal()
         {
-            return _saleItems.Sum(o => o.GetUnits() * o.GetUnitPrice());
+            return _saleItems.Sum(o => o.Units * o.UnitPrice);
         }
 
     }
