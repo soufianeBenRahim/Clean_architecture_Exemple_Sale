@@ -41,7 +41,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 
             // Add the OrderStarterDomainEvent to the domain events collection 
             // to be raised/dispatched when comitting changes into the Database [ After DbContext.SaveChanges() ]
-            this.AddDomainEvent(new SaleStatusChangedToPaidCachDomainEvent(Id));
+            this.AddDomainEvent(new NewSaleDomainEvent(Id));
         }
 
        
