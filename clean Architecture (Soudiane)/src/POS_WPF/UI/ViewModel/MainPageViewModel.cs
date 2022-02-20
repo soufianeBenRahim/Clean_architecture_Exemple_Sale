@@ -4,6 +4,7 @@ using POS.Exceptions;
 using POS.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace POS.ViewModel
             this.LocalSal = new Sale();
             _saleRepository = saleRepository;
         }
+        public ObservableCollection<SaleItem> SaleItems { get => new ObservableCollection<SaleItem>(this.LocalSal.SaleItems); }
         public IEnumerable<CatalogType> TypeCatalog { get; internal set; }
         public IEnumerable<CatalogItem> CatalogsFiltred { get; set; }
         public Sale LocalSal { get; set; }
@@ -52,6 +54,7 @@ namespace POS.ViewModel
              units = 1);
             _saleRepository.Add(LocalSal);
             _saleRepository.UnitOfWork.SaveChangesAsync();
+            this.OnPropertyChanged("SaleItems");
         }
 
         public void ScanBarCode(string barCode)

@@ -8,6 +8,7 @@ using POS.Services;
 using POS.Services.TesteServices;
 using POS.View;
 using POS.ViewModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace DeskTop.Unit.Tests
@@ -86,6 +87,24 @@ namespace DeskTop.Unit.Tests
             mainPage.ScanBarCode("1000");
             var itemAdd = mainPage.LocalSal.SaleItems.ToList()[0];
             Assert.AreEqual(itemAdd.ProductId, itemToAdd.Id);
+        }
+        [Test]
+        public void MainPage_WhenAddItemToSal_ShiuldRaisPropertyChangeOfSaleItems()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var propertyName = "SaleItems";
+            bool isIPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isIPropertyChanged = true;
+                }
+
+            };
+            mainPage.AddItemToLocalSale(1,"",10,0,"",1);
+            Assert.IsTrue(isIPropertyChanged);
         }
     }
 }
