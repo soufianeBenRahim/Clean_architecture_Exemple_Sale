@@ -35,6 +35,7 @@ namespace DeskTop.Unit.Tests
         public void MainPage_WhenBarCodeScanedIsNulOrEmpty_ShouldNotAddItemToSale()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
             mainPage.ScanBarCode("");
             Assert.IsEmpty(mainPage.LocalSal.SaleItems);
         }
@@ -93,18 +94,73 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var propertyName = "SaleItems";
-            bool isIPropertyChanged = false; ;
+            bool isPropertyChanged = false; ;
             mainPage.PropertyChanged +=
             delegate (object sender, PropertyChangedEventArgs e)
             {
                 if (e.PropertyName.Equals(propertyName))
                 {
-                    isIPropertyChanged = true;
+                    isPropertyChanged = true;
                 }
 
             };
             mainPage.AddItemToLocalSale(1,"",10,0,"",1);
-            Assert.IsTrue(isIPropertyChanged);
+            Assert.IsTrue(isPropertyChanged);
+            mainPage.PropertyChanged += null;
+        }
+        [Test]
+        public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldRaisPropertyChangeOfSaleItems()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var itemToAdd = ApplicationDbContextSeed.GetPreconfiguredItems().Where(x => x.Id == 2).First();
+            SetReteuRnedValueToFakeNavifationService(itemToAdd);
+            var propertyName = "SaleItems";
+            bool isPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isPropertyChanged = true;
+                }
+
+            };
+            mainPage.ScanBarCode("1000");
+            Assert.IsTrue(isPropertyChanged);
+            mainPage.PropertyChanged += null;
+        }
+        [Test]
+        public void MainPage_WhenClerSale_ShouldTheCollectionofSaleItemsEmpty()
+        {
+
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.AddItemToLocalSale(1, "", 2, 0, "");
+            Assert.IsNotEmpty(mainPage.LocalSal.SaleItems);
+            mainPage.Init();
+            Assert.IsEmpty(mainPage.LocalSal.SaleItems);
+        }
+
+        [Test]
+        public void MainPage_WhenClerSale_ShouldRaisPropertyChangeOfSaleItems()
+        {
+
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+
+            mainPage.AddItemToLocalSale(1, "", 10, 0, "", 1);
+            var propertyName = "SaleItems";
+            bool isPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isPropertyChanged = true;
+                }
+
+            };
+            mainPage.Init();
+            Assert.IsTrue(isPropertyChanged);
+            mainPage.PropertyChanged += null;
         }
     }
 }

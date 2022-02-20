@@ -26,6 +26,13 @@ namespace POS.ViewModel
         }
         public ObservableCollection<SaleItem> SaleItems { get => new ObservableCollection<SaleItem>(this.LocalSal.SaleItems); }
         public IEnumerable<CatalogType> TypeCatalog { get; internal set; }
+
+        public void Init()
+        {
+            LocalSal=new Sale();
+            OnPropertyChanged("SaleItems");
+        }
+
         public IEnumerable<CatalogItem> CatalogsFiltred { get; set; }
         public Sale LocalSal { get; set; }
 
