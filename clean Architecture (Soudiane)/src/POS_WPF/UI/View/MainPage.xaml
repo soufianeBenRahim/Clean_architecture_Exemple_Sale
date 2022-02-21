@@ -54,7 +54,7 @@
                     </ListView>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Width="Auto">
-                    <TextBox Name="FiltreCataloge" Width="Auto"></TextBox>
+                    <TextBox Name="FiltreCataloge" KeyUp="FiltreCataloge_KeyUp" Width="Auto"></TextBox>
                     <ListView x:Name="ListeCataloge" ItemsSource="{Binding Path=CatalogsFiltred}" Height="Auto">
                         <ListView.ItemTemplate>
                             <DataTemplate>

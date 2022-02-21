@@ -61,5 +61,13 @@ namespace POS.View
         {
             (_bctx as MainPageViewModel).ClearFilter();
         }
+
+        private void FiltreCataloge_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                (_bctx as MainPageViewModel).FilterByName(FiltreCataloge.Text);
+            }
+        }
     }
 }
