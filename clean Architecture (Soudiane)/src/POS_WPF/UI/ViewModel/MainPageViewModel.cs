@@ -121,14 +121,14 @@ namespace POS.ViewModel
             _saleRepository.UnitOfWork.SaveChangesAsync();
         }
 
-        public void FilterByName(CatalogType catalogType, string name)
+        public void FilterByName(string name)
         {
-            if (catalogType == null && string.IsNullOrWhiteSpace(name))
+            if (SelectedTypeCatalog == null && string.IsNullOrWhiteSpace(name))
             {
                 CatalogsFiltred = _catalogeIthemsRepository.GetAll();
                 return;
             }
-            CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(catalogType.Id, name);
+            CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(SelectedTypeCatalog.Id, name);
         }
 
         public void ClearFilter()
