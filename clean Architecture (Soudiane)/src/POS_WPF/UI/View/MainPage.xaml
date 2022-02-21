@@ -44,7 +44,7 @@
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
             <StackPanel Grid.Column="2" Orientation="Horizontal" >
                 <StackPanel Orientation="Vertical">
-                    <Button Background="Red" Click="Button_Click">X</Button>
+                    <Button x:Name="clearTypeBtn" Background="Red" Click="clearTypeBtn_Click">X</Button>
                     <ListView x:Name="ListeTypes" ItemsSource="{Binding Path=TypeCatalog}" SelectedItem="{Binding SelectedTypeCatalog}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
