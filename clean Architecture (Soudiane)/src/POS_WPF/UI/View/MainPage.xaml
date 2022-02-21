@@ -9,6 +9,12 @@
         Height="450" 
         Width="800"
         Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+        </Style>
+    </Window.Resources>
+
     <DockPanel>
        
         <Menu DockPanel.Dock="Top" Height="20">

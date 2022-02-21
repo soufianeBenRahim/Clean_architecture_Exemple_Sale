@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
+using Microsoft.Extensions.DependencyInjection;
 using POS.Exceptions;
 using POS.Services;
 using POS.ViewModel;
@@ -67,6 +68,17 @@ namespace POS.View
             if(e.Key == Key.Enter)
             {
                 (_bctx as MainPageViewModel).FilterByName(FiltreCataloge.Text);
+            }
+        }
+
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            CatalogItem catalogType = ((ListViewItem)sender).Content as CatalogItem;
+
+            if (catalogType != null)
+            {
+                (_bctx as MainPageViewModel).AddItemToLocalSale(catalogType.Id, catalogType.Name, catalogType.Price,0, catalogType.PictureUri);
             }
         }
     }
