@@ -30,6 +30,11 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
             return _dbContest.CatalogItems.Where(x => x.CatalogTypeId == idType && x.Name.Contains(name)).ToList();
         }
 
+        public IEnumerable<CatalogItem> GetCatalogsByName(string name)
+        {
+            return _dbContest.CatalogItems.Where(x => x.Name.Contains(name)).ToList();
+        }
+
         public IEnumerable<CatalogItem> GetItemByBarCode(string barCode)
         {
              return _dbContest.CatalogItems.Where(x => x.Bar_Code == barCode).ToList();

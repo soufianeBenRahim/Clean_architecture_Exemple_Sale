@@ -223,5 +223,76 @@ namespace DeskTop.Unit.Tests
             mainPage.ClearFilter();
             Assert.IsTrue(isPropertyChanged);
         }
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByNameAndCatalogType_ShouldRaesPropertyChangeToCatalogsFiltred()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+
+            var propertyName = "CatalogsFiltred";
+            bool isPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isPropertyChanged = true;
+                }
+            };
+            mainPage.SelectedTypeCatalog = new CatalogType()
+            {
+                Id = 2,
+                Type = "dsfdf"
+            };
+            mainPage.FilterByName(".Net");
+            Assert.IsTrue(isPropertyChanged);
+        }
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByNameAndSelectedTypeIsNul_ShouldShouldFiltedCatalogByNameOnly()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            var catalogRepository= ConfigurationService.getService<ICatalogIthemsRepository>();
+            var CatalogsFiltred = catalogRepository.GetCatalogsByName( ".Net");
+            mainPage.SelectedTypeCatalog = null;
+            mainPage.FilterByName(".Net");
+            Assert.That(CatalogsFiltred, Is.EqualTo(mainPage.CatalogsFiltred).Using(new CatalogIthemComparer()));
+        }
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByName_ShouldRaesPropertyChangeToCatalogsFiltred()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+
+            var propertyName = "CatalogsFiltred";
+            bool isPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isPropertyChanged = true;
+                }
+            };
+            mainPage.SelectedTypeCatalog = null;
+            mainPage.FilterByName(".Net");
+            Assert.IsTrue(isPropertyChanged);
+        }
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsAndNameAndCatalogTypeIsNull_ShouldRaesPropertyChangeToCatalogsFiltred()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+
+            var propertyName = "CatalogsFiltred";
+            bool isPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isPropertyChanged = true;
+                }
+            };
+            mainPage.SelectedTypeCatalog = null;
+            mainPage.FilterByName("");
+            Assert.IsTrue(isPropertyChanged);
+        }
     }
 }

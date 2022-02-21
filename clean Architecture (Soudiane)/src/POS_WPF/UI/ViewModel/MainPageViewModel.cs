@@ -123,12 +123,20 @@ namespace POS.ViewModel
 
         public void FilterByName(string name)
         {
+            if (SelectedTypeCatalog == null && !string.IsNullOrWhiteSpace(name))
+            {
+                CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByName( name);
+                OnPropertyChanged("CatalogsFiltred");
+                return;
+            }
             if (SelectedTypeCatalog == null && string.IsNullOrWhiteSpace(name))
             {
                 CatalogsFiltred = _catalogeIthemsRepository.GetAll();
+                OnPropertyChanged("CatalogsFiltred");
                 return;
             }
             CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(SelectedTypeCatalog.Id, name);
+            OnPropertyChanged("CatalogsFiltred");
         }
 
         public void ClearFilter()
