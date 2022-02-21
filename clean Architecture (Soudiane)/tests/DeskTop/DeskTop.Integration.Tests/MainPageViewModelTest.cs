@@ -164,7 +164,8 @@ namespace DeskTop.Integration.MainPageViewModelTests
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var catalogeIthemsRepository = ConfigurationService.getService<ICatalogIthemsRepository>();
-            mainPage.FilterByName(new CatalogType() { Id = 2, Type = "type2" },"cup");
+            mainPage.SelectedTypeCatalog = new CatalogType() { Id = 2, Type = "type2" };
+            mainPage.FilterByName("cup");
             var valuesRepository = catalogeIthemsRepository.GetCatalogsByCatigoryIdAndName(2, "cup");
             Assert.That(mainPage.CatalogsFiltred, Is.EqualTo(valuesRepository).Using(new CatalogIthemComparer()));
         }
