@@ -2,12 +2,9 @@
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using POS.Exceptions;
 using POS.View;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POS.ViewModel
 {
@@ -15,8 +12,14 @@ namespace POS.ViewModel
     {
         ICatalogIthemsRepository _catalogeIthemsRepository;
         ISaleRepository _saleRepository;
+        public ObservableCollection<SaleItem> SaleItems { get => new ObservableCollection<SaleItem>(this.LocalSal.SaleItems); }
+        public IEnumerable<CatalogType> TypeCatalog { get; internal set; }
+        public IEnumerable<CatalogItem> CatalogsFiltred { get; set; }
+        public Sale LocalSal { get; set; }
         public MainPageViewModel(ICatalogTypeRepository typeRepository
-            , ICatalogIthemsRepository catalogeIthemsRepository, ISaleRepository saleRepository)
+            , ICatalogIthemsRepository catalogeIthemsRepository, 
+            ISaleRepository saleRepository
+            )
         {
             TypeCatalog = typeRepository.GetAll();
             _catalogeIthemsRepository = catalogeIthemsRepository;
@@ -24,8 +27,7 @@ namespace POS.ViewModel
             this.LocalSal = new Sale();
             _saleRepository = saleRepository;
         }
-        public ObservableCollection<SaleItem> SaleItems { get => new ObservableCollection<SaleItem>(this.LocalSal.SaleItems); }
-        public IEnumerable<CatalogType> TypeCatalog { get; internal set; }
+
 
         public void Init()
         {
@@ -33,8 +35,7 @@ namespace POS.ViewModel
             OnPropertyChanged("SaleItems");
         }
 
-        public IEnumerable<CatalogItem> CatalogsFiltred { get; set; }
-        public Sale LocalSal { get; set; }
+
 
         public void Filter(CatalogType catalogType)
         {
