@@ -134,6 +134,7 @@ namespace POS.ViewModel
         public void ClearFilter()
         {
             CatalogsFiltred = _catalogeIthemsRepository.GetAll();
+            OnPropertyChanged("CatalogsFiltred");
         }
     }
 }

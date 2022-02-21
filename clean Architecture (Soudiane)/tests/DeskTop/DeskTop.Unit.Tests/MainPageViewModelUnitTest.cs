@@ -205,5 +205,23 @@ namespace DeskTop.Unit.Tests
             mainPage.SelectedTypeCatalog = new CatalogType() { Id = 2, Type = "dfsdf" };
             Assert.IsTrue(isPropertyChanged);
         }
+        [Test]
+        public void MainPage_WhenClearFilterCatalogType_ShouldRaesPropertyChangeToCatalogsFiltred()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+
+            var propertyName = "CatalogsFiltred";
+            bool isPropertyChanged = false; ;
+            mainPage.PropertyChanged +=
+            delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName.Equals(propertyName))
+                {
+                    isPropertyChanged = true;
+                }
+            };
+            mainPage.ClearFilter();
+            Assert.IsTrue(isPropertyChanged);
+        }
     }
 }
