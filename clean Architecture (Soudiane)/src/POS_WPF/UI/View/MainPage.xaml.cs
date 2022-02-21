@@ -56,5 +56,10 @@ namespace POS.View
                 codebarre.Clear();
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            (_bctx as MainPageViewModel).ClearFilter();
+        }
     }
 }
