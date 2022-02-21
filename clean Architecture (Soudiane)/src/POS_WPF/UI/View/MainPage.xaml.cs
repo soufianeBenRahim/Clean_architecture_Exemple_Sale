@@ -61,6 +61,7 @@ namespace POS.View
         private void clearTypeBtn_Click(object sender, RoutedEventArgs e)
         {
             (_bctx as MainPageViewModel).ClearFilter();
+            FiltreCataloge.Text = "";
         }
 
         private void FiltreCataloge_KeyUp(object sender, KeyEventArgs e)
