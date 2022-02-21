@@ -65,10 +65,10 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         public string ProductName { get => _productName; private set=> _productName=value; }
         public int Units { get => _units; private set => _units = value; }
         public decimal UnitPrice { get => _unitPrice; private set => _unitPrice = value; }
-        public decimal CurrentDiscount { get =>_discount; private set=> _discount=value; }
         public string PictureUri { get=>_pictureUrl; set=> _pictureUrl=value; }
 
         public decimal Discount { get => _discount; set => _discount = value; }
-        
+        public decimal Total { get => (_units* UnitPrice)- _discount; }
+
     }
 }
