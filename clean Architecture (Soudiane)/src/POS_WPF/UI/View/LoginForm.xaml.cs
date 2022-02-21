@@ -52,6 +52,7 @@ namespace POS.View
         {
             ILocalizationProvider provider = LocalizeDictionary.GetDefaultProvider(LocalizeDictionary.Instance);
             comboLoc.ItemsSource = provider.AvailableCultures;
+            userName.Focus();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)

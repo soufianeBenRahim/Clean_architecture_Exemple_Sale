@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using POS.Exceptions;
 using POS.Services;
 using POS.ViewModel;
 using System;
@@ -33,7 +34,27 @@ namespace POS.View
             var mainWindow = ConfigurationService.getService<LoginForm>();
             mainWindow.Owner = this;
             mainWindow.ShowDialog();
+            codebarre.Focus();
         }
 
+        private void codebarre_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    (_bctx as MainPageViewModel).ScanBarCode(codebarre.Text);
+                }
+                catch (BarCodeNotFondException ex)
+                {
+                    MessageBox.Show("Code barre n'existe pas !");
+                }
+                catch (Exception exe)
+                {
+                    MessageBox.Show("Erreur non attendue !");                    
+                }
+                codebarre.Clear();
+            }
+        }
     }
 }

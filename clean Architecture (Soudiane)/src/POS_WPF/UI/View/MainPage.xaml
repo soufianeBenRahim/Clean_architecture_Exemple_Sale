@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS.View"
         mc:Ignorable="d"
-        Title="MainPage" 
+        Title="Domain POS" 
         Height="450" 
         Width="800"
         Loaded="Window_Loaded">
@@ -19,23 +19,37 @@
         </StatusBar>
         <Grid DockPanel.Dock="Left">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="360" />
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" DockPanel.Dock="Left" Width="200">
-                <TextBlock > code barre </TextBlock>
-                <ListView></ListView>
+            <StackPanel Orientation="Vertical" DockPanel.Dock="Left" Height="Auto">
+                <TextBlock Margin="0,5,0,5"> Code barre: </TextBlock>
+                <TextBox Name="codebarre" KeyUp="codebarre_KeyUp" 
+                             Margin="8,5,0,5" />
+
+
+                <ListView ItemsSource="{Binding Path=SaleItems}" Height="352">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding ProductName}" />
+                            <GridViewColumn Header="Units" Width="50" DisplayMemberBinding="{Binding Units}" />
+                            <GridViewColumn Header="Prix" Width="50" DisplayMemberBinding="{Binding UnitPrice}" />
+                            <GridViewColumn Header="Total" Width="100" DisplayMemberBinding="{Binding Total}" />
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
             </StackPanel>
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
             <StackPanel Grid.Column="2" Orientation="Vertical" >
                 <StackPanel Orientation="Horizontal">
-                    <Button>Clear Filter</Button>
-                    <ListView ></ListView>
+                    <Button Background="Red">X</Button>
+                    <ListView x:Name="ListeTypes" ItemsSource="{Binding Source=TypeCatalog, Path=Type}" ></ListView>
                 </StackPanel>
-                
-                <TextBlock > Filter by name </TextBlock>
-                <ListView ></ListView>
+
+                <TextBox Name="FiltreCataloge">  </TextBox>
+                <ListView x:Name="ListeCataloge" ItemsSource="{Binding Source=CatalogsFiltred, Path=Name }" Height="Auto"></ListView>
             </StackPanel>
             
         </Grid>
