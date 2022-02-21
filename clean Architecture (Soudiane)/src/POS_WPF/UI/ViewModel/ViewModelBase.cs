@@ -1,16 +1,20 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using POS.Services;
+﻿using POS.Services;
 using POS.View;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-
 namespace POS.ViewModel
 {
-    public class ViewModelBase : ObservableObject
+    public class ViewModelBase : INotifyPropertyChanged
     {
         internal INavigationService navigationServiceProxy;
         internal IView CurentView;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
         public ViewModelBase()
         {
             navigationServiceProxy = ConfigurationService.getService<INavigationService>();

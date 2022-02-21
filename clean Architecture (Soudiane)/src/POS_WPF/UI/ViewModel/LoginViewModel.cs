@@ -1,11 +1,5 @@
 ﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Identity;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using POS.Services;
-using POS.View;
-using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace POS.ViewModel
 {
