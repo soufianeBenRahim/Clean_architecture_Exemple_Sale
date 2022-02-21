@@ -8,6 +8,7 @@ using POS.Services;
 using POS.Services.TesteServices;
 using POS.View;
 using POS.ViewModel;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -102,7 +103,6 @@ namespace DeskTop.Unit.Tests
                 {
                     isPropertyChanged = true;
                 }
-
             };
             mainPage.AddItemToLocalSale(1,"",10,0,"",1);
             Assert.IsTrue(isPropertyChanged);
@@ -143,9 +143,7 @@ namespace DeskTop.Unit.Tests
         [Test]
         public void MainPage_WhenClerSale_ShouldRaisPropertyChangeOfSaleItems()
         {
-
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-
             mainPage.AddItemToLocalSale(1, "", 10, 0, "", 1);
             var propertyName = "SaleItems";
             bool isPropertyChanged = false; ;
@@ -156,11 +154,38 @@ namespace DeskTop.Unit.Tests
                 {
                     isPropertyChanged = true;
                 }
-
             };
             mainPage.Init();
             Assert.IsTrue(isPropertyChanged);
             mainPage.PropertyChanged += null;
+        }
+        [Test]
+        public void MainPage_WhenSelectedCatalogTypeChange_ShouldFilterCataloge()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.SelectedTypeCatalog = new CatalogType() { Id = 2, Type = "dfsdf" };
+            ICatalogIthemsRepository _catalogeIthemsRepository = ConfigurationService.getService<ICatalogIthemsRepository>();
+            var CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryId(2);
+            Assert.That(CatalogsFiltred, Is.EqualTo(mainPage.CatalogsFiltred).Using(new CatalogIthemComparer()));
+        }
+        public class CatalogIthemComparer : IEqualityComparer<CatalogItem>
+        {
+            public bool Equals(CatalogItem b1, CatalogItem b2)
+            {
+                if (b2 == null && b1 == null)
+                    return true;
+                else if (b1 == null || b2 == null)
+                    return false;
+                else if (b1.Id == b2.Id && b1.Name == b2.Name)
+                    return true;
+                else
+                    return false;
+            }
+
+            public int GetHashCode(CatalogItem bx)
+            {
+                return bx.GetHashCode();
+            }
         }
     }
 }

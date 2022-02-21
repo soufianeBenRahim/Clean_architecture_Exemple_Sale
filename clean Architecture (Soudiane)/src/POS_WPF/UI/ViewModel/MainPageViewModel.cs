@@ -16,6 +16,18 @@ namespace POS.ViewModel
         public IEnumerable<CatalogType> TypeCatalog { get; internal set; }
         public IEnumerable<CatalogItem> CatalogsFiltred { get; set; }
         public Sale LocalSal { get; set; }
+
+        CatalogType _selectedTypeCatalog;
+        public CatalogType SelectedTypeCatalog 
+        { 
+            get => _selectedTypeCatalog; 
+            set 
+            { 
+                _selectedTypeCatalog = value;
+                Filter(value);
+            } 
+        }
+
         public MainPageViewModel(ICatalogTypeRepository typeRepository
             , ICatalogIthemsRepository catalogeIthemsRepository, 
             ISaleRepository saleRepository
