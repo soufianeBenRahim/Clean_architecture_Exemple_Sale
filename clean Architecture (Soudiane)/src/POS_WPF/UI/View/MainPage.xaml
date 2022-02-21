@@ -29,7 +29,7 @@
                              Margin="8,5,0,5" />
 
 
-                <ListView ItemsSource="{Binding Path=SaleItems}" Height="352">
+                <ListView ItemsSource="{Binding Path=SaleItems}" Height="Auto">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding ProductName}" />
@@ -42,14 +42,28 @@
                 </ListView>
             </StackPanel>
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-            <StackPanel Grid.Column="2" Orientation="Vertical" >
-                <StackPanel Orientation="Horizontal">
+            <StackPanel Grid.Column="2" Orientation="Horizontal" >
+                <StackPanel Orientation="Vertical">
                     <Button Background="Red">X</Button>
-                    <ListView x:Name="ListeTypes" ItemsSource="{Binding Source=TypeCatalog, Path=Type}" ></ListView>
+                    <ListView x:Name="ListeTypes" ItemsSource="{Binding Path=TypeCatalog}" SelectedItem="">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                    <TextBlock Text="{Binding Type}" FontWeight="Bold" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackPanel>
-
-                <TextBox Name="FiltreCataloge">  </TextBox>
-                <ListView x:Name="ListeCataloge" ItemsSource="{Binding Source=CatalogsFiltred, Path=Name }" Height="Auto"></ListView>
+                <StackPanel Orientation="Vertical" Width="Auto">
+                    <TextBox Name="FiltreCataloge" Width="Auto"></TextBox>
+                    <ListView x:Name="ListeCataloge" ItemsSource="{Binding Path=CatalogsFiltred}" Height="Auto">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+              
             </StackPanel>
             
         </Grid>
