@@ -45,7 +45,7 @@
             <StackPanel Grid.Column="2" Orientation="Horizontal" >
                 <StackPanel Orientation="Vertical">
                     <Button Background="Red">X</Button>
-                    <ListView x:Name="ListeTypes" ItemsSource="{Binding Path=TypeCatalog}" SelectedItem="">
+                    <ListView x:Name="ListeTypes" ItemsSource="{Binding Path=TypeCatalog}" SelectedItem="{Binding SelectedTypeCatalog}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                     <TextBlock Text="{Binding Type}" FontWeight="Bold" />

@@ -57,6 +57,7 @@ namespace POS.ViewModel
                 return;
             }
             CatalogsFiltred = _catalogeIthemsRepository.GetCatalogsByCatigoryId(catalogType.Id);
+            OnPropertyChanged("CatalogsFiltred");
         }
 
         public void AddItemToLocalSale(int productId,
