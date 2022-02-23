@@ -15,6 +15,11 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
             _dbContest = dbFactory.CreateDbContext();
         }
 
+        public IEnumerable<CatalogItem> FindByShourtCut(string shortCut)
+        {
+            return _dbContest.CatalogItems.Where(x => x.ShortCut == shortCut).ToList();
+        }
+
         public IEnumerable<CatalogItem> GetAll()
         {
             return _dbContest.CatalogItems.ToList();

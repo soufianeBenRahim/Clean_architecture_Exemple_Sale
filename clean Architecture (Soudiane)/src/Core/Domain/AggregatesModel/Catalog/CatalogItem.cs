@@ -40,6 +40,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog
         /// True if item is on reorder
         /// </summary>
         public bool OnReorder { get; set; }
+        public string ShortCut { get; set; }
 
         public CatalogItem() { }
 

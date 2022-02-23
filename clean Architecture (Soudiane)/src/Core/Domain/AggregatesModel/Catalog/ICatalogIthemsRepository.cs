@@ -9,5 +9,6 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog
         IEnumerable<CatalogItem> GetItemByBarCode(string barCode);
         IEnumerable<CatalogItem> GetCatalogsByCatigoryIdAndName(int idType , string name);
         IEnumerable<CatalogItem> GetCatalogsByName(string name);
+        IEnumerable<CatalogItem> FindByShourtCut(string shourtCut);
     }
 }

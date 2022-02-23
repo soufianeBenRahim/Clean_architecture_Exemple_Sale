@@ -38,5 +38,10 @@ namespace POS.Services.TesteServices
         {
             return GetPreconfiguredItems().Where(x => x.Name.Contains(name)).ToList();
         }
+
+        public IEnumerable<CatalogItem> FindByShourtCut(string shourtCut)
+        {
+            return GetPreconfiguredItems().Where(x => x.ShortCut== shourtCut).ToList();
+        }
     }
 }

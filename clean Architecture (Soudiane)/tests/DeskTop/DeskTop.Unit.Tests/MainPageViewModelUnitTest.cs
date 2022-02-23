@@ -91,7 +91,7 @@ namespace DeskTop.Unit.Tests
             Assert.AreEqual(itemAdd.ProductId, itemToAdd.Id);
         }
         [Test]
-        public void MainPage_WhenAddItemToSal_ShiuldRaisPropertyChangeOfSaleItems()
+        public void MainPage_WhenAddItemToSal_ShouldRaisPropertyChangeOfSaleItems()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var propertyName = "SaleItems";
@@ -294,5 +294,55 @@ namespace DeskTop.Unit.Tests
             mainPage.FilterByName("");
             Assert.IsTrue(isPropertyChanged);
         }
+
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndShourtCutNotExsite_ShouldNotAddItems()
+        {
+
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            mainPage.FilterByShourtCut("002");
+            Assert.IsEmpty(mainPage.SaleItems);
+        }
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteOneItem_ShouldAddItemToLocalSle()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            mainPage.FilterByShourtCut("001");
+            Assert.AreEqual(mainPage.SaleItems.Count,1);
+        }
+     
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItem_ShouldShowTheShooserForm()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            mainPage.FilterByShourtCut("003");
+            var navigation=ConfigurationService.getService<INavigationService>();
+            Assert.AreEqual(navigation.getCurrent(), typeof(ItemShooser));
+        }
+
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItemAndOneIsSelected_ShouldAddThisItemToLocalSal()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            SetReteuRnedValueToFakeNavifationService(new CatalogItem() { Id = 1, Name = "exempel" });
+            mainPage.FilterByShourtCut("003");
+         
+            Assert.IsNotEmpty(mainPage.SaleItems);
+        }
+        [Test]
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItemAndNoOneIsSelected_ShouldNotAddThisItemToLocalSal()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            SetReteuRnedValueToFakeNavifationService(null);
+            mainPage.FilterByShourtCut("003");
+
+            Assert.IsEmpty(mainPage.SaleItems);
+        }
+
     }
 }

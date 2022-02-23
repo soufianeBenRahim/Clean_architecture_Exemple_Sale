@@ -101,7 +101,6 @@ namespace POS.ViewModel
                      0,
                      itemToAdd.PictureUri,
                      1);
-                    Save();
                 }
 
                 return;
@@ -112,14 +111,8 @@ namespace POS.ViewModel
                  0,
                  items.First().PictureUri,
                  1);
-            Save();
         }
 
-        private void Save()
-        {
-            _saleRepository.Add(LocalSal);
-            _saleRepository.UnitOfWork.SaveChangesAsync();
-        }
 
         public void FilterByName(string name)
         {
@@ -143,6 +136,26 @@ namespace POS.ViewModel
         {
             CatalogsFiltred = _catalogeIthemsRepository.GetAll();
             OnPropertyChanged("CatalogsFiltred");
+        }
+
+        public void FilterByShourtCut(string shortCut)
+        {
+            var items = _catalogeIthemsRepository.FindByShourtCut(shortCut);
+            if(items!=null && items.Count() == 1)
+            {
+                var first=items.ToList()[0];
+                AddItemToLocalSale(first.Id, first.Name, first.Price, 0, first.PictureUri);
+            }
+            if(items != null && items.Count() > 1)
+            {
+                var result= navigationServiceProxy.NavigateToAsync<ItemShooser>(new ItemShooserViewModel(items), (CurentView as FormeBase));
+
+                var item = result as CatalogItem;
+                if (item != null)
+                {
+                    AddItemToLocalSale(item.Id, item.Name, item.Price, 0, item.PictureUri);
+                }
+            }
         }
     }
 }
