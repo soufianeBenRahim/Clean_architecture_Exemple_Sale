@@ -2,6 +2,7 @@
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using POS.Exceptions;
 using POS.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -65,14 +66,14 @@ namespace POS.ViewModel
             decimal unitPrice,
             decimal discount,
             string pictureUrl,
-            int units = 1)
+            decimal units = 1)
         {
             LocalSal.AddSaleItem( productId,
              productName,
              unitPrice,
              discount,
              pictureUrl,
-             units = 1);
+             units);
             _saleRepository.Add(LocalSal);
             _saleRepository.UnitOfWork.SaveChangesAsync();
             this.OnPropertyChanged("SaleItems");
@@ -143,8 +144,10 @@ namespace POS.ViewModel
             var items = _catalogeIthemsRepository.FindByShourtCut(shortCut);
             if(items!=null && items.Count() == 1)
             {
-                var first=items.ToList()[0];
-                AddItemToLocalSale(first.Id, first.Name, first.Price, 0, first.PictureUri);
+                var result = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
+                var qte = Convert.ToDecimal(result);
+                var first = items.ToList()[0];
+                AddItemToLocalSale(first.Id, first.Name, first.Price, 0, first.PictureUri, qte);
             }
             if(items != null && items.Count() > 1)
             {
@@ -153,7 +156,9 @@ namespace POS.ViewModel
                 var item = result as CatalogItem;
                 if (item != null)
                 {
-                    AddItemToLocalSale(item.Id, item.Name, item.Price, 0, item.PictureUri);
+                    var resultQte = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
+                    var qte = Convert.ToDecimal(resultQte);
+                    AddItemToLocalSale(item.Id, item.Name, item.Price, 0, item.PictureUri, qte);
                 }
             }
         }

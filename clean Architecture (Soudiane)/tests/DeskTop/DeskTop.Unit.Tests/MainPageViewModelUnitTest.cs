@@ -61,6 +61,7 @@ namespace DeskTop.Unit.Tests
             InitNavigation();
             var itemToAdd = ApplicationDbContextSeed.GetPreconfiguredItems().FirstOrDefault(x => x.Id == 2);
             SetReteuRnedValueToFakeNavifationService(itemToAdd);
+            SetReteuRnedValueToFakeNavifationService(2m);
         }
 
         [Test]
@@ -69,6 +70,7 @@ namespace DeskTop.Unit.Tests
            
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
+            InitNavigation();
             SetReteuRnedValueToFakeNavifationService(null);
             mainPage.ScanBarCode("1000");
             Assert.AreEqual(mainPage.SaleItems.Count, 0);
@@ -318,34 +320,37 @@ namespace DeskTop.Unit.Tests
             Assert.IsEmpty(mainPage.SaleItems);
         }
         [Test]
-        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteOneItem_ShouldAddItemToLocalSle()
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteOneItem_ShouldAddItemToLocalSaleWithToQteOfQteDialog()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
+            InitNavigation();
+            SetReteuRnedValueToFakeNavifationService(2m);
             mainPage.FilterByShourtCut("001");
-            Assert.AreEqual(mainPage.SaleItems.Count,1);
+            Assert.AreEqual(mainPage.SaleItems[0].Units,2m);
         }
      
         [Test]
-        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItem_ShouldShowTheShooserForm()
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItem_ShouldShowTheShooserFormAndQteDialogForm()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
             InitNavigationAndSetReturnedValue();
             mainPage.FilterByShourtCut("003");
-            var navigation=ConfigurationService.getService<INavigationService>();
-            Assert.AreEqual(navigation.getCurrent(), typeof(ItemShooser));
+            var navigation=ConfigurationService.getService<INavigationService>() as FakeNavigationProxy;
+            Assert.AreEqual(navigation.FomresStack[0], typeof(ItemShooser));
+            Assert.AreEqual(navigation.FomresStack[1], typeof(QteDialog));
         }
 
         [Test]
-        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItemAndOneIsSelected_ShouldAddThisItemToLocalSal()
+        public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItemAndOneIsSelected_ShouldAddThisItemToLocalSalWithTeresultOfQteDialogForm()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
             InitNavigationAndSetReturnedValue();
             mainPage.FilterByShourtCut("003");
          
-            Assert.IsNotEmpty(mainPage.SaleItems);
+            Assert.AreEqual(mainPage.SaleItems[0].Units,2);
         }
         [Test]
         public void MainPage_WhenFilterCatalogItemsByShourtCutAndExisteManyItemAndNoOneIsSelected_ShouldNotAddThisItemToLocalSal()
