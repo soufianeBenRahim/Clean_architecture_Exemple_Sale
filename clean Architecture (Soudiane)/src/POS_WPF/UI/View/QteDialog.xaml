@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS.View"
         mc:Ignorable="d"
-        Title="Quantite" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="Quantite" 
+                 SizeToContent="WidthAndHeight" 
+                 WindowStartupLocation="CenterScreen"
+                 Loaded="FormeBase_Loaded">
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

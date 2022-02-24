@@ -8,11 +8,22 @@ namespace POS.ViewModel
 {
     public class QteDialogViewModel : ViewModelBase
     {
+        public QteDialogViewModel()
+        {
+            _qte = 1;
+        }
         private decimal _qte;
-        public decimal Qte { get=>_qte; 
-            set { _qte = value;OnPropertyChanged("Qte"); } }
+        public decimal Qte 
+        { 
+            get=>_qte; 
+            set 
+            { 
+                _qte = value;
+                OnPropertyChanged("Qte"); 
+            } 
+        }
 
-        public void Ok()
+        public void Ok()    
         {
             this.Result = Qte;
             CurentView.CloseWindow();

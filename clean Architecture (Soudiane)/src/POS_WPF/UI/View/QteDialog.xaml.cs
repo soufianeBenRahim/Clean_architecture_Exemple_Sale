@@ -29,5 +29,11 @@ namespace POS.View
         {
             (_bctx as QteDialogViewModel).Ok();
         }
+
+        private void FormeBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            Qte.Focus();
+            Qte.SelectAll();
+        }
     }
 }

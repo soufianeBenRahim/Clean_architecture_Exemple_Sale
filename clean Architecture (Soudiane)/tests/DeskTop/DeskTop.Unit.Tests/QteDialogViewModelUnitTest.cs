@@ -40,7 +40,13 @@ namespace DeskTop.Unit.Tests
             viewModel.Ok();
             Assert.IsTrue(viewModel.isFormClosed());
         }
-
+        [Test]
+        public void QteDialogViewModel_WhenIsIntialise_ShouldQteEqualsOne()
+        {
+            var viewModel = new QteDialogViewModel();
+            viewModel.SetView(new FakeView());
+            Assert.AreEqual(viewModel.Qte, 1m);
+        }
         [Test]
         public void QteDialogViewModel_WhenValidateDialog_ShouldSetTheResultToQteProperty()
         {
