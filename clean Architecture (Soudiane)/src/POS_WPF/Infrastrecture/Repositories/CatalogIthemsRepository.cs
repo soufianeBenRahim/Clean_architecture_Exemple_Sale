@@ -32,12 +32,12 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 
         public IEnumerable<CatalogItem> GetCatalogsByCatigoryIdAndName(int idType, string name)
         {
-            return _dbContest.CatalogItems.Where(x => x.CatalogTypeId == idType && x.Name.Contains(name)).ToList();
+            return _dbContest.CatalogItems.Where(x => x.CatalogTypeId == idType && x.Name.ToUpper().Contains(name.ToUpper())).ToList();
         }
 
         public IEnumerable<CatalogItem> GetCatalogsByName(string name)
         {
-            return _dbContest.CatalogItems.Where(x => x.Name.Contains(name)).ToList();
+            return _dbContest.CatalogItems.Where(x => x.Name.ToUpper().Contains(name.ToUpper())).ToList();
         }
 
         public IEnumerable<CatalogItem> GetItemByBarCode(string barCode)
