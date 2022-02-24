@@ -385,6 +385,13 @@ namespace DeskTop.Unit.Tests
             mainPage.Init();
             Assert.Throws<QteInvalidException>(()=> mainPage.AddItemToLocalSale(GetItemById(1), 0,0)) ;
         }
+        [Test]
+        public void MainPage_WhenTrayToAddItemWitQteMinsThenZiro_ShouldThrowQteInvalidException()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            Assert.Throws<QteInvalidException>(() => mainPage.AddItemToLocalSale(GetItemById(1), 0, -1));
+        }
 
     }
 }
