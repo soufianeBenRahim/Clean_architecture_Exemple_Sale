@@ -133,10 +133,8 @@ namespace POS.ViewModel
             var items = _catalogeIthemsRepository.FindByShourtCut(shortCut);
             if(items!=null && items.Count() == 1)
             {
-                var result = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
-                var qte = Convert.ToDecimal(result);
                 var first = items.ToList()[0];
-                AddItemToLocalSale(first, 0, qte);
+                AddItemAfterAskedQte(first);
             }
             if(items != null && items.Count() > 1)
             {
@@ -145,11 +143,16 @@ namespace POS.ViewModel
                 var item = result as CatalogItem;
                 if (item != null)
                 {
-                    var resultQte = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
-                    var qte = Convert.ToDecimal(resultQte);
-                    AddItemToLocalSale(item, 0, qte);
+                    AddItemAfterAskedQte(item);
                 }
             }
+        }
+
+        private void AddItemAfterAskedQte(CatalogItem item)
+        {
+            var resultQte = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
+            var qte = Convert.ToDecimal(resultQte);
+            AddItemToLocalSale(item, 0, qte);
         }
     }
 }
