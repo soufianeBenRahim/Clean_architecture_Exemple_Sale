@@ -367,7 +367,7 @@ namespace DeskTop.Unit.Tests
             Assert.IsEmpty(mainPage.SaleItems);
         }
         [Test]
-        public void MainPage_WhenTryToAddItemWitQteZiro_ShouldThrowQteInvalidException()
+        public void MainPage_WhenTrayToAddItemWitQteZiro_ShouldThrowQteInvalidException()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
