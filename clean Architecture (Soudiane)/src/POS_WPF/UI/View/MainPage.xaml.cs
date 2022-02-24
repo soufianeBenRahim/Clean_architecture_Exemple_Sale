@@ -44,7 +44,14 @@ namespace POS.View
             {
                 try
                 {
-                    (_bctx as MainPageViewModel).ScanBarCode(codebarre.Text);
+                    if (IsBarCode.IsChecked.Value)
+                    {
+                        (_bctx as MainPageViewModel).ScanBarCode(codebarre.Text);
+                    }
+                    else
+                    {
+                        (_bctx as MainPageViewModel).FilterByShourtCut(codebarre.Text);
+                    }
                 }
                 catch (BarCodeNotFondException ex)
                 {

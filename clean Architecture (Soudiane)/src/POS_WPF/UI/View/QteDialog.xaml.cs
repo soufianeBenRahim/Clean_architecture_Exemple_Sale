@@ -24,5 +24,10 @@ namespace POS.View
         {
             InitializeComponent();
         }
+
+        private void btnDialogOk_Click(object sender, RoutedEventArgs e)
+        {
+            (_bctx as QteDialogViewModel).Ok();
+        }
     }
 }

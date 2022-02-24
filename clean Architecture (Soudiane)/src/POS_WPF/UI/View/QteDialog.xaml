@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POS.View"
         mc:Ignorable="d"
-        Title="QteDialog" Height="450" Width="800">
-    <Grid>
-        
+        Title="Quantite" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical">
+            <Label Name="lblQuestion" Grid.Column="1">Veuillez Saisir la Quantité a ajouter :</Label>
+            <TextBox Name="Qte" Text="{Binding Path=Qte,UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+
+        </StackPanel>
+      
+        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,15,0,0">
+            <Button IsDefault="True" Name="btnDialogOk"  MinWidth="60" Margin="0,0,10,0" Click="btnDialogOk_Click">_Ok</Button>
+            <Button IsCancel="True" MinWidth="60">_Cancel</Button>
+        </WrapPanel>
     </Grid>
 </local:FormeBase>
