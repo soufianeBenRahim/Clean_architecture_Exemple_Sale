@@ -1,6 +1,7 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 {
@@ -12,7 +13,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
             builder.ToTable("Catalog");
 
             builder.Property(o => o.Id)
-             .HasDefaultValue(1)
+             .HasDefaultValue(Guid.NewGuid())
              .ValueGeneratedOnAdd()
              .IsRequired();
 

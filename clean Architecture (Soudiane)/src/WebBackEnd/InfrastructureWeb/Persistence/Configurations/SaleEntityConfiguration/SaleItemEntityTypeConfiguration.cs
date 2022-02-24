@@ -1,6 +1,7 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
 {
@@ -15,10 +16,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
 
             saleItemConfiguration.Ignore(b => b.DomainEvents);
 
-            saleItemConfiguration.Property(o => o.Id)
-                .UseHiLo("saleitemseq");
-
-            saleItemConfiguration.Property<int>("SaleId")
+            saleItemConfiguration.Property<Guid>("SaleId")
                 .IsRequired();
 
             saleItemConfiguration
@@ -43,7 +41,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
                 .IsRequired();
 
             saleItemConfiguration
-                .Property<int>("_units")
+                .Property<decimal>("_units")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("Units")
                 .IsRequired();

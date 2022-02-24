@@ -38,17 +38,6 @@ namespace POS_API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ItemsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string ids = null)
         {
-            if (!string.IsNullOrEmpty(ids))
-            {
-                var items = await GetItemsByIdsAsync(ids);
-
-                if (!items.Any())
-                {
-                    return BadRequest("ids value invalid. Must be comma-separated list of numbers");
-                }
-
-                return Ok(items);
-            }
 
             var totalItems = await _catalogContext.CatalogItems
                 .LongCountAsync();
@@ -75,38 +64,20 @@ namespace POS_API.Controllers
             return Ok(model);
         }
 
-        private async Task<List<CatalogItem>> GetItemsByIdsAsync(string ids)
-        {
-            var numIds = ids.Split(',').Select(id => (Ok: int.TryParse(id, out int x), Value: x));
-
-            if (!numIds.All(nid => nid.Ok))
-            {
-                return new List<CatalogItem>();
-            }
-
-            var idsToSelect = numIds
-                .Select(id => id.Value);
-
-            var items = await _catalogContext.CatalogItems.Where(ci => idsToSelect.Contains(ci.Id)).ToListAsync();
-
-            items = ChangeUriPlaceholder(items);
-
-            return items;
-        }
-
+       
         [HttpGet]
         [Route("items/{id:int}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(CatalogItem), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CatalogItem>> ItemByIdAsync(int id)
+        public async Task<ActionResult<CatalogItem>> ItemByIdAsync(string id)
         {
-            if (id <= 0)
+            if (Guid.Parse(id) == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var item = await _catalogContext.CatalogItems.SingleOrDefaultAsync(ci => ci.Id == id);
+            var item = await _catalogContext.CatalogItems.SingleOrDefaultAsync(ci => ci.Id == Guid.Parse(id));
 
             var baseUri = _settings.PicBaseUrl;
             var azureStorageEnabled = _settings.AzureStorageEnabled;
@@ -269,9 +240,9 @@ namespace POS_API.Controllers
         [HttpDelete]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> DeleteProductAsync(int id)
+        public async Task<ActionResult> DeleteProductAsync(string id)
         {
-            var product = _catalogContext.CatalogItems.SingleOrDefault(x => x.Id == id);
+            var product = _catalogContext.CatalogItems.SingleOrDefault(x => x.Id == Guid.Parse(id));
 
             if (product == null)
             {

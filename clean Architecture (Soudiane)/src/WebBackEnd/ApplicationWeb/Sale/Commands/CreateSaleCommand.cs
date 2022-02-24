@@ -1,16 +1,17 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Clean_Architecture_Soufiane.Application.Sale.Commands
 {
-    public class CreateSaleCommand : IRequest<int>
+    public class CreateSaleCommand : IRequest<Guid>
     {
 
     }
 
-    public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, int>
+    public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Guid>
     {
         private readonly ISaleRepository _saleRepository;
 
@@ -19,7 +20,7 @@ namespace Clean_Architecture_Soufiane.Application.Sale.Commands
             _saleRepository = context;
         }
 
-        public async Task<int> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
         {
             var entity = new Domain.AggregatesModel.Sales.Sale();
 

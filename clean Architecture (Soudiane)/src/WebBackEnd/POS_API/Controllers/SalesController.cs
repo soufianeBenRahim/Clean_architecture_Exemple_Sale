@@ -1,6 +1,7 @@
 ﻿using Clean_Architecture_Soufiane.Application.Sale.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace POS_API.Controllers
@@ -10,7 +11,7 @@ namespace POS_API.Controllers
       
 
         [HttpPost("CreateSale")]
-        public async Task<ActionResult<int>> Create()
+        public async Task<ActionResult<Guid>> Create()
         {
             return await Mediator.Send(new CreateSaleCommand());
         }

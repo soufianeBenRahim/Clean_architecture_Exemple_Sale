@@ -1,16 +1,17 @@
 ﻿
 
 using Clean_Architecture_Soufiane.Domain.Seedwork;
+using System;
 
 namespace Clean_Architecture_Soufiane.Domain.Events
 {
     public class SaleStatusChangedToPaidCachDomainEvent : DomainEvent
     {
-        public SaleStatusChangedToPaidCachDomainEvent(int _idSale)
+        public SaleStatusChangedToPaidCachDomainEvent(Guid _idSale)
         {
             id = _idSale;
         }
 
-        public int id { get; }
+        public Guid id { get; }
     }
 }

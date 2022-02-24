@@ -10,10 +10,8 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<CatalogItem> builder)
         {
             builder.ToTable("Catalog");
-
-            builder.Property(ci => ci.Id)
-                .UseHiLo("catalog_hilo")
-                .IsRequired();
+            
+            builder.HasKey(o => o.Id);
 
             builder.Property(ci => ci.Name)
                 .IsRequired(true)

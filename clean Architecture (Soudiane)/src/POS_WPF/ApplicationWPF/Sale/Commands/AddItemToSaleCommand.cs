@@ -11,8 +11,8 @@ namespace Clean_Architecture_Soufiane.Application.Sale.Commands
 {
     public class AddItemToSaleCommand : IRequest<bool>
     {
-        public int idSale { get; set; }
-        public int Iditem { get; set; }
+        public Guid idSale { get; set; }
+        public Guid Iditem { get; set; }
         public string itemName { get; set; }
         public decimal Price { get; set; }
         public int numberUnit { get; set; }

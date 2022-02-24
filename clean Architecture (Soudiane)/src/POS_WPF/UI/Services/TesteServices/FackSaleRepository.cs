@@ -28,7 +28,7 @@ namespace POS.Services.TesteServices
             return vente;
         }
 
-        public Task<Sale> GetAsync(int orderId)
+        public Task<Sale> GetAsync(Guid orderId)
         {
             return Task.FromResult(sales.FirstOrDefault(x => x.Id == orderId));
         }

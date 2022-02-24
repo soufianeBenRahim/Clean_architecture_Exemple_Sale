@@ -1,5 +1,6 @@
 ﻿
 using Clean_Architecture_Soufiane.Domain.Seedwork;
+using System;
 using System.Threading.Tasks;
 
 namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
@@ -13,6 +14,6 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 
         void Update(Sale order);
 
-        Task<Sale> GetAsync(int orderId);
+        Task<Sale> GetAsync(Guid orderId);
     }
 }

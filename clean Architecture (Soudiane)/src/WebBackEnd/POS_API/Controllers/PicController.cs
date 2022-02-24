@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -28,15 +29,15 @@ namespace POS_API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         // GET: /<controller>/
-        public async Task<ActionResult> GetImageAsync(int catalogItemId)
+        public async Task<ActionResult> GetImageAsync(string catalogItemId)
         {
-            if (catalogItemId <= 0)
+            if (catalogItemId == null || catalogItemId==String.Empty)
             {
                 return BadRequest();
             }
 
             var item = await _catalogContext.CatalogItems
-                .SingleOrDefaultAsync(ci => ci.Id == catalogItemId);
+                .SingleOrDefaultAsync(ci => ci.Id == Guid.Parse(catalogItemId));
 
             if (item != null)
             {

@@ -6,7 +6,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog
 {
     public class CatalogItem
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -42,7 +42,10 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Catalog
         public bool OnReorder { get; set; }
         public string ShortCut { get; set; }
 
-        public CatalogItem() { }
+        public CatalogItem() 
+        {
+            Id = Guid.NewGuid();
+        }
 
 
         /// <summary>

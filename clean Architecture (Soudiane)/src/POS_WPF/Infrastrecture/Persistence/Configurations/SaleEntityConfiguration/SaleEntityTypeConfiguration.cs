@@ -15,7 +15,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 
             saleConfiguration.HasKey(o => o.Id);
             saleConfiguration.Property(o => o.Id)
-            .HasDefaultValue(1)
+            .HasDefaultValue(Guid.NewGuid())
             .ValueGeneratedOnAdd()
             .IsRequired();
 

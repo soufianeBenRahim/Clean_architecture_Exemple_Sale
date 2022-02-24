@@ -1,6 +1,7 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 {
@@ -13,13 +14,13 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
 
             saleItemConfiguration.HasKey(o => o.Id);
             saleItemConfiguration.Property(o => o.Id)
-             .HasDefaultValue(1)
+             .HasDefaultValue(Guid.NewGuid())
              .ValueGeneratedOnAdd()
              .IsRequired();
             saleItemConfiguration.Ignore(b => b.DomainEvents);
 
 
-            saleItemConfiguration.Property<int>("SaleId")
+            saleItemConfiguration.Property<Guid>("SaleId")
                 .IsRequired();
 
             saleItemConfiguration
@@ -28,7 +29,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
                 .HasColumnName("Discount")
                 .IsRequired();
 
-            saleItemConfiguration.Property<int>("ProductId")
+            saleItemConfiguration.Property<Guid>("ProductId")
                 .IsRequired();
 
             saleItemConfiguration

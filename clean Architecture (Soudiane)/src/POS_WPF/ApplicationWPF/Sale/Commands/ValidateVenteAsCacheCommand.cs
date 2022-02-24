@@ -11,7 +11,7 @@ namespace Clean_Architecture_Soufiane.Application.Sale.Commands
 {
     public class ValidateVenteAsCacheCommand : IRequest<bool>
     {
-        public int idSale { get; set; }
+        public Guid idSale { get; set; }
         public decimal amount { get; set; }
     }
     public class ValidateVenteAsCacheCommandHandler : IRequestHandler<ValidateVenteAsCacheCommand, bool>

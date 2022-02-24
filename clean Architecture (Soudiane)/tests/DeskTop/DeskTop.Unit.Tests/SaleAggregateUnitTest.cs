@@ -2,6 +2,7 @@
 using Clean_Architecture_Soufiane.Domain.Events;
 using NUnit.Framework;
 using Clean_Architecture_Soufiane.Domain.Exceptions;
+using System;
 
 namespace DeskTop.Unit.SaleAggregateTest
 {
@@ -14,7 +15,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         public void Create_order_item_success()
         {
             //Arrange    
-            var productId = 1;
+            var productId = Guid.NewGuid();
             var productName = "FakeProductName";
             var unitPrice = 12;
             var discount = 15;
@@ -32,7 +33,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         public void Invalid_number_of_units()
         {
             //Arrange    
-            var productId = 1;
+            var productId = Guid.NewGuid();
             var productName = "FakeProductName";
             var unitPrice = 12;
             var discount = 15;
@@ -47,7 +48,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         public void Invalid_total_of_order_item_lower_than_discount_applied()
         {
             //Arrange    
-            var productId = 1;
+            var productId = Guid.NewGuid();
             var productName = "FakeProductName";
             var unitPrice = 12;
             var discount = 15;
@@ -62,7 +63,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         public void Invalid_discount_setting()
         {
             //Arrange    
-            var productId = 1;
+            var productId = Guid.NewGuid();
             var productName = "FakeProductName";
             var unitPrice = 12;
             var discount = 15;
@@ -80,7 +81,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         public void Invalid_units_setting()
         {
             //Arrange    
-            var productId = 1;
+            var productId = Guid.NewGuid();
             var productName = "FakeProductName";
             var unitPrice = 12;
             var discount = 15;
@@ -97,9 +98,10 @@ namespace DeskTop.Unit.SaleAggregateTest
           [Test]
           public void when_add_two_times_on_the_same_item_then_the_total_of_order_should_be_the_sum_of_the_two_items()
           {
+              var id=Guid.NewGuid();
               var order = new OrderBuilder()
-                  .AddOne(1, "cup", 10.0m, 0, string.Empty)
-                  .AddOne(1, "cup", 10.0m, 0, string.Empty)
+                  .AddOne(id, "cup", 10.0m, 0, string.Empty)
+                  .AddOne(id, "cup", 10.0m, 0, string.Empty)
                   .Build();
 
               Assert.AreEqual(20.0m, order.GetTotal());
@@ -125,7 +127,7 @@ namespace DeskTop.Unit.SaleAggregateTest
 
             //Act 
             var fakeOrder = new Sale();
-            fakeOrder.AddDomainEvent(new SaleStatusChangedToPaidCachDomainEvent(1));
+            fakeOrder.AddDomainEvent(new SaleStatusChangedToPaidCachDomainEvent(Guid.NewGuid()));
             //Assert
             Assert.AreEqual(fakeOrder.DomainEvents.Count, expectedResult);
         }
@@ -135,7 +137,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         {
             //Arrange    
             var fakeOrder = new Sale();
-            var @fakeEvent = new SaleStatusChangedToPaidCachDomainEvent(1);
+            var @fakeEvent = new SaleStatusChangedToPaidCachDomainEvent(Guid.NewGuid());
             var expectedResult = 1;
 
             //Act         

@@ -1,4 +1,5 @@
 ﻿using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
+using System;
 
 namespace DeskTop.Unit.SaleAggregateTest
 {
@@ -12,7 +13,7 @@ namespace DeskTop.Unit.SaleAggregateTest
         }
 
         public OrderBuilder AddOne(
-            int productId,
+            Guid productId,
             string productName,
             decimal unitPrice,
             decimal discount,

@@ -1,6 +1,7 @@
 ﻿
 using Clean_Architecture_Soufiane.Domain.Seedwork;
 using Clean_Architecture_Soufiane.Domain.Exceptions;
+using System;
 
 namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 {
@@ -16,11 +17,11 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         private decimal _discount;
         private decimal _units;
 
-        public int ProductId { get; private set; }
+        public Guid ProductId { get; private set; }
 
         protected SaleItem() { }
 
-        public SaleItem(int productId, string productName, decimal unitPrice, decimal discount, string PictureUrl, decimal units = 1)
+        public SaleItem(Guid productId, string productName, decimal unitPrice, decimal discount, string PictureUrl, decimal units = 1)
         {
             if (units <= 0)
             {

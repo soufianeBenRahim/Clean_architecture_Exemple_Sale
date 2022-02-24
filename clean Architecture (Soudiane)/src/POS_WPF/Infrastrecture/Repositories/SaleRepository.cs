@@ -32,7 +32,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
             return _applicationDB.Sales.Add(order).Entity;
         }
 
-        public async Task<Sale> GetAsync(int orderId)
+        public async Task<Sale> GetAsync(Guid orderId)
         {
                 var order = await _applicationDB
                             .Sales

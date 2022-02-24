@@ -16,10 +16,6 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
 
             saleConfiguration.Ignore(b => b.DomainEvents);
 
-            saleConfiguration.Property(o => o.Id)
-                .UseHiLo("saleseq");
-
-
 
 
             saleConfiguration

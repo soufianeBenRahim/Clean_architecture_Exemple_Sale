@@ -32,7 +32,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 
         }
 
-        public async Task<Sale> GetAsync(int orderId)
+        public async Task<Sale> GetAsync(Guid orderId)
         {
             var order = await _context
                                 .Sales

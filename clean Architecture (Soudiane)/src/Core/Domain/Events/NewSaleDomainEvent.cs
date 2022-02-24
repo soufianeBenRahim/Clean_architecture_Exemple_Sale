@@ -9,11 +9,11 @@ namespace Clean_Architecture_Soufiane.Domain.Events
 {
     public class NewSaleDomainEvent : DomainEvent
     {
-        public NewSaleDomainEvent(int _idSale)
+        public NewSaleDomainEvent(Guid _idSale)
         {
             id = _idSale;
         }
 
-        public int id { get; }
+        public Guid id { get; }
     }
 }
