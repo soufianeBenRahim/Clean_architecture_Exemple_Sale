@@ -86,11 +86,11 @@ namespace POS.View
         private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            CatalogItem catalogType = ((ListViewItem)sender).Content as CatalogItem;
+            CatalogItem catalogItem = ((ListViewItem)sender).Content as CatalogItem;
 
-            if (catalogType != null)
+            if (catalogItem != null)
             {
-                (_bctx as MainPageViewModel).AddItemToLocalSale(catalogType.Id, catalogType.Name, catalogType.Price,0, catalogType.PictureUri);
+                (_bctx as MainPageViewModel).AddItemToLocalSale(catalogItem.Id, catalogItem.Name, catalogItem.Price,0, catalogItem.PictureUri);
             }
         }
     }
