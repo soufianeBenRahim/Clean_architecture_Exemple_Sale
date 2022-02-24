@@ -50,10 +50,19 @@ namespace DeskTop.Unit.Tests
         public void MainPage_WhenScanBarCodeGetMultipleItem_ShouldShowTheItemShooserForm()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            InitNavigationAndSetReturnedValue();
             var navigationService = ConfigurationService.getService<INavigationService>();
             mainPage.ScanBarCode("1000");
             Assert.IsTrue(navigationService.getCurrent().Equals(typeof(ItemShooser)));
         }
+
+        private void InitNavigationAndSetReturnedValue()
+        {
+            InitNavigation();
+            var itemToAdd = ApplicationDbContextSeed.GetPreconfiguredItems().FirstOrDefault(x => x.Id == 2);
+            SetReteuRnedValueToFakeNavifationService(itemToAdd);
+        }
+
         [Test]
         public void MainPage_WhenScanBarCodeGetMultipleItemAndUserNoSelect_ShouldNotAddItemToSale()
         {
@@ -69,27 +78,32 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = new MainPageViewModel(new FakeCatalogTypeRepository()
             , new FakeCatalogIthemsRepository(), new FackSaleRepository(new FackUnitOfWerk()));
-            SetReteuRnedValueToFakeNavifationService(new CatalogItem());
+            InitNavigationAndSetReturnedValue();
             mainPage.ScanBarCode("1000");
-            Assert.IsNotEmpty(mainPage.LocalSal.SaleItems);
+            Assert.AreEqual(mainPage.SaleItems.Count,1);
         }
 
-        private void SetReteuRnedValueToFakeNavifationService(CatalogItem value)
+        private void SetReteuRnedValueToFakeNavifationService(object value)
         {
-            var navigationService = ConfigurationService.getService<INavigationService>();
-            var Mock = navigationService as FakeNavigationProxy;
-            Mock.RetunEdValue = value;
+            var navigationService = ConfigurationService.getService<INavigationService>() as FakeNavigationProxy;
+            navigationService.RetunEdValue.Add(value);
         }
         [Test]
-        public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldAddTenItemInTheSale()
+        public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldAddTheItemInTheSale()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            var itemToAdd=ApplicationDbContextSeed.GetPreconfiguredItems().Where(x=>x.Id==2).First();
-            SetReteuRnedValueToFakeNavifationService(itemToAdd);
+            InitNavigationAndSetReturnedValue();
             mainPage.ScanBarCode("1000");
-            var itemAdd = mainPage.LocalSal.SaleItems.ToList()[0];
-            Assert.AreEqual(itemAdd.ProductId, itemToAdd.Id);
+            var itemAdd = mainPage.SaleItems.ToList()[0];
+            Assert.AreEqual(itemAdd.ProductId, 2);
         }
+
+        private static void InitNavigation()
+        {
+            var Navigation = ConfigurationService.getService<INavigationService>() as FakeNavigationProxy;
+            Navigation.Init();
+        }
+
         [Test]
         public void MainPage_WhenAddItemToSal_ShouldRaisPropertyChangeOfSaleItems()
         {
@@ -112,8 +126,7 @@ namespace DeskTop.Unit.Tests
         public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldRaisPropertyChangeOfSaleItems()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            var itemToAdd = ApplicationDbContextSeed.GetPreconfiguredItems().Where(x => x.Id == 2).First();
-            SetReteuRnedValueToFakeNavifationService(itemToAdd);
+            InitNavigationAndSetReturnedValue();
             var propertyName = "SaleItems";
             bool isPropertyChanged = false; ;
             mainPage.PropertyChanged +=
@@ -318,6 +331,7 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
+            InitNavigationAndSetReturnedValue();
             mainPage.FilterByShourtCut("003");
             var navigation=ConfigurationService.getService<INavigationService>();
             Assert.AreEqual(navigation.getCurrent(), typeof(ItemShooser));
@@ -328,7 +342,7 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
-            SetReteuRnedValueToFakeNavifationService(new CatalogItem() { Id = 1, Name = "exempel" });
+            InitNavigationAndSetReturnedValue();
             mainPage.FilterByShourtCut("003");
          
             Assert.IsNotEmpty(mainPage.SaleItems);
@@ -338,9 +352,9 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
+            InitNavigation();
             SetReteuRnedValueToFakeNavifationService(null);
             mainPage.FilterByShourtCut("003");
-
             Assert.IsEmpty(mainPage.SaleItems);
         }
 

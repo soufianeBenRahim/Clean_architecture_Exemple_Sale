@@ -11,12 +11,18 @@ using System.Windows;
 
 namespace DeskTop.Integration.Tests
 {
-    public class FakeNavigationProxy:INavigationService
+    public class FakeNavigationProxy : INavigationService
     {
         private Type current;
-
-        public object RetunEdValue { get; set; }
-
+        public List<Type> FomresStack { get; set; }
+        public int CurrentIndex { get; set; }
+        public List<object> RetunEdValue { get; set; }
+        public void Init ()
+        {
+            FomresStack =new List<Type>();
+            CurrentIndex = -1;
+            RetunEdValue=new List<object>();
+        }
         public Type getCurrent()
         {
             return  current;
@@ -25,7 +31,9 @@ namespace DeskTop.Integration.Tests
         public object NavigateToAsync<T>(ViewModelBase viemModel, FormeBase parent)
         {
             current = typeof(T);
-            return RetunEdValue;
+            FomresStack.Add(typeof(T));
+            CurrentIndex++;
+            return RetunEdValue[CurrentIndex];
         }
     }
 }
