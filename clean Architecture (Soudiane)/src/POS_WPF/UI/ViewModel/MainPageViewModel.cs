@@ -148,7 +148,7 @@ namespace POS.ViewModel
             }
         }
 
-        private void AddItemAfterAskedQte(CatalogItem item)
+        public void AddItemAfterAskedQte(CatalogItem item)
         {
             var resultQte = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
             var qte = Convert.ToDecimal(resultQte);
