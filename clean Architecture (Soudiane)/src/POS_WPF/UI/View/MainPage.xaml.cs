@@ -57,6 +57,10 @@ namespace POS.View
                 {
                     MessageBox.Show("Code barre n'existe pas !");
                 }
+                catch (QteInvalidException ex)
+                {
+                    MessageBox.Show("Quantité invalide !");
+                }
                 catch (Exception exe)
                 {
                     MessageBox.Show("Erreur non attendue !");                    
