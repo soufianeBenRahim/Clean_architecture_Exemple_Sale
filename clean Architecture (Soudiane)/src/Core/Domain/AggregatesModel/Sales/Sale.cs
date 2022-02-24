@@ -49,7 +49,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         // This Order AggregateRoot's method "AddOrderitem()" should be the only way to add Items to the Order,
         // so any behavior (discounts, etc.) and validations are controlled by the AggregateRoot 
         // in order to maintain consistency between the whole Aggregate. 
-        public void AddSaleItem(int productId, string productName, decimal unitPrice, decimal discount, string pictureUrl, int units = 1)
+        public void AddSaleItem(int productId, string productName, decimal unitPrice, decimal discount, string pictureUrl, decimal units = 1)
         {
             var existingOrderForProduct = _saleItems.Where(o => o.ProductId == productId)
                 .SingleOrDefault();

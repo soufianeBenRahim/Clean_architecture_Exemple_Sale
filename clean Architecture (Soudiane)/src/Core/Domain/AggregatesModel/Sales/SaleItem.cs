@@ -14,13 +14,13 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         private string _pictureUrl;
         private decimal _unitPrice;
         private decimal _discount;
-        private int _units;
+        private decimal _units;
 
         public int ProductId { get; private set; }
 
         protected SaleItem() { }
 
-        public SaleItem(int productId, string productName, decimal unitPrice, decimal discount, string PictureUrl, int units = 1)
+        public SaleItem(int productId, string productName, decimal unitPrice, decimal discount, string PictureUrl, decimal units = 1)
         {
             if (units <= 0)
             {
@@ -52,7 +52,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
             _discount = discount;
         }
 
-        public void AddUnits(int units)
+        public void AddUnits(decimal units)
         {
             if (units < 0)
             {
@@ -63,7 +63,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         }
 
         public string ProductName { get => _productName; private set=> _productName=value; }
-        public int Units { get => _units; private set => _units = value; }
+        public decimal Units { get => _units; private set => _units = value; }
         public decimal UnitPrice { get => _unitPrice; private set => _unitPrice = value; }
         public string PictureUri { get=>_pictureUrl; set=> _pictureUrl=value; }
 

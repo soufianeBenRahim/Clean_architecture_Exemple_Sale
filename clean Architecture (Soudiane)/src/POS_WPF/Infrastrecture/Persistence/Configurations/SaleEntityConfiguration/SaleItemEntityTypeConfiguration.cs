@@ -44,7 +44,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             saleItemConfiguration
-                .Property<int>("_units")
+                .Property<decimal>("_units")
                 .UsePropertyAccessMode(PropertyAccessMode.Field)
                 .HasColumnName("Units")
                 .IsRequired();
