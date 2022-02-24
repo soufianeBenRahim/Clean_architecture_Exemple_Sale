@@ -362,6 +362,13 @@ namespace DeskTop.Unit.Tests
             mainPage.FilterByShourtCut("003");
             Assert.IsEmpty(mainPage.SaleItems);
         }
+        [Test]
+        public void MainPage_WhenTryToAddItemWitQteZiro_ShouldThrowQteInvalidException()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            Assert.Throws<QteInvalidException>(()=> mainPage.AddItemToLocalSale(1, "test", 20, 0, "", 0)) ;
+        }
 
     }
 }

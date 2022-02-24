@@ -68,6 +68,10 @@ namespace POS.ViewModel
             string pictureUrl,
             decimal units = 1)
         {
+            if (units <= 0)
+            {
+                throw new QteInvalidException();
+            }
             LocalSal.AddSaleItem( productId,
              productName,
              unitPrice,
