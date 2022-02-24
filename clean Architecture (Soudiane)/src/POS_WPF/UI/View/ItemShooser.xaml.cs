@@ -28,5 +28,10 @@ namespace POS.View
         {
             (_bctx as ItemShooserViewModel).Ok();
         }
+
+        private void FormeBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            listItems.Focus();
+        }
     }
 }
