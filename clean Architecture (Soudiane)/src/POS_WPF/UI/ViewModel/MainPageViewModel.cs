@@ -17,7 +17,7 @@ namespace POS.ViewModel
         public IEnumerable<CatalogType> TypeCatalog { get; internal set; }
         public IEnumerable<CatalogItem> CatalogsFiltred { get; set; }
         public Sale LocalSal { get; set; }
-
+        public bool IsBarCod { get;set; }
         CatalogType _selectedTypeCatalog;
         public CatalogType SelectedTypeCatalog 
         { 
@@ -41,6 +41,17 @@ namespace POS.ViewModel
             _saleRepository = saleRepository;
         }
 
+        public void ScanCode(string text)
+        {
+            if (IsBarCod)
+            {
+                ScanBarCode(text);
+            }
+            else
+            {
+                FilterByShourtCut(text);
+            }
+        }
 
         public void Init()
         {

@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical" DockPanel.Dock="Left" Height="Auto">
-                <CheckBox x:Name="IsBarCode" > Code Barre </CheckBox>
+                <CheckBox x:Name="IsBarCode" IsChecked="{Binding IsBarCod,UpdateSourceTrigger=PropertyChanged}"> Code Barre </CheckBox>
                 <TextBlock Margin="0,5,0,5"> Code barre: </TextBlock>
                 <TextBox Name="codebarre" KeyUp="codebarre_KeyUp" 
                              Margin="8,5,0,5" />

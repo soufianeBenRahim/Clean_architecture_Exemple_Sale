@@ -138,7 +138,8 @@ namespace DeskTop.Integration.MainPageViewModelTests
         {
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            mainPage.ScanBarCode("1111");
+            mainPage.IsBarCod=true;
+            mainPage.ScanCode("1111");
             var item = mainPage.LocalSal.SaleItems.FirstOrDefault(x => x.Id == 1);
             Assert.NotNull(item);
         }

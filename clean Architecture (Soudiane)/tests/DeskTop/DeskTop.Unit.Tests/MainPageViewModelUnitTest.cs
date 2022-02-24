@@ -37,14 +37,16 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
-            mainPage.ScanBarCode("");
+            mainPage.IsBarCod = true;
+            mainPage.ScanCode("");
             Assert.IsEmpty(mainPage.SaleItems);
         }
         [Test]
         public void MainPage_WhenSacanBarCodeNotExiste_ShouldRaisNotFoundException()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            Assert.Throws<BarCodeNotFondException>(() => mainPage.ScanBarCode("123456789"));
+            mainPage.IsBarCod = true;
+            Assert.Throws<BarCodeNotFondException>(() => mainPage.ScanCode("123456789"));
         }
         [Test]
         public void MainPage_WhenScanBarCodeGetMultipleItem_ShouldShowTheItemShooserForm()
@@ -52,7 +54,8 @@ namespace DeskTop.Unit.Tests
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             InitNavigationAndSetReturnedValue();
             var navigationService = ConfigurationService.getService<INavigationService>();
-            mainPage.ScanBarCode("1000");
+            mainPage.IsBarCod = true;
+            mainPage.ScanCode("1000");
             Assert.IsTrue(navigationService.getCurrent().Equals(typeof(ItemShooser)));
         }
 
@@ -72,7 +75,8 @@ namespace DeskTop.Unit.Tests
             mainPage.Init();
             InitNavigation();
             SetReteuRnedValueToFakeNavifationService(null);
-            mainPage.ScanBarCode("1000");
+            mainPage.IsBarCod = true;
+            mainPage.ScanCode("1000");
             Assert.AreEqual(mainPage.SaleItems.Count, 0);
         }
         [Test]
@@ -81,7 +85,8 @@ namespace DeskTop.Unit.Tests
             var mainPage = new MainPageViewModel(new FakeCatalogTypeRepository()
             , new FakeCatalogIthemsRepository(), new FackSaleRepository(new FackUnitOfWerk()));
             InitNavigationAndSetReturnedValue();
-            mainPage.ScanBarCode("1000");
+            mainPage.IsBarCod = true;
+            mainPage.ScanCode("1000");
             Assert.AreEqual(mainPage.SaleItems.Count,1);
         }
 
@@ -95,7 +100,8 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             InitNavigationAndSetReturnedValue();
-            mainPage.ScanBarCode("1000");
+            mainPage.IsBarCod = true;
+            mainPage.ScanCode("1000");
             var itemAdd = mainPage.SaleItems.ToList()[0];
             Assert.AreEqual(itemAdd.ProductId, 2);
         }
@@ -144,7 +150,8 @@ namespace DeskTop.Unit.Tests
                 }
 
             };
-            mainPage.ScanBarCode("1000");
+            mainPage.IsBarCod = true;
+            mainPage.ScanCode("1000");
             Assert.IsTrue(isPropertyChanged);
             mainPage.PropertyChanged += null;
         }
@@ -320,7 +327,8 @@ namespace DeskTop.Unit.Tests
 
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
-            mainPage.FilterByShourtCut("002");
+            mainPage.IsBarCod = false;
+            mainPage.ScanCode("002");
             Assert.IsEmpty(mainPage.SaleItems);
         }
         [Test]
@@ -330,7 +338,8 @@ namespace DeskTop.Unit.Tests
             mainPage.Init();
             InitNavigation();
             SetReteuRnedValueToFakeNavifationService(2m);
-            mainPage.FilterByShourtCut("001");
+            mainPage.IsBarCod = false;
+            mainPage.ScanCode("001");
             Assert.AreEqual(mainPage.SaleItems[0].Units,2m);
         }
      
@@ -340,7 +349,8 @@ namespace DeskTop.Unit.Tests
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
             InitNavigationAndSetReturnedValue();
-            mainPage.FilterByShourtCut("003");
+            mainPage.IsBarCod = false;
+            mainPage.ScanCode("003");
             var navigation=ConfigurationService.getService<INavigationService>() as FakeNavigationProxy;
             Assert.AreEqual(navigation.FomresStack[0], typeof(ItemShooser));
             Assert.AreEqual(navigation.FomresStack[1], typeof(QteDialog));
@@ -352,7 +362,8 @@ namespace DeskTop.Unit.Tests
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
             InitNavigationAndSetReturnedValue();
-            mainPage.FilterByShourtCut("003");
+            mainPage.IsBarCod = false;
+            mainPage.ScanCode("003");
          
             Assert.AreEqual(mainPage.SaleItems[0].Units,2);
         }
@@ -363,7 +374,8 @@ namespace DeskTop.Unit.Tests
             mainPage.Init();
             InitNavigation();
             SetReteuRnedValueToFakeNavifationService(null);
-            mainPage.FilterByShourtCut("003");
+            mainPage.IsBarCod = false;
+            mainPage.ScanCode("003");
             Assert.IsEmpty(mainPage.SaleItems);
         }
         [Test]
