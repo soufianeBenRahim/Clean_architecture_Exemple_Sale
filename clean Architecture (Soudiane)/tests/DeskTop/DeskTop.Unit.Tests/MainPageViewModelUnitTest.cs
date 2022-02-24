@@ -38,7 +38,7 @@ namespace DeskTop.Unit.Tests
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
             mainPage.ScanBarCode("");
-            Assert.IsEmpty(mainPage.LocalSal.SaleItems);
+            Assert.IsEmpty(mainPage.SaleItems);
         }
         [Test]
         public void MainPage_WhenSacanBarCodeNotExiste_ShouldRaisNotFoundException()
@@ -68,10 +68,10 @@ namespace DeskTop.Unit.Tests
         {
            
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            var countBefor=mainPage.LocalSal.SaleItems.Count;
+            mainPage.Init();
             SetReteuRnedValueToFakeNavifationService(null);
             mainPage.ScanBarCode("1000");
-            Assert.AreEqual(mainPage.LocalSal.SaleItems.Count, countBefor);
+            Assert.AreEqual(mainPage.SaleItems.Count, 0);
         }
         [Test]
         public void MainPage_WhenScanBarCodeGetMultipleItemAndUserSelectOne_ShouldAddItemToSale()
@@ -109,7 +109,7 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var propertyName = "SaleItems";
-            bool isPropertyChanged = false; ;
+            bool isPropertyChanged = false;
             mainPage.PropertyChanged +=
             delegate (object sender, PropertyChangedEventArgs e)
             {
@@ -148,9 +148,9 @@ namespace DeskTop.Unit.Tests
 
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.AddItemToLocalSale(1, "", 2, 0, "");
-            Assert.IsNotEmpty(mainPage.LocalSal.SaleItems);
+            Assert.IsNotEmpty(mainPage.SaleItems);
             mainPage.Init();
-            Assert.IsEmpty(mainPage.LocalSal.SaleItems);
+            Assert.IsEmpty(mainPage.SaleItems);
         }
 
         [Test]
