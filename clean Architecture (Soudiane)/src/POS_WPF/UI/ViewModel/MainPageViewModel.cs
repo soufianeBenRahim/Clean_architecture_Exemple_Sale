@@ -61,22 +61,17 @@ namespace POS.ViewModel
             OnPropertyChanged("CatalogsFiltred");
         }
 
-        public void AddItemToLocalSale(int productId,
-            string productName,
-            decimal unitPrice,
-            decimal discount,
-            string pictureUrl,
-            decimal units = 1)
+        public void AddItemToLocalSale(CatalogItem item,decimal discount=0,  decimal units = 1)
         {
             if (units <= 0)
             {
                 throw new QteInvalidException();
             }
-            LocalSal.AddSaleItem( productId,
-             productName,
-             unitPrice,
+            LocalSal.AddSaleItem(item.Id,
+             item.Name,
+             item.Price,
              discount,
-             pictureUrl,
+            item.PictureUri,
              units);
             _saleRepository.Add(LocalSal);
             _saleRepository.UnitOfWork.SaveChangesAsync();
@@ -100,22 +95,12 @@ namespace POS.ViewModel
                 if (result != null)
                 {
                     var itemToAdd = result as CatalogItem;
-                    AddItemToLocalSale(itemToAdd.Id,
-                     itemToAdd.Name,
-                     itemToAdd.Price,
-                     0,
-                     itemToAdd.PictureUri,
-                     1);
+                    AddItemToLocalSale(itemToAdd);
                 }
 
                 return;
             }
-            AddItemToLocalSale(items.First().Id,
-                 items.First().Name,
-                 items.First().Price,
-                 0,
-                 items.First().PictureUri,
-                 1);
+            AddItemToLocalSale(items.First());
         }
 
 
@@ -151,7 +136,7 @@ namespace POS.ViewModel
                 var result = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
                 var qte = Convert.ToDecimal(result);
                 var first = items.ToList()[0];
-                AddItemToLocalSale(first.Id, first.Name, first.Price, 0, first.PictureUri, qte);
+                AddItemToLocalSale(first, 0, qte);
             }
             if(items != null && items.Count() > 1)
             {
@@ -162,7 +147,7 @@ namespace POS.ViewModel
                 {
                     var resultQte = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
                     var qte = Convert.ToDecimal(resultQte);
-                    AddItemToLocalSale(item.Id, item.Name, item.Price, 0, item.PictureUri, qte);
+                    AddItemToLocalSale(item, 0, qte);
                 }
             }
         }

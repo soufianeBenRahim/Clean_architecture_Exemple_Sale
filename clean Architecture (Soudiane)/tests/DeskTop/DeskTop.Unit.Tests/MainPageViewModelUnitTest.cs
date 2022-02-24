@@ -120,9 +120,13 @@ namespace DeskTop.Unit.Tests
                     isPropertyChanged = true;
                 }
             };
-            mainPage.AddItemToLocalSale(1,"",10,0,"",1);
+            mainPage.AddItemToLocalSale(GetItemById(1));
             Assert.IsTrue(isPropertyChanged);
             mainPage.PropertyChanged += null;
+        }
+        private static CatalogItem GetItemById(int id)
+        {
+            return ApplicationDbContextSeed.GetPreconfiguredItems().FirstOrDefault(x => x.Id == id);
         }
         [Test]
         public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldRaisPropertyChangeOfSaleItems()
@@ -149,7 +153,7 @@ namespace DeskTop.Unit.Tests
         {
 
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            mainPage.AddItemToLocalSale(1, "", 2, 0, "");
+            mainPage.AddItemToLocalSale(GetItemById(1));
             Assert.IsNotEmpty(mainPage.SaleItems);
             mainPage.Init();
             Assert.IsEmpty(mainPage.SaleItems);
@@ -159,7 +163,7 @@ namespace DeskTop.Unit.Tests
         public void MainPage_WhenClerSale_ShouldRaisPropertyChangeOfSaleItems()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            mainPage.AddItemToLocalSale(1, "", 10, 0, "", 1);
+            mainPage.AddItemToLocalSale(GetItemById(1));
             var propertyName = "SaleItems";
             bool isPropertyChanged = false; ;
             mainPage.PropertyChanged +=
@@ -367,7 +371,7 @@ namespace DeskTop.Unit.Tests
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
-            Assert.Throws<QteInvalidException>(()=> mainPage.AddItemToLocalSale(1, "test", 20, 0, "", 0)) ;
+            Assert.Throws<QteInvalidException>(()=> mainPage.AddItemToLocalSale(GetItemById(1), 0,0)) ;
         }
 
     }

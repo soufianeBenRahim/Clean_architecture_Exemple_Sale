@@ -90,7 +90,7 @@ namespace POS.View
 
             if (catalogItem != null)
             {
-                (_bctx as MainPageViewModel).AddItemToLocalSale(catalogItem.Id, catalogItem.Name, catalogItem.Price,0, catalogItem.PictureUri);
+                (_bctx as MainPageViewModel).AddItemToLocalSale(catalogItem, 0);
             }
         }
     }

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using POS.View;
+using Clean_Architecture_Soufiane.Infrastructure.Persistence;
 
 namespace DeskTop.Integration.MainPageViewModelTests
 {
@@ -107,19 +108,28 @@ namespace DeskTop.Integration.MainPageViewModelTests
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var SaleRepository = ConfigurationService.getService<ISaleRepository>();
-            mainPage.AddItemToLocalSale(1, "cup", 10.0m, 0, string.Empty);
-            mainPage.AddItemToLocalSale(2, "cup", 20.0m, 0, string.Empty);
-            var sale=await SaleRepository.GetAsync(mainPage.LocalSal.Id);
+            var item1=GetItemById(1);
+            mainPage.AddItemToLocalSale(item1);
+            var item2 = GetItemById(1);
+            mainPage.AddItemToLocalSale(item2);
+            var sale = await SaleRepository.GetAsync(mainPage.LocalSal.Id);
             Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
         }
+
+        private static CatalogItem GetItemById(int id)
+        {
+           return ApplicationDbContextSeed.GetPreconfiguredItems().FirstOrDefault(x => x.Id == id);
+        }
+
         [Test]
         public async Task MainPage_AfterAddTheSamItemToLocalSale_ShouldSaveTheSaleInDataBase()
         {
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             var SaleRepository = ConfigurationService.getService<ISaleRepository>();
-            mainPage.AddItemToLocalSale(1, "cup", 10.0m, 0, string.Empty);
-            mainPage.AddItemToLocalSale(1, "cup", 10.0m, 0, string.Empty);
+            var item1 = GetItemById(1);
+            mainPage.AddItemToLocalSale(item1);
+            mainPage.AddItemToLocalSale(item1);
             var sale = await SaleRepository.GetAsync(mainPage.LocalSal.Id);
             Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
         }
