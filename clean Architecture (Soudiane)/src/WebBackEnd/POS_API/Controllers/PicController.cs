@@ -25,7 +25,7 @@ namespace POS_API.Controllers
         }
 
         [HttpGet]
-        [Route("api/v1/catalog/items/{catalogItemId:int}/pic")]
+        [Route("api/v1/catalog/items/{catalogItemId}/pic")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         // GET: /<controller>/

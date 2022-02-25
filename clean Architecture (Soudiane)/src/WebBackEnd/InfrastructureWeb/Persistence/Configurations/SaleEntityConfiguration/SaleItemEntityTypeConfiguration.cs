@@ -25,7 +25,7 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Persistence.Confeguration
                 .HasColumnName("Discount")
                 .IsRequired();
 
-            saleItemConfiguration.Property<int>("ProductId")
+            saleItemConfiguration.Property<Guid>("ProductId")
                 .IsRequired();
 
             saleItemConfiguration
