@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31402.337
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6FF37DDB-185B-4744-8732-5AAD07870B7C}"
 EndProject
@@ -48,6 +48,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationWPF", "src\POS_WPF\ApplicationWPF\ApplicationWPF.csproj", "{470D1331-3071-4C5E-BE76-EC5625D9B269}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeskTop.Unit.Tests", "tests\DeskTop\DeskTop.Unit.Tests\DeskTop.Unit.Tests.csproj", "{46E5630E-9763-4383-BE35-EA0802E397C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "E2E", "E2E", "{D30B404E-1DCD-4291-B069-591FAFCE0F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POSTest", "tests\DeskTop\E2E\POSTest.csproj", "{54E36D90-BFBB-4F1A-945D-B7646F3AF88A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,10 @@ Global
 		{46E5630E-9763-4383-BE35-EA0802E397C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46E5630E-9763-4383-BE35-EA0802E397C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46E5630E-9763-4383-BE35-EA0802E397C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E36D90-BFBB-4F1A-945D-B7646F3AF88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E36D90-BFBB-4F1A-945D-B7646F3AF88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E36D90-BFBB-4F1A-945D-B7646F3AF88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E36D90-BFBB-4F1A-945D-B7646F3AF88A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +145,8 @@ Global
 		{A728663F-B8FB-466E-9402-80DFEC1F7162} = {4D7C3724-AFA6-42EF-AFE9-DAA18442D329}
 		{470D1331-3071-4C5E-BE76-EC5625D9B269} = {DFA0E23D-1314-4968-A244-9279C2073B3A}
 		{46E5630E-9763-4383-BE35-EA0802E397C3} = {0FEDBE8E-FE22-40EC-B3FF-5A6AAD40CC11}
+		{D30B404E-1DCD-4291-B069-591FAFCE0F69} = {0FEDBE8E-FE22-40EC-B3FF-5A6AAD40CC11}
+		{54E36D90-BFBB-4F1A-945D-B7646F3AF88A} = {D30B404E-1DCD-4291-B069-591FAFCE0F69}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E03E2CF-936C-4CC6-B1E1-77E724BEF5D9}
