@@ -19,9 +19,13 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
 
         public Guid ProductId { get; private set; }
 
-        protected SaleItem() { }
+        protected SaleItem() 
+        {
+            Id = Guid.NewGuid();
+        }
 
         public SaleItem(Guid productId, string productName, decimal unitPrice, decimal discount, string PictureUrl, decimal units = 1)
+            :base()
         {
             if (units <= 0)
             {

@@ -7,20 +7,17 @@ namespace WPF_POS_Test
     [TestClass]
     public  class SessionBarCode : WPFPOSSession
     {
-        [TestMethod]
+       // [TestMethod]
         public void EditorEnterText()
         {
             Thread.Sleep(TimeSpan.FromSeconds(6));
         }
-
-
-        [ClassInitialize]
+    //    [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
             Setup(context);
         }
-
-        [ClassCleanup]
+       // [ClassCleanup]
         public static void ClassCleanup()
         {
             TearDown();

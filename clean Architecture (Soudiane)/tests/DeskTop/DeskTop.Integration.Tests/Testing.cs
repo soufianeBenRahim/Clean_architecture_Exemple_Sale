@@ -1,4 +1,5 @@
 ﻿using Clean_Architecture_Soufiane.Application.Common.Interfaces;
+using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using POS.Services;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,7 +63,26 @@ public class Testing
         }
        
     }
+    public async Task<Sale> GetSaleAsync(Guid SaleId)
+    {
+        var dbContextFactory = ConfigurationService.getService<IDbContextFactory<ApplicationDbContext>>();
+        using (var applicationDB = dbContextFactory.CreateDbContext())
+        {
+            await applicationDB
+                 .Sales.LoadAsync();
+            var Sale = await applicationDB
+                  .Sales
+                  .FirstOrDefaultAsync(o => o.Id == SaleId);
 
+            if (Sale != null)
+            {
+                await applicationDB.Entry(Sale)
+                    .Collection(i => i.SaleItems).LoadAsync();
+            }
+
+            return Sale;
+        }
+    }
     public static async Task AddAsync<TEntity>(TEntity entity)
         where TEntity : class
     {

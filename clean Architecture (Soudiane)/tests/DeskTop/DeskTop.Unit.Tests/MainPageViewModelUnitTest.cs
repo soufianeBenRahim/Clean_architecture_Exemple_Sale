@@ -101,6 +101,7 @@ namespace DeskTop.Unit.Tests
         public void MainPage_WheneScanCodeBarrGetManyItemsAndOneIsSelectes_ShouldAddTheItemInTheSale()
         {
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
             var id=InitNavigationAndSetReturnedValue();
             mainPage.IsBarCod = true;
             mainPage.ScanCode("1000");
@@ -176,13 +177,13 @@ namespace DeskTop.Unit.Tests
             var propertyName = "SaleItems";
             bool isPropertyChanged = false; ;
             mainPage.PropertyChanged +=
-            delegate (object sender, PropertyChangedEventArgs e)
-            {
-                if (e.PropertyName.Equals(propertyName))
-                {
-                    isPropertyChanged = true;
-                }
-            };
+              delegate (object sender, PropertyChangedEventArgs e)
+              {
+                  if (e.PropertyName.Equals(propertyName))
+                  {
+                      isPropertyChanged = true;
+                  }
+              };
             mainPage.Init();
             Assert.IsTrue(isPropertyChanged);
             mainPage.PropertyChanged += null;
@@ -394,6 +395,34 @@ namespace DeskTop.Unit.Tests
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
             mainPage.Init();
             Assert.Throws<QteInvalidException>(() => mainPage.AddItemToLocalSale(GetItemByOrder(1), 0, -1));
+        }
+
+        [Test]
+        public void MainPage_WhenDeleteingSaleItem_ShouldDeleteItFromSaleItems()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            var item1 = GetItemByOrder(1);
+            mainPage.AddItemToLocalSale(item1);
+            var item2 = GetItemByOrder(2);
+            mainPage.AddItemToLocalSale(item2);
+            Assert.AreEqual(mainPage.SaleItems.Count, 2);
+            mainPage.RemoveItem(mainPage.SaleItems[0]);
+            Assert.AreEqual(mainPage.SaleItems.Count , 1);
+        }
+        [Test]
+        public void MainPage_WhenDeleteingSaleItem_ShouldRaisPropertyChange()
+        {
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            var item1 = GetItemByOrder(1);
+            mainPage.AddItemToLocalSale(item1);
+            bool isPropertyChanged = false;
+            var propertyName = "SaleItems";
+            mainPage.PropertyChanged +=delegate(object? sender, PropertyChangedEventArgs e){ 
+                if(e.PropertyName.Equals(propertyName)) isPropertyChanged = true; };
+            mainPage.RemoveItem(mainPage.SaleItems[0]);
+            Assert.IsTrue(isPropertyChanged);
         }
 
     }

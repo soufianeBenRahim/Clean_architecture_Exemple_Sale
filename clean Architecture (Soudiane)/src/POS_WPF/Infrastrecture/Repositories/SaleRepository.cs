@@ -60,5 +60,11 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
         {
              _applicationDB.Entry(order).State = EntityState.Modified;
         }
+
+        public async void RemouveItemFromSale(SaleItem item)
+        {
+            _applicationDB.SaleItems.Remove(item);
+
+        }
     }
 }

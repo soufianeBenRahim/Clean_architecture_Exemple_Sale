@@ -64,8 +64,16 @@ namespace POS.Services
                 }
                 else
                 {
-                    services.AddDbContextFactory<ApplicationDbContext>(opt =>
+               
+                        services.AddDbContextFactory<ApplicationDbContext>(opt =>
                         opt.UseSqlite("Data Source = SaleDataBase.db"));
+                    /* 
+                       services.AddDbContext<ApplicationDbContext>(options =>
+                  options.UseSqlServer(
+                      "Server=(localdb)\\mssqllocaldb;Database=ClienArchitectureSoufianeDb;Trusted_Connection=True;MultipleActiveResultSets=true;",
+                      b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                    */
+
                 }
 
                 services.AddInfrastructure();
@@ -111,11 +119,9 @@ namespace POS.Services
             IDbContextFactory<ApplicationDbContext> dbFactory = ConfigurationService.getService<IDbContextFactory<ApplicationDbContext>>();
             var SaleContext = dbFactory.CreateDbContext();
 
-            if (SaleContext.Database.IsSqlite())
-            {
                 SaleContext.Database.EnsureDeleted();
                 SaleContext.Database.EnsureCreated();
-            }
+
 
             return SaleContext;
         }

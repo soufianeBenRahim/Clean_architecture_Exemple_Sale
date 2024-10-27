@@ -34,9 +34,10 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
 
         public async Task<Sale> GetAsync(Guid orderId)
         {
+
             var order = await _context
-                                .Sales
-                                .FirstOrDefaultAsync(o => o.Id == orderId);
+                        .Sales
+                        .FirstOrDefaultAsync(o => o.Id == orderId);
             if (order == null)
             {
                 order = _context
@@ -58,6 +59,11 @@ namespace Clean_Architecture_Soufiane.Infrastructure.Repositories
         public void Update(Sale order)
         {
             _context.Entry(order).State = EntityState.Modified;
+        }
+
+        public void RemouveItemFromSale(SaleItem item)
+        {
+            _context.SaleItems.Remove(item);
         }
     }
 }

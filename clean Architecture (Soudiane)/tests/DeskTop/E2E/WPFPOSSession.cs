@@ -28,7 +28,6 @@ namespace WPF_POS_Test
         private const string POSAppId = @"C:\Users\H O P E\source\repos\soufianeBenRahim\Clean_architecture_Exemple_Sale\clean Architecture (Soudiane)\src\POS_WPF\UI\bin\Debug\net5.0-windows\POS.exe";
 
         protected static WindowsDriver<WindowsElement> session;
-
         public static void Setup(TestContext context)
         {
             // Launch a new instance of POS application
@@ -40,15 +39,10 @@ namespace WPF_POS_Test
                 session = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
                 Assert.IsNotNull(session);
                 Assert.IsNotNull(session.SessionId);
-
-
                 // Set implicit timeout to 1.5 seconds to make element search to retry every 500 ms for at most three times
                 session.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1.5);
-
-
             }
         }
-
         public static void TearDown()
         {
             // Close the application and delete the session
@@ -72,7 +66,5 @@ namespace WPF_POS_Test
         {
 
         }
-
-        protected static string SanitizeBackslashes(string input) => input.Replace("\\", Keys.Alt + Keys.NumberPad9 + Keys.NumberPad2 + Keys.Alt);
     }
 }

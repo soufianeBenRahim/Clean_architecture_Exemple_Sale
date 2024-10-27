@@ -72,20 +72,27 @@ namespace POS.ViewModel
             OnPropertyChanged("CatalogsFiltred");
         }
 
-        public void AddItemToLocalSale(CatalogItem item,decimal discount=0,  decimal units = 1)
+        public async void AddItemToLocalSale(CatalogItem item,decimal discount=0,  decimal units = 1)
         {
             if (units <= 0)
             {
                 throw new QteInvalidException();
             }
-            LocalSal.AddSaleItem(item.Id,
+            var saleToUpdate =  await _saleRepository.GetAsync(LocalSal.Id);
+            if (saleToUpdate == null)
+            {
+                saleToUpdate=new Sale();
+            }
+
+
+            saleToUpdate.AddSaleItem(item.Id,
              item.Name,
              item.Price,
              discount,
             item.PictureUri,
              units);
-            _saleRepository.Add(LocalSal);
-            _saleRepository.UnitOfWork.SaveChangesAsync();
+            LocalSal = saleToUpdate;
+            await _saleRepository.UnitOfWork.SaveChangesAsync();
             this.OnPropertyChanged("SaleItems");
         }
 
@@ -164,6 +171,21 @@ namespace POS.ViewModel
             var resultQte = navigationServiceProxy.NavigateToAsync<QteDialog>(new QteDialogViewModel(), (CurentView as FormeBase));
             var qte = Convert.ToDecimal(resultQte);
             AddItemToLocalSale(item, 0, qte);
+        }
+
+        public async void RemoveItem(SaleItem item)
+        {
+            var saleToUpdate = await _saleRepository.GetAsync(LocalSal.Id);
+            if (saleToUpdate == null)
+            {
+                return;
+            }
+
+            saleToUpdate.RemouveItem(item);
+            LocalSal = saleToUpdate;
+            await _saleRepository.UnitOfWork.SaveChangesAsync();
+           
+            OnPropertyChanged("SaleItems");
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         }
         public Sale()
         {
+            Id = Guid.NewGuid();
             _saleItems = new List<SaleItem>();
             _saleStatusId = SaleStatus.AwaitingValidation.Id;
             _orderDate = DateTime.UtcNow;
@@ -80,5 +81,9 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
             return _saleItems.Sum(o => o.Units * o.UnitPrice);
         }
 
+        public void RemouveItem(SaleItem saleItem)
+        {
+           _saleItems.Remove(saleItem);
+        }
     }
 }

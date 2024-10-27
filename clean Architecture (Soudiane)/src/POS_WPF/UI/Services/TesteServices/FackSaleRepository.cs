@@ -37,5 +37,15 @@ namespace POS.Services.TesteServices
         {
 
         }
+
+        public void RemouveItemFromSale(SaleItem item)
+        {
+            
+        }
+
+        public Task<Sale> RemouveItemFromSale(Sale sale, Guid idToRemouv)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

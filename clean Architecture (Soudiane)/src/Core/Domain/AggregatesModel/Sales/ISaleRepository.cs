@@ -15,5 +15,6 @@ namespace Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales
         void Update(Sale order);
 
         Task<Sale> GetAsync(Guid orderId);
+        void RemouveItemFromSale(SaleItem item);
     }
 }

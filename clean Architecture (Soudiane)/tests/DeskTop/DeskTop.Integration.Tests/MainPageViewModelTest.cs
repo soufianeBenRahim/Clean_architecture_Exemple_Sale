@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Clean_Architecture_Soufiane.Domain.AggregatesModel.Sales;
 using POS.View;
 using Clean_Architecture_Soufiane.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeskTop.Integration.MainPageViewModelTests
 {
@@ -108,15 +109,29 @@ namespace DeskTop.Integration.MainPageViewModelTests
         {
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
-            var SaleRepository = ConfigurationService.getService<ISaleRepository>();
+            mainPage.Init();
             var item1=GetItem(1);
             mainPage.AddItemToLocalSale(item1);
             var item2 = GetItem(2);
             mainPage.AddItemToLocalSale(item2);
-            var sale = await SaleRepository.GetAsync(mainPage.LocalSal.Id);
+            var sale = await GetSaleAsync(mainPage.LocalSal.Id);
             Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
         }
-
+    
+        [Test]
+        public async Task MainPage_AfterRemouveItemToLocalSale_ShouldRemoveTheItemInDataBase()
+        {
+            ConfigurationService.DataBaseSeed();
+            var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
+            var item1 = GetItem(1);
+            mainPage.AddItemToLocalSale(item1);
+            var item2 = GetItem(2);
+            mainPage.AddItemToLocalSale(item2);
+            mainPage.RemoveItem(mainPage.SaleItems[0]);
+            var sale = await GetSaleAsync(mainPage.LocalSal.Id);
+            Assert.That(mainPage.LocalSal.SaleItems, Is.EqualTo(sale.SaleItems).Using(new SaleIthemComparer()));
+        }
         private static CatalogItem GetItem(int order)
         {
            return ApplicationDbContextSeed.GetPreconfiguredItems().ToList()[order];
@@ -127,6 +142,7 @@ namespace DeskTop.Integration.MainPageViewModelTests
         {
             ConfigurationService.DataBaseSeed();
             var mainPage = ConfigurationService.getService<MainPageViewModel>();
+            mainPage.Init();
             var SaleRepository = ConfigurationService.getService<ISaleRepository>();
             var item1 = GetItem(1);
             mainPage.AddItemToLocalSale(item1);
